@@ -1,0 +1,540 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --gold-1: #bf953f;
+    --gold-2: #fcf6ba;
+    --gold-3: #b38728;
+    --gold-4: #fbf5b7;
+    --gold-5: #aa771c;
+    --bg-dark: #040d0a; /* Very rich dark green/black */
+    --surface: #0a1f1a;
+    --surface-hover: #0f2d25;
+    --surface-active: #153e33;
+    --text-primary: #f0f4f2;
+    --text-secondary: #9cb3a8;
+    --border: rgba(191, 149, 63, 0.25);
+    --border-hover: rgba(191, 149, 63, 0.6);
+  }
+
+  #visriva-superdesigner-root {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Montserrat', sans-serif;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .gold-foil {
+    background: linear-gradient(to right, var(--gold-1), var(--gold-2), var(--gold-3), var(--gold-4), var(--gold-5));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+
+  .visriva-header {
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(4, 13, 10, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .visriva-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    margin: 0;
+  }
+
+  .visriva-studio-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 0;
+    flex: 1;
+  }
+
+  .visriva-canvas-area {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-right: 1px solid var(--border);
+  }
+
+  .visriva-controls-area {
+    padding: 3rem;
+    background: rgba(10, 31, 26, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    overflow-y: auto;
+  }
+
+  .visriva-preview-box {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 4/5;
+    background: radial-gradient(circle at center, var(--surface) 0%, transparent 70%);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .visriva-tshirt-mockup {
+    width: 80%;
+    height: 80%;
+    /* Default placeholder, replaced by component logic */
+    background-color: #111;
+    mask-image: url('https://pub-866993ef9088469599283f550970034a.r2.dev/tshirt-front-texture.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url('https://pub-866993ef9088469599283f550970034a.r2.dev/tshirt-front-texture.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    transition: all 0.4s ease;
+  }
+
+  .visriva-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    color: var(--gold-2);
+  }
+
+  .visriva-label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .visriva-select {
+    width: 100%;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    border-radius: 4px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .visriva-select:focus, .visriva-select:hover {
+    border-color: var(--gold-2);
+    background: var(--surface-hover);
+  }
+
+  .visriva-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .visriva-swatch {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 2px;
+    background-clip: content-box;
+  }
+  .visriva-swatch.is-active {
+    border-color: var(--gold-2);
+    transform: scale(1.1);
+  }
+
+  .visriva-button {
+    width: 100%;
+    padding: 1.25rem;
+    background: transparent;
+    border: 1px solid var(--gold-3);
+    color: var(--gold-2);
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .visriva-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, var(--gold-1), var(--gold-2), var(--gold-3));
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .visriva-button:hover {
+    color: #000;
+  }
+  .visriva-button:hover::before {
+    transform: scaleX(1);
+  }
+
+  .visriva-team-info {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .visriva-team-role {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .visriva-team-role strong {
+    color: var(--gold-4);
+    font-weight: 500;
+  }
+
+  .visriva-view-toggle {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .visriva-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 0.5rem 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+  .visriva-toggle-btn.active {
+    border-color: var(--gold-2);
+    color: var(--gold-2);
+    background: rgba(191, 149, 63, 0.1);
+  }
+
+  /* File upload styling */
+  .visriva-upload {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+  }
+  .visriva-upload input[type=file] {
+    position: absolute;
+    left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
+  }
+  .visriva-upload-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    border: 1px dashed var(--border-hover);
+    background: var(--surface);
+    color: var(--gold-4);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  .visriva-upload:hover .visriva-upload-btn {
+    background: var(--surface-hover);
+    border-color: var(--gold-2);
+  }
+
+  @media (max-width: 900px) {
+    .visriva-studio-layout {
+      grid-template-columns: 1fr;
+    }
+    .visriva-canvas-area {
+      padding: 2rem;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+</style>
+
+<div id="visriva-superdesigner-root"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "preact": "https://esm.sh/preact@10.19.2",
+    "preact/hooks": "https://esm.sh/preact@10.19.2/hooks",
+    "htm/preact": "https://esm.sh/htm@3.1.1/preact?external=preact",
+    "gsap": "https://esm.sh/gsap@3.12.5"
+  }
+}
+</script>
+
+<script type="module">
+  import { html, render } from 'htm/preact';
+  import { useState, useEffect, useRef } from 'preact/hooks';
+  import gsap from 'gsap';
+
+  // ---------------------------------------------------------
+  // 1. Web Pixel Hook Implementation
+  // ---------------------------------------------------------
+  const useWebPixel = () => {
+    const track = (eventName, data) => {
+      console.log(`[VISRIVA Pixel] Event: ${eventName}`, data);
+      if (window.Shopify && window.Shopify.analytics && window.Shopify.analytics.publish) {
+        window.Shopify.analytics.publish(eventName, data);
+      } else if (window.trekkie && window.trekkie.track) {
+        window.trekkie.track(eventName, data);
+      }
+    };
+
+    return {
+      trackMilestone: (milestone) => track('designer_milestone', { milestone }),
+      trackClick: (buttonName) => track('designer_click', { buttonName }),
+      trackFunnelProgression: (step) => track('designer_funnel_progress', { step })
+    };
+  };
+
+  // ---------------------------------------------------------
+  // 2. Constants & Data
+  // ---------------------------------------------------------
+  const GARMENTS = [
+    { id: 'tshirt', label: 'Classic T-Shirt', price: 899 },
+    { id: 'polo', label: 'Premium Polo', price: 1299 },
+    { id: 'sweatshirt', label: 'Heavy Sweatshirt', price: 1899 },
+    { id: 'hoodie', label: '90210 Hoodie', price: 2499 }
+  ];
+
+  const COLORS = [
+    { id: 'navy', hex: '#111827', name: 'Deep Navy' },
+    { id: 'forest', hex: '#064e3b', name: 'Rich Dark Green' },
+    { id: 'onyx', hex: '#111111', name: 'Onyx Black' },
+    { id: 'acid-blue', hex: '#828FB2', name: 'Acid Wash Blue' },
+    { id: 'ivory', hex: '#EFEDE8', name: 'Ivory Solid' }
+  ];
+
+  const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
+
+  // ---------------------------------------------------------
+  // 3. Components
+  // ---------------------------------------------------------
+  const Header = () => html`
+    <header class="visriva-header">
+      <h1 class="visriva-logo gold-foil">VISRIVA</h1>
+      <div style="font-size: 0.9rem; letter-spacing: 0.1em; color: var(--gold-4)">
+        STUDIO
+      </div>
+    </header>
+  `;
+
+  const DesignerApp = () => {
+    const pixel = useWebPixel();
+    const [garment, setGarment] = useState(GARMENTS[0]);
+    const [color, setColor] = useState(COLORS[0]);
+    const [size, setSize] = useState(SIZES[1]);
+    const [view, setView] = useState('front'); // 'front' or 'back'
+    const [artwork, setArtwork] = useState(null);
+
+    const mockupRef = useRef(null);
+
+    // Initial Pixel Tracking
+    useEffect(() => {
+      pixel.trackFunnelProgression('Studio_Loaded');
+    }, []);
+
+    // Animate mockup when view or garment changes
+    useEffect(() => {
+      if (mockupRef.current) {
+        gsap.fromTo(mockupRef.current, 
+          { opacity: 0, scale: 0.95, rotationY: view === 'front' ? -15 : 15 }, 
+          { opacity: 1, scale: 1, rotationY: 0, duration: 0.8, ease: "power3.out" }
+        );
+      }
+    }, [view, garment, color]);
+
+    const handleGarmentChange = (e) => {
+      const selected = GARMENTS.find(g => g.id === e.target.value);
+      setGarment(selected);
+      pixel.trackMilestone(`Garment_Selected_${selected.id}`);
+    };
+
+    const handleColorChange = (c) => {
+      setColor(c);
+      pixel.trackMilestone(`Color_Selected_${c.id}`);
+    };
+
+    const handleFileUpload = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        setArtwork(url);
+        pixel.trackMilestone('Artwork_Uploaded');
+      }
+    };
+
+    const handleAddToCart = () => {
+      pixel.trackClick('Add_To_Cart');
+      pixel.trackFunnelProgression('Checkout_Initiated');
+      
+      // Submit to shopify cart
+      const formData = new FormData();
+      formData.append('id', '47212533547200'); // placeholder variant
+      formData.append('quantity', '1');
+      formData.append('properties[Garment]', garment.label);
+      formData.append('properties[Color]', color.name);
+      formData.append('properties[Size]', size);
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(() => {
+        window.location.href = '/cart';
+      })
+      .catch(err => console.error(err));
+    };
+
+    return html`
+      <${Header} />
+      <main class="visriva-studio-layout">
+        <section class="visriva-canvas-area">
+          <div class="visriva-view-toggle">
+            <button 
+              class="visriva-toggle-btn ${view === 'front' ? 'active' : ''}" 
+              onClick=${() => { setView('front'); pixel.trackClick('View_Front'); }}
+            >FRONT</button>
+            <button 
+              class="visriva-toggle-btn ${view === 'back' ? 'active' : ''}" 
+              onClick=${() => { setView('back'); pixel.trackClick('View_Back'); }}
+            >BACK</button>
+          </div>
+          
+          <div class="visriva-preview-box">
+            <div 
+              ref=${mockupRef}
+              class="visriva-tshirt-mockup"
+              style="background-color: ${color.hex}; position: relative; display: flex; align-items: center; justify-content: center;"
+            >
+              <!-- Artwork Overlay -->
+              ${artwork && html`
+                <img 
+                  src=${artwork} 
+                  style="max-width: 40%; max-height: 40%; z-index: 10; object-fit: contain; transform: translateY(-10%); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));" 
+                />
+              `}
+            </div>
+          </div>
+        </section>
+
+        <section class="visriva-controls-area">
+          <div>
+            <h2 class="visriva-section-title">Configure Details</h2>
+            
+            <label class="visriva-label">Garment</label>
+            <select class="visriva-select" value=${garment.id} onChange=${handleGarmentChange}>
+              ${GARMENTS.map(g => html`<option value=${g.id}>${g.label} - ₹${g.price}</option>`)}
+            </select>
+          </div>
+
+          <div>
+            <label class="visriva-label">Premium Colors</label>
+            <div class="visriva-swatches">
+              ${COLORS.map(c => html`
+                <div 
+                  class="visriva-swatch ${color.id === c.id ? 'is-active' : ''}"
+                  style="background-color: ${c.hex};"
+                  title=${c.name}
+                  onClick=${() => handleColorChange(c)}
+                ></div>
+              `)}
+            </div>
+          </div>
+
+          <div>
+            <label class="visriva-label">Size</label>
+            <div style="display: flex; gap: 0.5rem;">
+              ${SIZES.map(s => html`
+                <button 
+                  class="visriva-toggle-btn ${size === s ? 'active' : ''}"
+                  style="padding: 0.5rem 1rem;"
+                  onClick=${() => { setSize(s); pixel.trackMilestone('Size_Selected_' + s); }}
+                >${s}</button>
+              `)}
+            </div>
+          </div>
+
+          <div>
+            <label class="visriva-label">Custom Artwork</label>
+            <div class="visriva-upload">
+              <input type="file" accept="image/png, image/jpeg, image/webp" onChange=${handleFileUpload} />
+              <div class="visriva-upload-btn">
+                ${artwork ? 'REPLACE ARTWORK' : '+ UPLOAD DESIGN'}
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: auto;">
+            <button class="visriva-button" onClick=${handleAddToCart}>
+              ADD TO CART - ₹${garment.price}
+            </button>
+          </div>
+
+          <div class="visriva-team-info">
+            <h3 class="visriva-label" style="color: var(--gold-2); margin-bottom: 1rem;">Production Pipeline</h3>
+            <div class="visriva-team-role">
+              <span>Strategy & Lead</span>
+              <strong>Drupitha</strong>
+            </div>
+            <div class="visriva-team-role">
+              <span>Sourcing & Materials</span>
+              <strong>Jeevan</strong>
+            </div>
+            <div class="visriva-team-role">
+              <span>Print Quality & DTF</span>
+              <strong>Puneeth</strong>
+            </div>
+          </div>
+        </section>
+      </main>
+    `;
+  };
+
+  // Mount Application
+  render(html`<${DesignerApp} />`, document.getElementById('visriva-superdesigner-root'));
+</script>
