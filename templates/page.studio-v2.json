@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "visriva-studio-v2",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

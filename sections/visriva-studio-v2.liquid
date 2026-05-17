@@ -1,0 +1,205 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="{{ 'visriva-studio-v2.css' | asset_url }}" rel="stylesheet">
+
+<section
+  class="studio-v2"
+  data-studio-root
+  data-default-color="#828FB2"
+  data-default-color-name="Acid Wash Blue"
+  data-default-wash="acid-blue"
+  data-fixed-price="899"
+  data-currency-symbol="₹"
+  data-model-tshirt-front="https://pub-866993ef9088469599283f550970034a.r2.dev/tshirt-front-texture.png"
+  data-model-tshirt-back="https://pub-866993ef9088469599283f550970034a.r2.dev/tshirt-back-texture.png"
+>
+  <script type="application/json" data-studio-products>
+    {
+      "tshirt": {
+        "label": "T-Shirt",
+        "title": "Custom T-Shirt",
+        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+      },
+      "polo": {
+        "label": "Polo",
+        "title": "Custom Polo",
+        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+      },
+      "sweatshirt": {
+        "label": "Sweatshirt",
+        "title": "Custom Sweatshirt",
+        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+      },
+      "hoodie": {
+        "label": "Hoodie",
+        "title": "Custom Hoodie",
+        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+      }
+    }
+  </script>
+
+  <div class="studio-v2-shell">
+    <header class="studio-v2-head">
+      <h1>Build Your Superdesign</h1>
+      <p>Choose garment, size, color and edit your artwork directly on front and back previews.</p>
+    </header>
+
+    <div class="studio-v2-layout">
+      <!-- LEFT: Preview Column -->
+      <div class="studio-v2-preview-column">
+        <div class="studio-v2-preview-grid">
+          <article class="studio-v2-preview-card is-active" data-studio-preview-card="front">
+            <h3>Front</h3>
+            <canvas width="440" height="560" data-studio-canvas="front" aria-label="Front preview canvas"></canvas>
+            <p class="studio-v2-model-hint">Click to edit front design</p>
+          </article>
+          <article class="studio-v2-preview-card" data-studio-preview-card="back">
+            <h3>Back</h3>
+            <canvas width="440" height="560" data-studio-canvas="back" aria-label="Back preview canvas"></canvas>
+            <p class="studio-v2-model-hint">Click to edit back design</p>
+          </article>
+        </div>
+
+        <div class="studio-v2-summary" aria-live="polite">
+          <p><span>Garment</span><strong data-studio-garment-readout>T-Shirt</strong></p>
+          <p><span>Size</span><strong data-studio-size-readout>Not selected</strong></p>
+          <p><span>Selected color</span><strong data-studio-color-readout>Acid Wash Blue</strong></p>
+          <p><span>Wash finish</span><strong data-studio-wash-readout>Acid Wash Blue</strong></p>
+          <p><span>Artwork file</span><strong data-studio-file-readout>No file uploaded</strong></p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form Column -->
+      <form class="studio-v2-form" action="/cart/add" method="post" enctype="multipart/form-data" data-studio-form>
+        <input type="hidden" name="id" value="47212533547200" data-studio-variant-id>
+        <input type="hidden" name="properties[Size]" value="" data-studio-size-property>
+        <input type="hidden" name="properties[Garment Color]" value="Acid Wash Blue (#828FB2)" data-studio-color-property>
+        <input type="hidden" name="properties[Wash Finish]" value="Acid Wash Blue" data-studio-wash-property>
+        <input type="hidden" name="properties[Color Source]" value="Acid swatch" data-studio-color-source-property>
+        <input type="hidden" name="properties[Custom Color Hex]" value="" data-studio-custom-color-property>
+        <input type="hidden" name="properties[Print Scale]" value="100%" data-studio-scale-property>
+        <input type="hidden" name="properties[Artwork File Name]" value="" data-studio-artwork-name-property>
+        <input type="hidden" name="properties[Front Artwork Transform]" value="" data-studio-front-transform-property>
+        <input type="hidden" name="properties[Back Artwork Transform]" value="" data-studio-back-transform-property>
+        <input type="hidden" name="properties[Quoted Price]" value="₹899" data-studio-quoted-price-property>
+        <input type="file" name="properties[Front Preview Snapshot]" accept="image/png" class="studio-v2-hidden-input" data-studio-front-shot tabindex="-1" aria-hidden="true">
+        <input type="file" name="properties[Back Preview Snapshot]" accept="image/png" class="studio-v2-hidden-input" data-studio-back-shot tabindex="-1" aria-hidden="true">
+
+        <div class="studio-v2-fieldset">
+          <label class="studio-v2-label" for="studio-garment">Garment type</label>
+          <div class="studio-v2-select-wrap">
+            <select id="studio-garment" name="properties[Garment Type]" data-studio-garment>
+              <option value="tshirt" selected>T-Shirt</option>
+              <option value="polo">Polo</option>
+              <option value="sweatshirt">Sweatshirt</option>
+              <option value="hoodie">Hoodie</option>
+            </select>
+          </div>
+
+          <label class="studio-v2-label" for="studio-size" style="margin-top:1rem">Size</label>
+          <div class="studio-v2-select-wrap">
+            <select id="studio-size" data-studio-size></select>
+          </div>
+        </div>
+
+        <div class="studio-v2-fieldset">
+          <label class="studio-v2-label">Acid wash colors</label>
+          <div class="studio-v2-swatches" role="listbox" aria-label="Acid wash color selection">
+            <button type="button" class="studio-v2-swatch is-active" data-studio-swatch data-color="#828FB2" data-color-name="Acid Wash Blue" data-wash="acid-blue" aria-label="Acid Wash Blue">
+              <span class="studio-v2-swatch-chip" style="--swatch-base:#828FB2;--swatch-a:rgba(224,232,250,.55);--swatch-b:rgba(52,63,92,.58);--swatch-c:rgba(151,166,200,.42);"></span>
+              <span class="studio-v2-swatch-name">Acid Blue</span>
+            </button>
+            <button type="button" class="studio-v2-swatch" data-studio-swatch data-color="#1F262A" data-color-name="Washed Black" data-wash="acid-black" aria-label="Washed Black">
+              <span class="studio-v2-swatch-chip" style="--swatch-base:#1F262A;--swatch-a:rgba(237,239,244,.34);--swatch-b:rgba(13,17,20,.66);--swatch-c:rgba(151,158,171,.3);"></span>
+              <span class="studio-v2-swatch-name">Washed Black</span>
+            </button>
+            <button type="button" class="studio-v2-swatch" data-studio-swatch data-color="#1E4D2B" data-color-name="Acid Wash Green" data-wash="acid-green" aria-label="Acid Wash Green">
+              <span class="studio-v2-swatch-chip" style="--swatch-base:#1E4D2B;--swatch-a:rgba(190,224,198,.42);--swatch-b:rgba(16,36,22,.52);--swatch-c:rgba(96,139,110,.32);"></span>
+              <span class="studio-v2-swatch-name">Acid Green</span>
+            </button>
+            <button type="button" class="studio-v2-swatch" data-studio-swatch data-color="#DB6A6C" data-color-name="Acid Wash Red" data-wash="acid-red" aria-label="Acid Wash Red">
+              <span class="studio-v2-swatch-chip" style="--swatch-base:#DB6A6C;--swatch-a:rgba(255,222,222,.52);--swatch-b:rgba(126,40,46,.54);--swatch-c:rgba(235,157,159,.38);"></span>
+              <span class="studio-v2-swatch-name">Acid Red</span>
+            </button>
+            <button type="button" class="studio-v2-swatch" data-studio-swatch data-color="#111111" data-color-name="Onyx Solid" data-wash="solid" aria-label="Onyx Solid">
+              <span class="studio-v2-swatch-chip" style="--swatch-base:#111111;--swatch-a:rgba(255,255,255,.2);--swatch-b:rgba(10,10,10,.35);--swatch-c:rgba(0,0,0,.1);"></span>
+              <span class="studio-v2-swatch-name">Onyx</span>
+            </button>
+            <button type="button" class="studio-v2-swatch" data-studio-swatch data-color="#EFEDE8" data-color-name="Ivory Solid" data-wash="solid" aria-label="Ivory Solid">
+              <span class="studio-v2-swatch-chip" style="--swatch-base:#EFEDE8;--swatch-a:rgba(255,255,255,.65);--swatch-b:rgba(215,211,202,.45);--swatch-c:rgba(227,221,209,.3);"></span>
+              <span class="studio-v2-swatch-name">Ivory</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="studio-v2-fieldset">
+          <label class="studio-v2-label">Custom color</label>
+          <div class="studio-v2-custom-color-row">
+            <input type="color" value="#828FB2" data-studio-custom-color-picker aria-label="Select custom color">
+            <input type="text" value="#828FB2" maxlength="7" data-studio-custom-color-hex aria-label="Custom color hex">
+            <button type="button" class="studio-v2-small-button" data-studio-custom-color-apply>Apply</button>
+          </div>
+          <p class="studio-v2-help">Use this for any exact color beyond acid wash swatches.</p>
+        </div>
+
+        <div class="studio-v2-fieldset">
+          <label class="studio-v2-label" for="studio-upload">Upload artwork</label>
+          <input id="studio-upload" class="studio-v2-native-upload" type="file" name="properties[Uploaded Artwork]" data-studio-upload accept="image/png,image/jpeg,image/webp">
+          <div class="studio-v2-upload-row">
+            <button type="button" class="studio-v2-small-button studio-v2-upload-trigger" data-studio-upload-trigger>Choose artwork</button>
+            <span class="studio-v2-upload-name" data-studio-upload-name>No file selected</span>
+          </div>
+        </div>
+
+        <div class="studio-v2-fieldset">
+          <label class="studio-v2-label" for="studio-placement">Artwork placement</label>
+          <div class="studio-v2-select-wrap">
+            <select id="studio-placement" name="properties[Artwork Placement]" data-studio-placement>
+              <option value="front">Front only</option>
+              <option value="back">Back only</option>
+              <option value="both" selected>Front and back</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="studio-v2-fieldset">
+          <label class="studio-v2-label">Edit on model</label>
+          <div class="studio-v2-edit-tabs">
+            <button type="button" class="studio-v2-edit-tab is-active" data-studio-edit-side="front">Edit front</button>
+            <button type="button" class="studio-v2-edit-tab" data-studio-edit-side="back">Edit back</button>
+          </div>
+          <p class="studio-v2-help">Drag artwork on preview to move. Drag the corner handle to scale.</p>
+          <button type="button" class="studio-v2-small-button" data-studio-reset-side>Reset active side</button>
+        </div>
+
+        <div class="studio-v2-fieldset">
+          <label class="studio-v2-label" for="studio-notes">Customization notes</label>
+          <textarea id="studio-notes" name="properties[Customization Notes]" rows="3" placeholder="Anything extra we should know about your design?"></textarea>
+        </div>
+
+        <p class="studio-v2-status" data-studio-status aria-live="polite"></p>
+
+        <button type="submit" class="studio-v2-submit" data-studio-submit>
+          Add to cart — <span data-studio-price>₹899</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'visriva-studio-v2.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "VISRIVA Studio V2",
+  "tag": "section",
+  "class": "visriva-studio-v2-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "VISRIVA Studio V2"
+    }
+  ]
+}
+{% endschema %}
