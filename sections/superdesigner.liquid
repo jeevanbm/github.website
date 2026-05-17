@@ -369,6 +369,8 @@
     const [size, setSize] = useState(SIZES[1]);
     const [view, setView] = useState('front'); // 'front' or 'back'
     const [artwork, setArtwork] = useState(null);
+    const [artworkFile, setArtworkFile] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const mockupRef = useRef(null);
 
@@ -403,11 +405,13 @@
       if (file) {
         const url = URL.createObjectURL(file);
         setArtwork(url);
+        setArtworkFile(file);
         pixel.trackMilestone('Artwork_Uploaded');
       }
     };
 
     const handleAddToCart = () => {
+      setIsSubmitting(true);
       pixel.trackClick('Add_To_Cart');
       pixel.trackFunnelProgression('Checkout_Initiated');
       
@@ -419,6 +423,10 @@
       formData.append('properties[Color]', color.name);
       formData.append('properties[Size]', size);
       
+      if (artworkFile) {
+        formData.append('properties[Artwork File]', artworkFile);
+      }
+      
       fetch('/cart/add.js', {
         method: 'POST',
         body: formData
@@ -427,7 +435,10 @@
       .then(() => {
         window.location.href = '/cart';
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setIsSubmitting(false);
+      });
     };
 
     return html`
@@ -510,8 +521,8 @@
           </div>
 
           <div style="margin-top: auto;">
-            <button class="visriva-button" onClick=${handleAddToCart}>
-              ADD TO CART - ₹${garment.price}
+            <button class="visriva-button" onClick=${handleAddToCart} disabled=${isSubmitting}>
+              ${isSubmitting ? 'ADDING TO CART...' : \`ADD TO CART - ₹\${garment.price}\`}
             </button>
           </div>
 

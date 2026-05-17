@@ -1,0 +1,106 @@
+/* 
+  Global Branding & Assets for VISRIVA 
+*/
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap');
+
+body {
+  /* Premium Dark Green Textured Background */
+  background-color: #040d0a !important; 
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E") !important;
+  background-attachment: fixed !important;
+  color: #f0f4f2 !important;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Override Logo */
+.logo-section__image-wrapper, .logo-section__image, .header-logo img, .logo-monogram, .logo-inline img {
+  display: none !important; 
+}
+
+/* Force VISRIVA Gold Foil Logo */
+.logo-title, .logo-section::after, .header-logo::after, .logo-inline::after {
+  content: "VISRIVA";
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.logo-section::after {
+  font-size: 3rem;
+}
+
+/* Global Gold Accents for UI */
+.button, .btn, button, input[type="submit"], .header-actions__action {
+  transition: all 0.3s ease !important;
+}
+
+.button, .btn, input[type="submit"] {
+  border: 1px solid rgba(191, 149, 63, 0.5) !important;
+  color: #fcf6ba !important;
+  background: transparent !important;
+  font-family: 'Cinzel', serif !important;
+  letter-spacing: 0.1em !important;
+}
+
+.button:hover, .btn:hover, input[type="submit"]:hover {
+  border-color: #fcf6ba !important;
+  background: rgba(191, 149, 63, 0.15) !important;
+  box-shadow: 0 0 15px rgba(191, 149, 63, 0.2) !important;
+}
+
+/* Floating Action Button (FAB) for Homepage Launch */
+.visriva-fab {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background: linear-gradient(135deg, #0a1f1a, #040d0a);
+  border: 2px solid #bf953f;
+  border-radius: 50px;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fcf6ba;
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(191, 149, 63, 0.3);
+  z-index: 9999;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.visriva-fab:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 30px rgba(191, 149, 63, 0.5);
+  border-color: #fcf6ba;
+  color: #fff;
+}
+
+.visriva-fab-icon {
+  font-size: 1.5rem;
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { text-shadow: 0 0 5px rgba(252, 246, 186, 0.2); }
+  50% { text-shadow: 0 0 20px rgba(252, 246, 186, 0.8); }
+  100% { text-shadow: 0 0 5px rgba(252, 246, 186, 0.2); }
+}
+
+@media (max-width: 768px) {
+  .visriva-fab {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}
