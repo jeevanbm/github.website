@@ -12,58 +12,6 @@
     "main": {
       "type": "main-404",
       "blocks": {
-        "text_GqmVFf": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<h1>Page not found</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "h3",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "text_Ua9XAW": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>The link may be incorrect, or the page has been removed. </p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 16,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "button_PAQMwR": {
           "type": "button",
           "name": "t:names.button",
@@ -81,10 +29,9 @@
         }
       },
       "block_order": [
-        "text_GqmVFf",
-        "text_Ua9XAW",
         "button_PAQMwR"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "section_width": "page-width",
@@ -96,9 +43,15 @@
         "padding-block-start": 100,
         "padding-block-end": 100
       }
+    },
+    "visriva_studio_v2_qehk6i": {
+      "type": "visriva-studio-v2",
+      "name": "VISRIVA Studio V2",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "visriva_studio_v2_qehk6i"
   ]
 }
