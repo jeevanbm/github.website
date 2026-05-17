@@ -12,25 +12,7 @@ body {
   font-family: 'Montserrat', sans-serif !important;
 }
 
-/* Override Logo */
-.logo-section__image-wrapper, .logo-section__image, .header-logo img, .logo-monogram, .logo-inline img {
-  display: none !important; 
-}
-
-/* Force VISRIVA Gold Foil Logo */
-.logo-title, .logo-section::after, .header-logo::after, .logo-inline::after {
-  content: "VISRIVA";
-  font-family: 'Cinzel', serif;
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  display: inline-block;
-  white-space: nowrap;
-}
+/* Logo will be handled via theme.liquid inline styles to support asset_url */
 
 .logo-section::after {
   font-size: 3rem;
