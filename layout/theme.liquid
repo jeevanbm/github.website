@@ -39,6 +39,14 @@
     {{ content_for_header }}
     {% # theme-check-enable RemoteAsset %}
     <style>
+      /* Global Background Image */
+      body {
+        background-image: url("{{ 'visriva-bg.png' | asset_url }}") !important;
+        background-size: cover !important;
+        background-position: center top !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+      }
       /* Force Custom Image Logo */
       .logo-section__image-wrapper, .logo-section__image, .header-logo img, .logo-monogram, .logo-inline img {
         display: none !important; 
