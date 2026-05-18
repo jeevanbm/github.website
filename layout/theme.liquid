@@ -263,6 +263,127 @@
         color: #d4af37 !important;
         transform: translateX(5px) !important;
       }
+
+      /* ============================================
+         HEADER ICONS — Slim, Elegant, Animated
+      ============================================ */
+
+      /* Fix right-side icon container alignment */
+      header-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+      }
+
+      /* Uniform icon button sizing & baseline alignment fix */
+      .header-actions__action,
+      header-actions > a,
+      header-actions > button {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 36px !important;
+        height: 36px !important;
+        padding: 0 !important;
+        border-radius: 8px !important;
+        transition: background 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        position: relative !important;
+      }
+
+      /* All SVGs inside header icons — uniform small size */
+      header-actions svg,
+      header-actions .svg-wrapper svg,
+      .header-actions__action svg,
+      .search-action svg,
+      .account-button__icon {
+        width: 18px !important;
+        height: 18px !important;
+        stroke-width: 1.6 !important;
+        flex-shrink: 0 !important;
+        display: block !important;
+      }
+
+      /* Fix svg-wrapper so it doesn't add extra space */
+      header-actions .svg-wrapper,
+      .header-actions__action .svg-wrapper {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 0 !important;
+      }
+
+      /* Hover background shimmer */
+      .header-actions__action:hover,
+      header-actions > a:hover,
+      header-actions > button:hover {
+        background: rgba(212, 175, 55, 0.12) !important;
+        transform: translateY(-2px) scale(1.06) !important;
+      }
+
+      /* Search icon — subtle spin-zoom on hover */
+      .search-action:hover svg,
+      [aria-label*="search"]:hover svg,
+      [aria-label*="Search"]:hover svg {
+        transform: scale(1.15) rotate(8deg);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      /* Account icon — bounce up on hover */
+      .account-button:hover .account-button__icon,
+      .account-button:hover shopify-account svg {
+        transform: translateY(-2px) scale(1.15);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      /* Cart icon — wiggle animation on hover */
+      @keyframes cart-wiggle {
+        0%  { transform: rotate(0deg); }
+        20% { transform: rotate(-8deg); }
+        40% { transform: rotate(8deg); }
+        60% { transform: rotate(-4deg); }
+        80% { transform: rotate(4deg); }
+        100%{ transform: rotate(0deg); }
+      }
+
+      .header-actions__cart-icon:hover svg {
+        animation: cart-wiggle 0.5s ease forwards;
+      }
+
+      /* Customise (pencil) icon — smaller and cleaner */
+      .header-actions__customizer {
+        width: 36px !important;
+        height: 36px !important;
+      }
+      .header-actions__customizer svg,
+      .customizer-action-icon {
+        width: 18px !important;
+        height: 18px !important;
+        stroke-width: 1.6 !important;
+      }
+      .header-actions__customizer:hover svg {
+        transform: rotate(-12deg) scale(1.15) !important;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      }
+
+      /* Cart bubble — keep it proportional */
+      .cart-bubble {
+        width: 16px !important;
+        height: 16px !important;
+        font-size: 9px !important;
+      }
+
+      /* Shopify account fallback avatar */
+      .account-button__fallback {
+        width: 20px !important;
+        height: 20px !important;
+      }
+
+      /* Fix any stray text labels hidden in icon mode */
+      header-actions .hidden,
+      header-actions .mobile\:hidden,
+      header-actions .desktop\:hidden {
+        display: none !important;
+      }
     </style>
     <link href="{{ 'visriva-global.css' | asset_url }}" rel="stylesheet">
   </head>
