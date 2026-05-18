@@ -39,6 +39,10 @@
             role="list"
           >
             {% for link in block_settings.menu.links %}
+              {% assign link_title_down = link.title | downcase %}
+              {% if link_title_down contains 'track order' %}
+                {% continue %}
+              {% endif %}
               <li>
                 <a
                   href="{{ link.url }}"
@@ -99,6 +103,10 @@
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
+        {% assign link_title_down = link.title | downcase %}
+        {% if link_title_down contains 'track order' %}
+          {% continue %}
+        {% endif %}
         <li
           role="presentation"
           class="menu-list__list-item"
