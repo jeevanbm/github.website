@@ -3,6 +3,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="{{ 'visriva-studio-v2.css' | asset_url }}" rel="stylesheet">
 
+{%- comment -%} Look up products by settings selection, fallback handle search, or collection matching {%- endcomment -%}
+{%- assign tshirt_prod = all_products[section.settings.tshirt_product] -%}
+{%- if tshirt_prod == empty -%}{%- assign tshirt_prod = all_products['custom-t-shirt'] -%}{%- endif -%}
+{%- if tshirt_prod == empty -%}{%- assign tshirt_prod = all_products['t-shirt'] -%}{%- endif -%}
+{%- if tshirt_prod == empty -%}
+  {%- for product in collections.all.products -%}
+    {%- if product.handle contains 'custom' or product.handle contains 'design' or product.handle contains 't-shirt' -%}
+      {%- assign tshirt_prod = product -%}{%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign polo_prod = all_products[section.settings.polo_product] -%}
+{%- if polo_prod == empty -%}{%- assign polo_prod = all_products['custom-polo'] -%}{%- endif -%}
+{%- if polo_prod == empty -%}{%- assign polo_prod = all_products['polo'] -%}{%- endif -%}
+
+{%- assign sweatshirt_prod = all_products[section.settings.sweatshirt_product] -%}
+{%- if sweatshirt_prod == empty -%}{%- assign sweatshirt_prod = all_products['custom-sweatshirt'] -%}{%- endif -%}
+{%- if sweatshirt_prod == empty -%}{%- assign sweatshirt_prod = all_products['sweatshirt'] -%}{%- endif -%}
+
+{%- assign hoodie_prod = all_products[section.settings.hoodie_product] -%}
+{%- if hoodie_prod == empty -%}{%- assign hoodie_prod = all_products['custom-hoodie'] -%}{%- endif -%}
+{%- if hoodie_prod == empty -%}{%- assign hoodie_prod = all_products['hoodie'] -%}{%- endif -%}
+
 <section
   class="studio-v2"
   data-studio-root
@@ -18,23 +42,87 @@
     {
       "tshirt": {
         "label": "T-Shirt",
-        "title": "Custom T-Shirt",
-        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+        "title": {{ tshirt_prod.title | default: "Custom T-Shirt" | json }},
+        "variants": [
+          {%- if tshirt_prod != empty and tshirt_prod.variants.size > 0 -%}
+            {%- for variant in tshirt_prod.variants -%}
+              {
+                "id": {{ variant.id | json }},
+                "title": {{ variant.title | json }},
+                "available": {{ variant.available | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          {%- else -%}
+            {"id":"47212533547200","title":"S / 430 GSM","available":true},
+            {"id":"47212533579968","title":"M / 430 GSM","available":true},
+            {"id":"47212533612736","title":"L / 430 GSM","available":true},
+            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
+            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
+          {%- endif -%}
+        ]
       },
       "polo": {
         "label": "Polo",
-        "title": "Custom Polo",
-        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+        "title": {{ polo_prod.title | default: "Custom Polo" | json }},
+        "variants": [
+          {%- if polo_prod != empty and polo_prod.variants.size > 0 -%}
+            {%- for variant in polo_prod.variants -%}
+              {
+                "id": {{ variant.id | json }},
+                "title": {{ variant.title | json }},
+                "available": {{ variant.available | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          {%- else -%}
+            {"id":"47212533547200","title":"S / 430 GSM","available":true},
+            {"id":"47212533579968","title":"M / 430 GSM","available":true},
+            {"id":"47212533612736","title":"L / 430 GSM","available":true},
+            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
+            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
+          {%- endif -%}
+        ]
       },
       "sweatshirt": {
         "label": "Sweatshirt",
-        "title": "Custom Sweatshirt",
-        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+        "title": {{ sweatshirt_prod.title | default: "Custom Sweatshirt" | json }},
+        "variants": [
+          {%- if sweatshirt_prod != empty and sweatshirt_prod.variants.size > 0 -%}
+            {%- for variant in sweatshirt_prod.variants -%}
+              {
+                "id": {{ variant.id | json }},
+                "title": {{ variant.title | json }},
+                "available": {{ variant.available | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          {%- else -%}
+            {"id":"47212533547200","title":"S / 430 GSM","available":true},
+            {"id":"47212533579968","title":"M / 430 GSM","available":true},
+            {"id":"47212533612736","title":"L / 430 GSM","available":true},
+            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
+            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
+          {%- endif -%}
+        ]
       },
       "hoodie": {
         "label": "Hoodie",
-        "title": "Custom Hoodie",
-        "variants": [{"id":"47212533547200","title":"S / 430 GSM","available":true},{"id":"47212533579968","title":"M / 430 GSM","available":true},{"id":"47212533612736","title":"L / 430 GSM","available":true},{"id":"47212533645504","title":"XL / 430 GSM","available":true},{"id":"47212533678272","title":"2XL / 430 GSM","available":true}]
+        "title": {{ hoodie_prod.title | default: "Custom Hoodie" | json }},
+        "variants": [
+          {%- if hoodie_prod != empty and hoodie_prod.variants.size > 0 -%}
+            {%- for variant in hoodie_prod.variants -%}
+              {
+                "id": {{ variant.id | json }},
+                "title": {{ variant.title | json }},
+                "available": {{ variant.available | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          {%- else -%}
+            {"id":"47212533547200","title":"S / 430 GSM","available":true},
+            {"id":"47212533579968","title":"M / 430 GSM","available":true},
+            {"id":"47212533612736","title":"L / 430 GSM","available":true},
+            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
+            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
+          {%- endif -%}
+        ]
       }
     }
   </script>
@@ -195,7 +283,36 @@
   "name": "VISRIVA Studio V2",
   "tag": "section",
   "class": "visriva-studio-v2-section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Garment Product Mappings"
+    },
+    {
+      "type": "paragraph",
+      "content": "Select the products from your Shopify catalog that correspond to each garment type. The customizer will dynamically load their active variants (sizes, inventory, prices, and IDs)."
+    },
+    {
+      "type": "product",
+      "id": "tshirt_product",
+      "label": "Custom T-Shirt Product"
+    },
+    {
+      "type": "product",
+      "id": "polo_product",
+      "label": "Custom Polo Product"
+    },
+    {
+      "type": "product",
+      "id": "sweatshirt_product",
+      "label": "Custom Sweatshirt Product"
+    },
+    {
+      "type": "product",
+      "id": "hoodie_product",
+      "label": "Custom Hoodie Product"
+    }
+  ],
   "presets": [
     {
       "name": "VISRIVA Studio V2"

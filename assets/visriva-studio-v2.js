@@ -474,24 +474,58 @@
         artworkCloudUrl = await uploadToDriveAPI(originalFile, originalFile.name, originalFile.type);
       }
 
-      // 4. Inject cloud URLs into Shopify line item properties
+      // 4. Inject cloud URLs into Shopify line item properties, falling back to direct binary attachments if uploader is offline
       const formData = new FormData(form);
+
+      // Handle front preview snapshot
       if (frontCloudUrl) {
         formData.set('properties[Front Preview Snapshot]', frontCloudUrl);
         if (frontTransformProperty) formData.set('properties[Front Preview Cloud URL]', frontCloudUrl);
+      } else if (frontBlob) {
+        // Fallback: Upload the image blob directly to Shopify as a file
+        formData.set('properties[Front Preview Snapshot]', frontBlob, 'front-preview.png');
+      } else {
+        formData.delete('properties[Front Preview Snapshot]');
       }
+
+      // Handle back preview snapshot
       if (backCloudUrl) {
         formData.set('properties[Back Preview Snapshot]', backCloudUrl);
         if (backTransformProperty) formData.set('properties[Back Preview Cloud URL]', backCloudUrl);
+      } else if (backBlob) {
+        // Fallback: Upload the image blob directly to Shopify as a file
+        formData.set('properties[Back Preview Snapshot]', backBlob, 'back-preview.png');
+      } else {
+        formData.delete('properties[Back Preview Snapshot]');
       }
+
+      // Handle original uploaded artwork
       if (artworkCloudUrl) {
-        if (artworkNameProperty) formData.set('properties[Original Artwork Cloud URL]', artworkCloudUrl);
+        formData.set('properties[Original Artwork Cloud URL]', artworkCloudUrl);
+        // Clean up the original file upload from formData so we don't upload it twice
+        formData.delete('properties[Uploaded Artwork]');
+      } else if (originalFile) {
+        // If the cloud upload failed, ensure the original file is attached directly
+        formData.set('properties[Uploaded Artwork]', originalFile, originalFile.name);
+      } else {
+        formData.delete('properties[Uploaded Artwork]');
+      }
+
+      // Delete any other empty File objects to prevent Shopify cart errors (e.g. from empty inputs)
+      for (const [key, value] of formData.entries()) {
+        if (value instanceof File && value.size === 0) {
+          formData.delete(key);
+        }
       }
 
       if (statusEl) statusEl.textContent = 'Adding to cart...';
 
       const res = await fetch('/cart/add.js', { method: 'POST', body: formData });
-      if (!res.ok) throw new Error('Cart error');
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error('Shopify Add to Cart Error response:', errorText);
+        throw new Error('Cart error: ' + errorText);
+      }
 
       // Track via Shopify analytics
       if (window.Shopify?.analytics?.publish) {
