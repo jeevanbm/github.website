@@ -249,6 +249,25 @@
                 {% endif %}
               </li>
             {%- endfor -%}
+            <!-- Customise Menu Link -->
+            <li
+              style="--menu-drawer-animation-index: {{ animation_index | plus: 1 }};"
+              class="{%- if block_settings.drawer_accordion -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
+            >
+              <a
+                id="HeaderDrawer-customise"
+                href="/pages/superdesign"
+                class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset menu-drawer__menu-item--customise"
+                style="display: flex; align-items: center; gap: 8px; font-weight: 600;"
+              >
+                <span class="customizer-icon-wrapper" style="display: flex; align-items: center;">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="customizer-icon">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                  </svg>
+                </span>
+                <span class="menu-drawer__menu-item-text wrap-text">Customise</span>
+              </a>
+            </li>
           {% else %}
             {%- comment -%}
               Handle menus with 3 levels of links
@@ -569,6 +588,25 @@
                 {%- endif -%}
               </li>
             {%- endfor -%}
+            <!-- Customise Menu Link (3 levels) -->
+            <li
+              class="menu-drawer__list-item menu-drawer__list-item--customise{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
+              style="--menu-drawer-animation-index: {{ animation_index | plus: 1 }};"
+            >
+              <a
+                id="HeaderDrawer-customise-3"
+                href="/pages/superdesign"
+                class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset menu-drawer__menu-item--customise"
+                style="display: flex; align-items: center; gap: 8px; font-weight: 600;"
+              >
+                <span class="customizer-icon-wrapper" style="display: flex; align-items: center;">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="customizer-icon">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                  </svg>
+                </span>
+                <span class="menu-drawer__menu-item-text wrap-text">Customise</span>
+              </a>
+            </li>
           {% endif %}
         </ul>
       </nav>

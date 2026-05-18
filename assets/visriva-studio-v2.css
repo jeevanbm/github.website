@@ -47,7 +47,6 @@
 
 /* Form Controls */
 .studio-v2-form { display: flex; flex-direction: column; gap: 1.75rem; }
-.studio-v2-fieldset {}
 .studio-v2-label {
   display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em;
   color: var(--v2-gold-light); margin-bottom: 0.75rem; font-family: 'Cinzel', serif;

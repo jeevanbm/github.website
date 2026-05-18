@@ -52,6 +52,21 @@
                 </a>
               </li>
             {% endfor %}
+            <li>
+              <a
+                href="/pages/superdesign"
+                id="MenuItem-customise"
+                class="menu-list__item menu-list__item--customizer"
+                style="display: flex; align-items: center; gap: 6px; font-weight: 600;"
+              >
+                <span class="customizer-icon-wrapper" style="display: flex; align-items: center;">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="customizer-icon">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                  </svg>
+                </span>
+                <span>Customise</span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -139,6 +154,32 @@
           {%- endif -%}
         </li>
       {% endfor %}
+      <!-- Customise Menu Link -->
+      <li
+        role="presentation"
+        class="menu-list__list-item menu-list__list-item--customizer"
+        on:focus="/activate"
+        on:blur="/deactivate"
+        on:pointerenter="/activate"
+        on:pointerleave="/deactivate"
+      >
+        <a
+          href="/pages/superdesign"
+          data-skip-node-update="true"
+          class="menu-list__link menu-list__link--customizer"
+          ref="menuitem"
+          style="display: flex; align-items: center;"
+        >
+          <span class="menu-list__link-title menu-list__link-title--customizer" style="display: flex; align-items: center; gap: 6px;">
+            <span class="customizer-icon-wrapper" style="display: flex; align-items: center;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="customizer-icon" style="display: inline-block; vertical-align: middle;">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+              </svg>
+            </span>
+            <span>Customise</span>
+          </span>
+        </a>
+      </li>
       <li
         class="menu-list__list-item"
         role="presentation"
@@ -684,6 +725,28 @@
   .mega-menu__submenu {
     /* preserves the inherited grid layout when this submenu wrapper is used */
     display: contents;
+  }
+
+  /* Customizer Menu Item Styling & Subtle Micro-Animations */
+  .menu-list__list-item--customizer {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-list__link-title--customizer {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+
+  .customizer-icon-wrapper svg {
+    transition: transform 0.25s ease, stroke 0.25s ease;
+  }
+
+  .menu-list__link--customizer:hover .customizer-icon-wrapper svg {
+    transform: rotate(-15deg) translateY(-1px);
+    stroke: var(--color-primary-button-background);
   }
 {% endstylesheet %}
 

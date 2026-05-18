@@ -63,6 +63,38 @@
   {% endif %}
   {{- block.shopify_attributes -}}
 >
+  <!-- Customise Action -->
+  <a
+    href="/pages/superdesign"
+    class="header-actions__action header-actions__customizer {% if display_style == 'text' %} header-actions__text-style{% endif %}"
+    aria-label="Customise T-Shirt"
+    style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;"
+  >
+    <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
+      Customise
+    </span>
+    <span
+      class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
+      aria-hidden="true"
+      style="display: inline-flex; align-items: center; justify-content: center;"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="customizer-action-icon"
+      >
+        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+      </svg>
+    </span>
+  </a>
+
   {% if shop.customer_accounts_enabled %}
     {% liquid
       assign account_actions_style = ''
@@ -709,5 +741,21 @@
     .header__column--right .header-actions--text {
       margin-inline-start: 0;
     }
+  }
+
+  /* Customizer Header Action Icon Styling */
+  .header-actions__customizer {
+    color: var(--color-account-icon);
+    transition: color var(--header-content-transition-timing);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header-actions__customizer svg {
+    transition: transform 0.25s ease, stroke 0.25s ease;
+  }
+
+  .header-actions__customizer:hover svg {
+    transform: rotate(-15deg) translateY(-1px);
+    stroke: var(--color-primary-button-background);
   }
 {% endstylesheet %}

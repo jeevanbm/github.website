@@ -13,6 +13,9 @@ declare global {
     loadFeatures(features: ShopifyFeature[], callback?: LoadCallback): void;
     ModelViewerUI?: ModelViewer;
     visualPreviewMode: boolean;
+    analytics?: {
+      publish: (event: string, payload: any) => void;
+    };
   }
 
   interface Theme {
