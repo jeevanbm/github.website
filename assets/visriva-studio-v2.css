@@ -65,15 +65,24 @@
 /* Swatches */
 .studio-v2-swatches { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .studio-v2-swatch {
-  background: none; border: 2px solid transparent; border-radius: 50%; padding: 3px;
-  cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: none; border: none; padding: 0;
+  cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
-.studio-v2-swatch.is-active { border-color: var(--v2-gold-light); transform: scale(1.1); }
 .studio-v2-swatch-chip {
   width: 44px; height: 44px; border-radius: 50%; background: var(--swatch-base);
   box-shadow: inset 3px 3px 6px var(--swatch-b), inset -2px -2px 5px var(--swatch-a), 0 2px 8px var(--swatch-c);
+  border: 2px solid transparent; transition: all 0.3s ease; box-sizing: border-box;
 }
-.studio-v2-swatch-name { font-size: 0.6rem; color: var(--v2-muted); white-space: nowrap; }
+.studio-v2-swatch:hover .studio-v2-swatch-chip {
+  transform: scale(1.05);
+}
+.studio-v2-swatch.is-active .studio-v2-swatch-chip {
+  border-color: var(--v2-gold-light);
+  box-shadow: 0 0 12px rgba(191,149,63,0.45), inset 3px 3px 6px var(--swatch-b), inset -2px -2px 5px var(--swatch-a);
+  transform: scale(1.1);
+}
+.studio-v2-swatch-name { font-size: 0.6rem; color: var(--v2-muted); white-space: nowrap; transition: color 0.3s ease; }
+.studio-v2-swatch.is-active .studio-v2-swatch-name { color: var(--v2-gold-light); font-weight: 500; }
 
 /* Custom Color */
 .studio-v2-custom-color-row { display: flex; gap: 0.75rem; align-items: center; }

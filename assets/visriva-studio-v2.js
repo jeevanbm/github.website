@@ -199,7 +199,7 @@
     renderBothCanvases();
   }
 
-  // Canvas interaction (drag artwork)
+  // Canvas interaction (drag and resize artwork)
   /**
    * @param {HTMLCanvasElement} canvas
    * @param {any} e
@@ -207,8 +207,20 @@
    */
   function getCanvasCoords(canvas, e) {
     const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    let clientX = 0;
+    let clientY = 0;
+    
+    if (e.touches && e.touches.length > 0) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else if (e.changedTouches && e.changedTouches.length > 0) {
+      clientX = e.changedTouches[0].clientX;
+      clientY = e.changedTouches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    
     return {
       x: (clientX - rect.left) / rect.width,
       y: (clientY - rect.top) / rect.height
@@ -221,48 +233,81 @@
    */
   function setupCanvasInteraction(canvas, side) {
     if (!canvas) return;
+
     const onDown = (/** @type {any} */ e) => {
       if (!artworkImg) return;
-      e.preventDefault();
+      
       const pos = getCanvasCoords(canvas, e);
       const t = artworkTransforms[side];
+      
+      // Calculate mathematically correct aspect-ratio adjusted height (normalized)
+      const aspect = artworkImg.height / artworkImg.width;
       const aw = t.scale;
-      const ah = (artworkImg.height / artworkImg.width) * aw;
-      // Check resize handle
-      if (pos.x >= t.x + aw - 0.03 && pos.y >= t.y + ah - 0.03) {
+      const ah = aspect * aw * (canvas.width / canvas.height);
+      
+      // Calculate distance to the bottom-right corner (resize handle)
+      const distToCornerX = Math.abs(pos.x - (t.x + aw));
+      const distToCornerY = Math.abs(pos.y - (t.y + ah));
+      
+      // Check if we hit the resize handle (within a 0.05 hit-box radius)
+      if (distToCornerX <= 0.05 && distToCornerY <= 0.05) {
         isResizing = true;
-      } else if (pos.x >= t.x && pos.x <= t.x + aw && pos.y >= t.y && pos.y <= t.y + ah) {
+        e.preventDefault();
+      } 
+      // Otherwise check if we clicked inside the artwork bounding box to drag
+      else if (pos.x >= t.x && pos.x <= t.x + aw && pos.y >= t.y && pos.y <= t.y + ah) {
         isDragging = true;
+        e.preventDefault();
+      } 
+      // Clicked outside, allow normal event bubbling
+      else {
+        return; 
       }
+
       dragStart = pos;
       activeSide = side;
       updateEditTabs();
+
+      // Bind window event listeners for high-precision pointer tracking even outside canvas boundaries
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+      window.addEventListener('touchmove', onMove, { passive: false });
+      window.addEventListener('touchend', onUp);
     };
+
     const onMove = (/** @type {any} */ e) => {
       if (!isDragging && !isResizing) return;
       e.preventDefault();
+      
       const pos = getCanvasCoords(canvas, e);
       const t = artworkTransforms[side];
+      const dx = pos.x - dragStart.x;
+      const dy = pos.y - dragStart.y;
+
       if (isDragging) {
-        t.x += pos.x - dragStart.x;
-        t.y += pos.y - dragStart.y;
+        t.x += dx;
+        t.y += dy;
       } else if (isResizing) {
-        const dx = pos.x - dragStart.x;
-        t.scale = Math.max(0.1, t.scale + dx);
+        // Adjust scale smoothly
+        t.scale = Math.max(0.05, Math.min(1.0, t.scale + dx));
       }
+
       dragStart = pos;
       renderBothCanvases();
       updateTransformProperties();
     };
-    const onUp = () => { isDragging = false; isResizing = false; };
+
+    const onUp = () => {
+      isDragging = false;
+      isResizing = false;
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('touchend', onUp);
+    };
 
     canvas.addEventListener('mousedown', onDown);
-    canvas.addEventListener('mousemove', onMove);
-    canvas.addEventListener('mouseup', onUp);
-    canvas.addEventListener('mouseleave', onUp);
     canvas.addEventListener('touchstart', onDown, { passive: false });
-    canvas.addEventListener('touchmove', onMove, { passive: false });
-    canvas.addEventListener('touchend', onUp);
   }
 
   function updateTransformProperties() {
@@ -356,21 +401,92 @@
   frontCard?.addEventListener('click', () => { activeSide = 'front'; updateEditTabs(); });
   backCard?.addEventListener('click', () => { activeSide = 'back'; updateEditTabs(); });
 
+  /**
+   * Helper to convert Blob to Base64
+   * @param {Blob | null} blob
+   * @returns {Promise<string>}
+   */
+  function blobToBase64(blob) {
+    return new Promise((resolve) => {
+      if (!blob) { resolve(''); return; }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = /** @type {string} */ (reader.result);
+        resolve(result.split(',')[1] || '');
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  /**
+   * Helper to upload file via serverless upload API
+   * @param {Blob | null} blob
+   * @param {string} filename
+   * @param {string} mimeType
+   * @returns {Promise<string>}
+   */
+  async function uploadToDriveAPI(blob, filename, mimeType) {
+    if (!blob) return '';
+    try {
+      const base64Data = await blobToBase64(blob);
+      // We query local host for local testing/saving, falling back dynamically
+      const apiEndpoint = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:3000/api/upload-to-drive'
+        : 'https://visriva-upload-api.vercel.app/api/upload-to-drive'; // Replace with production URL once deployed
+        
+      const res = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename, mimeType, base64Data })
+      });
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      return data.publicUrl || '';
+    } catch (e) {
+      console.warn('API upload failed:', e);
+      return '';
+    }
+  }
+
   // Form submit with canvas snapshots
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form) return;
-    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Adding to cart...'; }
-    if (statusEl) statusEl.textContent = 'Generating previews...';
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Uploading files...'; }
+    if (statusEl) statusEl.textContent = 'Generating design previews...';
 
-    // Generate snapshots
     try {
+      // 1. Generate canvas snapshots
       const frontBlob = frontCanvas ? await new Promise(r => frontCanvas.toBlob(r, 'image/png')) : null;
       const backBlob = backCanvas ? await new Promise(r => backCanvas.toBlob(r, 'image/png')) : null;
 
+      if (statusEl) statusEl.textContent = 'Uploading files to your synced folder...';
+
+      // 2. Upload Front & Back snapshots
+      const frontCloudUrl = await uploadToDriveAPI(frontBlob, 'front-preview.png', 'image/png');
+      const backCloudUrl = await uploadToDriveAPI(backBlob, 'back-preview.png', 'image/png');
+
+      // 3. Upload original high-res custom artwork if present
+      let artworkCloudUrl = '';
+      const originalFile = uploadInput?.files ? uploadInput.files[0] : null;
+      if (originalFile) {
+        if (statusEl) statusEl.textContent = 'Uploading original high-res artwork...';
+        artworkCloudUrl = await uploadToDriveAPI(originalFile, originalFile.name, originalFile.type);
+      }
+
+      // 4. Inject cloud URLs into Shopify line item properties
       const formData = new FormData(form);
-      if (frontBlob) formData.set('properties[Front Preview Snapshot]', /** @type {Blob} */ (frontBlob), 'front-preview.png');
-      if (backBlob) formData.set('properties[Back Preview Snapshot]', /** @type {Blob} */ (backBlob), 'back-preview.png');
+      if (frontCloudUrl) {
+        formData.set('properties[Front Preview Snapshot]', frontCloudUrl);
+        if (frontTransformProperty) formData.set('properties[Front Preview Cloud URL]', frontCloudUrl);
+      }
+      if (backCloudUrl) {
+        formData.set('properties[Back Preview Snapshot]', backCloudUrl);
+        if (backTransformProperty) formData.set('properties[Back Preview Cloud URL]', backCloudUrl);
+      }
+      if (artworkCloudUrl) {
+        if (artworkNameProperty) formData.set('properties[Original Artwork Cloud URL]', artworkCloudUrl);
+      }
 
       if (statusEl) statusEl.textContent = 'Adding to cart...';
 

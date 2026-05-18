@@ -137,7 +137,11 @@ header-component button:hover svg,
 .header__icon:hover svg,
 .header-actions__action:hover svg,
 .account-button:hover svg,
-.menu-drawer__menu-item:hover svg {
+.menu-drawer__menu-item:hover svg,
+.search-action button:hover svg,
+search-button button:hover svg,
+.action__cart:hover svg,
+cart-drawer-component button:hover svg {
   stroke: #fcf6ba !important; /* Royal Gold sand color */
   filter: drop-shadow(0 0 8px rgba(252, 246, 186, 0.85)) !important; /* Gold highlight glow! */
 }
@@ -147,7 +151,10 @@ header-component button:hover svg,
 /* 1. Cart Icon: play a bouncing shopping basket animation */
 .header-actions__cart-icon:hover svg,
 [data-testid="cart-icon"]:hover svg,
-.header__icon--cart:hover svg {
+.header__icon--cart:hover svg,
+.action__cart:hover svg,
+cart-drawer-component button:hover svg,
+.header-actions__action:hover cart-icon svg {
   animation: visriva-cart-bounce 0.6s ease-in-out infinite !important;
 }
 @keyframes visriva-cart-bounce {
@@ -158,7 +165,11 @@ header-component button:hover svg,
 /* 2. Search Icon: play a pulse and slight rotation zoom */
 .header__search:hover svg,
 [aria-label="Search"]:hover svg,
-.header__icon--search:hover svg {
+.header__icon--search:hover svg,
+.search-action button:hover svg,
+search-button button:hover svg,
+.header-actions__action:hover svg.icon-search,
+.search-action:hover svg {
   animation: visriva-search-pulse 0.7s ease-in-out infinite !important;
 }
 @keyframes visriva-search-pulse {
@@ -168,7 +179,8 @@ header-component button:hover svg,
 
 /* 3. Account / User Profile Icon: play a nodding rotation wobble */
 .account-button:hover svg,
-.account-button__icon:hover {
+.account-button__icon:hover,
+shopify-account:hover svg {
   animation: visriva-account-nod 0.6s ease-in-out infinite !important;
 }
 @keyframes visriva-account-nod {
@@ -180,7 +192,8 @@ header-component button:hover svg,
 /* 4. Menu Bars (Hamburger): play a subtle horizontal expand bounce */
 .header__icon--menu:hover svg,
 .menu-drawer__toggle:hover svg,
-[aria-label="Menu"]:hover svg {
+[aria-label="Menu"]:hover svg,
+.menu-drawer-container:hover svg {
   animation: visriva-menu-slide 0.6s ease-in-out infinite !important;
 }
 @keyframes visriva-menu-slide {
