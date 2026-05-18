@@ -73,9 +73,9 @@
         display: none !important;
       }
       @keyframes elegant-float {
-        0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.4)); }
-        50% { transform: translateY(-3px) scale(1.03); filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.9)); }
-        100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.4)); }
+        0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 2px 5px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.1)); }
+        50% { transform: translateY(-5px) scale(1.04); filter: drop-shadow(0 8px 25px rgba(212, 175, 55, 0.95)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+        100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 2px 5px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.1)); }
       }
 
       .logo-title, .logo-section::after, .header-logo::after, .logo-inline::after {
@@ -85,16 +85,26 @@
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        width: 210px;
-        height: 60px;
-        animation: elegant-float 4s ease-in-out infinite;
-        transition: transform 0.3s ease;
+        width: 320px;
+        height: 90px;
+        animation: elegant-float 5s ease-in-out infinite;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
       
       .header-logo:hover::after, .logo-inline:hover::after, .logo-title:hover {
-        transform: scale(1.08) !important;
-        filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
+        transform: translateY(-8px) scale(1.08) !important;
+        filter: drop-shadow(0 15px 35px rgba(212, 175, 55, 1)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5)) !important;
         animation-play-state: paused;
+      }
+
+      @media screen and (max-width: 749px) {
+        .logo-title, .logo-section::after, .header-logo::after, .logo-inline::after {
+          width: 210px !important;
+          height: 60px !important;
+        }
+        .header-logo:hover::after, .logo-inline:hover::after, .logo-title:hover {
+          transform: translateY(-4px) scale(1.05) !important;
+        }
       }
       .header__column--left .header-logo::after {
         background-position: center left;
