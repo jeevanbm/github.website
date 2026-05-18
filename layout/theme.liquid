@@ -47,9 +47,16 @@
         background-repeat: no-repeat !important;
         background-attachment: fixed !important;
       }
-      /* Force Custom Image Logo */
+      /* Force Custom Image Logo and Remove Text Logo Fallbacks */
       .logo-section__image-wrapper, .logo-section__image, .header-logo img, .logo-monogram, .logo-inline img {
         display: none !important; 
+      }
+      .header-logo, .logo-title {
+        font-size: 0 !important;
+        color: transparent !important;
+      }
+      .logo-section jumbo-text, .logo-block jumbo-text {
+        display: none !important;
       }
       .logo-title, .logo-section::after, .header-logo::after, .logo-inline::after {
         content: "";
