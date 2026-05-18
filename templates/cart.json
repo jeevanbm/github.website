@@ -58,7 +58,8 @@
       },
       "settings": {
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-6",
+        "background_image": "shopify:\/\/shop_images\/93a267cf2f78c3d92c047ab2706d390b.png",
         "padding-block-start": 24,
         "padding-block-end": 0
       }

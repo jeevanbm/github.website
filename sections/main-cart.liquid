@@ -8,13 +8,23 @@
 
 {% capture cart_items_children %}
   <template id="empty-cart-template">
-    <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-    <div
-      class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
-    >
+    <div class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}" style="position: relative; overflow: hidden; min-height: 100vh;">
+      {%- if section.settings.background_image != blank -%}
+        {{
+          section.settings.background_image
+          | image_url: width: 3840
+          | image_tag:
+            width: section.settings.background_image.width,
+            height: section.settings.background_image.height,
+            class: 'cart-background-image',
+            style: 'position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 0; top: 0; left: 0;',
+            sizes: '100vw'
+        }}
+        <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); z-index: 0;"></div>
+      {%- endif -%}
       <div
         class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
-        style="{% render 'spacing-style', settings: section.settings %}"
+        style="{% render 'spacing-style', settings: section.settings %}; position: relative; z-index: 1;"
       >
         <div class="cart-page__title">
           {%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}
@@ -28,13 +38,23 @@
   </template>
 
   {% # theme-check-disable UniqueStaticBlockId %}
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-  <div
-    class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
-  >
+  <div class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}" style="position: relative; overflow: hidden; min-height: 100vh;">
+    {%- if section.settings.background_image != blank -%}
+      {{
+        section.settings.background_image
+        | image_url: width: 3840
+        | image_tag:
+          width: section.settings.background_image.width,
+          height: section.settings.background_image.height,
+          class: 'cart-background-image',
+          style: 'position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 0; top: 0; left: 0;',
+          sizes: '100vw'
+      }}
+      <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); z-index: 0;"></div>
+    {%- endif -%}
     <div
       class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
-      style="{% render 'spacing-style', settings: section.settings %}"
+      style="{% render 'spacing-style', settings: section.settings %}; position: relative; z-index: 1;"
     >
       <div class="cart-page__title">
         {%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}
@@ -188,6 +208,11 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
     },
     {
       "type": "header",
