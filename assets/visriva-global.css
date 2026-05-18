@@ -116,3 +116,74 @@ body {
     transform: rotate(0deg) translate(0, 0);
   }
 }
+
+/* Header Action & Menu Icons Glowing Highlights & Animations */
+#header-group svg,
+header-component svg,
+.header__icon svg,
+.header-actions__action svg,
+.menu-drawer svg,
+.account-button svg {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), stroke 0.3s ease, fill 0.3s ease, filter 0.3s ease !important;
+  transform-origin: center !important;
+}
+
+/* Hover state: Highlight with a radiant Royal Gold glow, gold coloring, and a playful tilt/scale micro-animation */
+#header-group a:hover svg,
+#header-group button:hover svg,
+#header-group summary:hover svg,
+header-component a:hover svg,
+header-component button:hover svg,
+.header__icon:hover svg,
+.header-actions__action:hover svg,
+.account-button:hover svg,
+.menu-drawer__menu-item:hover svg {
+  stroke: #fcf6ba !important; /* Royal Gold sand color */
+  filter: drop-shadow(0 0 8px rgba(252, 246, 186, 0.85)) !important; /* Gold highlight glow! */
+}
+
+/* Specific micro-animations for different types of icons to make them feel alive! */
+
+/* 1. Cart Icon: play a bouncing shopping basket animation */
+.header-actions__cart-icon:hover svg,
+[data-testid="cart-icon"]:hover svg,
+.header__icon--cart:hover svg {
+  animation: visriva-cart-bounce 0.6s ease-in-out infinite !important;
+}
+@keyframes visriva-cart-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.1); }
+}
+
+/* 2. Search Icon: play a pulse and slight rotation zoom */
+.header__search:hover svg,
+[aria-label="Search"]:hover svg,
+.header__icon--search:hover svg {
+  animation: visriva-search-pulse 0.7s ease-in-out infinite !important;
+}
+@keyframes visriva-search-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.15) rotate(15deg); }
+}
+
+/* 3. Account / User Profile Icon: play a nodding rotation wobble */
+.account-button:hover svg,
+.account-button__icon:hover {
+  animation: visriva-account-nod 0.6s ease-in-out infinite !important;
+}
+@keyframes visriva-account-nod {
+  0%, 100% { transform: rotate(0deg); }
+  33% { transform: rotate(-10deg); }
+  66% { transform: rotate(10deg); }
+}
+
+/* 4. Menu Bars (Hamburger): play a subtle horizontal expand bounce */
+.header__icon--menu:hover svg,
+.menu-drawer__toggle:hover svg,
+[aria-label="Menu"]:hover svg {
+  animation: visriva-menu-slide 0.6s ease-in-out infinite !important;
+}
+@keyframes visriva-menu-slide {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.2); }
+}
