@@ -72,14 +72,14 @@
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
-        "color_scheme_top": "scheme-1",
+        "color_scheme_top": "scheme-6",
         "color_scheme_bottom": "",
-        "color_scheme_transparent": "scheme-7",
+        "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": true,
         "home_color_scheme": "inverse",
-        "enable_transparent_header_product": false,
+        "enable_transparent_header_product": true,
         "product_color_scheme": "default",
-        "enable_transparent_header_collection": false,
+        "enable_transparent_header_collection": true,
         "collection_color_scheme": "default"
       }
     }
