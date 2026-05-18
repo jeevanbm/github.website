@@ -219,9 +219,11 @@
 
                       {%- liquid
                         assign has_visible_properties = false
+                        assign allowed_properties = 'color,colour,size,gsm' | split: ','
                         for property in item.properties
                           assign property_first_char = property.first | slice: 0
-                          if property.last != blank and property_first_char != '_'
+                          assign property_name_down = property.first | downcase
+                          if property.last != blank and property_first_char != '_' and allowed_properties contains property_name_down
                             assign has_visible_properties = true
                             break
                           endif
@@ -231,7 +233,8 @@
                         <dl class="cart-items__properties">
                           {%- for property in item.properties -%}
                             {%- assign property_first_char = property.first | slice: 0 -%}
-                            {%- if property.last != blank and property_first_char != '_' -%}
+                            {%- assign property_name_down = property.first | downcase -%}
+                            {%- if property.last != blank and property_first_char != '_' and allowed_properties contains property_name_down -%}
                               <div class="cart-items__property">
                                 <dt>{{ property.first }}:</dt>
                                 <dd>
