@@ -170,9 +170,66 @@
         text-shadow: 0 0 10px rgba(252, 246, 186, 0.25) !important;
       }
       
-      p, span, li, a, div:not(#visriva-superdesigner-root *) {
+      p:not(#visriva-superdesigner-root *), 
+      li:not(#visriva-superdesigner-root *), 
+      a:not(#visriva-superdesigner-root *) {
+        color: #ffffff;
+      }
+      
+      /* Navigation Bar Styling & Animations */
+      .menu-list__link-title {
+        font-family: 'Cinzel', serif !important;
+        font-size: 1.15rem !important;
+        letter-spacing: 0.1em !important;
+        color: #fcf6ba !important; /* Golden text */
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8) !important;
+        transition: all 0.3s ease !important;
+        position: relative;
+      }
+
+      .menu-list__link-title::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #d4af37;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+      }
+
+      .menu-list__link:hover .menu-list__link-title::after,
+      .menu-list__link--active .menu-list__link-title::after {
+        width: 100%;
+      }
+
+      .menu-list__link:hover .menu-list__link-title,
+      .menu-list__link--active .menu-list__link-title {
         color: #ffffff !important;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
+        text-shadow: 0 0 15px rgba(252, 246, 186, 0.8) !important;
+      }
+
+      /* Mega Menu Glassmorphism */
+      .menu-list__submenu-inner {
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border-top: 1px solid rgba(212, 175, 55, 0.45) !important;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+        border-radius: 0 0 16px 16px;
+      }
+
+      .mega-menu__link {
+        font-family: 'Cinzel', serif !important;
+        color: #ffffff !important;
+        transition: color 0.3s ease, transform 0.3s ease !important;
+      }
+
+      .mega-menu__link:hover {
+        color: #d4af37 !important;
+        transform: translateX(5px) !important;
       }
     </style>
     <link href="{{ 'visriva-global.css' | asset_url }}" rel="stylesheet">
