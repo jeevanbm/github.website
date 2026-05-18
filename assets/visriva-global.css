@@ -200,3 +200,25 @@ shopify-account:hover svg {
   0%, 100% { transform: scaleX(1); }
   50% { transform: scaleX(1.2); }
 }
+
+/* Complete removal of any white/light hover background shapes on menu links, header actions, and icons */
+.menu-list__link:hover,
+.menu-list__item:hover,
+.menu-list__list-item:hover,
+.menu-list__link-title:hover,
+.header__icon:hover,
+.header-actions__action:hover,
+.account-button:hover,
+.action__cart:hover,
+.header__logo-link:hover,
+.menu-drawer__menu-item:hover,
+.menu-drawer__toggle:hover,
+.dropdown-localization__button:hover,
+button.button-unstyled:hover,
+.header__search:hover,
+.search-action button:hover,
+search-button button:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
