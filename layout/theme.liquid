@@ -101,23 +101,53 @@
         background-color: transparent !important;
         background: transparent !important;
       }
+      
+      /* Royal Luminous Glassmorphic Cards */
       .card,
       .product-card,
       .collection-card,
       .blog-post-card {
-        background: rgba(4, 13, 10, 0.45) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(191, 149, 63, 0.25) !important;
-        border-radius: 12px !important;
-        padding: 15px !important;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.45) !important; /* Luminous Royal Gold Border */
+        border-radius: 16px !important;
+        padding: 20px !important;
+        box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.05) !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
       }
+      
+      .card:hover,
+      .product-card:hover,
+      .collection-card:hover,
+      .blog-post-card:hover {
+        transform: translateY(-8px) scale(1.02) !important;
+        border-color: #fcf6ba !important;
+        box-shadow: 0 15px 45px 0 rgba(212, 175, 55, 0.35), inset 0 0 20px rgba(255, 255, 255, 0.1) !important;
+      }
+
       .card__image,
       .product-card__image,
       .collection-card__image,
       .image-element img {
         background-color: transparent !important;
+      }
+
+      /* Royal Look Typography */
+      h1, h2, h3, h4, h5, h6,
+      .h1, .h2, .h3, .h4, .h5, .h6,
+      .section-title, .heading, .title,
+      .card__heading, .product-card__title, .collection-card__title {
+        font-family: 'Cinzel', serif !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        color: #fcf6ba !important; /* Royal Golden Sand text */
+        text-shadow: 0 0 10px rgba(252, 246, 186, 0.25) !important;
+      }
+      
+      p, span, li, a, div:not(#visriva-superdesigner-root *) {
+        color: #ffffff !important;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
       }
     </style>
     <link href="{{ 'visriva-global.css' | asset_url }}" rel="stylesheet">
