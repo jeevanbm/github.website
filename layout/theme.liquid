@@ -265,6 +265,64 @@
       }
 
       /* ============================================
+         LEFT MENU (HAMBURGER) ICON — Elegant & Animated
+      ============================================ */
+
+      /* Button container — match same 36px box as right icons */
+      .header__icon--menu {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 36px !important;
+        height: 36px !important;
+        padding: 0 !important;
+        border-radius: 8px !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        cursor: pointer !important;
+        transition: background 0.2s ease !important;
+        color: rgba(252, 246, 186, 0.85) !important;
+      }
+
+      /* Hover — same golden shimmer as right icons */
+      .header__icon--menu:hover {
+        background: rgba(212, 175, 55, 0.12) !important;
+      }
+
+      /* The SVG itself — small and clean */
+      .header__icon--menu svg,
+      .header-drawer-icon--open svg {
+        width: 18px !important;
+        height: 18px !important;
+        color: rgba(252, 246, 186, 0.85) !important;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    filter 0.3s ease !important;
+      }
+
+      /* On hover — lines spread with a golden glow */
+      .header__icon--menu:hover svg,
+      .header__icon--menu:hover .header-drawer-icon--open svg {
+        transform: scale(1.15) !important;
+        filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.9)) !important;
+      }
+
+      /* Close icon (X) when drawer is open — same style */
+      .header-drawer-icon--close svg {
+        width: 18px !important;
+        height: 18px !important;
+        color: rgba(252, 246, 186, 0.85) !important;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      }
+
+      /* Spin close icon on hover */
+      .header__icon--menu[aria-expanded="true"]:hover .header-drawer-icon--close svg,
+      .menu-drawer__close-button:hover svg {
+        transform: rotate(90deg) scale(1.1) !important;
+        filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.9)) !important;
+      }
+
+      /* ============================================
          HEADER ICONS — Unified, Consistent, Animated
       ============================================ */
 
