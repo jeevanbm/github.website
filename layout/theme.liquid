@@ -75,11 +75,54 @@
         width: 250px;
         height: 80px;
       }
+      /* Homepage Transparency & Glassmorphism for Global Background Visibility */
+      body.template-index,
+      body.template-index #MainContent,
+      body.template-index .section,
+      body.template-index .section-background,
+      body.template-index .color-scheme-1,
+      body.template-index .color-scheme-2,
+      body.template-index .color-scheme-3,
+      body.template-index .color-scheme-4,
+      body.template-index .color-scheme-5,
+      body.template-index .color-scheme-6,
+      body.template-index .color-scheme-7,
+      body.template-index .color-scheme-8,
+      body.template-index [class*="color-scheme-"],
+      body.template-index #header-group,
+      body.template-index header-component,
+      body.template-index footer,
+      body.template-index .footer-section,
+      body.template-index .layered-slide, 
+      body.template-index .slide, 
+      body.template-index .carousel-content,
+      body.template-index .marquee {
+        background-color: transparent !important;
+        background: transparent !important;
+      }
+      body.template-index .card,
+      body.template-index .product-card,
+      body.template-index .collection-card,
+      body.template-index .blog-post-card {
+        background: rgba(4, 13, 10, 0.45) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(191, 149, 63, 0.25) !important;
+        border-radius: 12px !important;
+        padding: 15px !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+      }
+      body.template-index .card__image,
+      body.template-index .product-card__image,
+      body.template-index .collection-card__image,
+      body.template-index .image-element img {
+        background-color: transparent !important;
+      }
     </style>
     <link href="{{ 'visriva-global.css' | asset_url }}" rel="stylesheet">
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="template-{{ template.name }} page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
