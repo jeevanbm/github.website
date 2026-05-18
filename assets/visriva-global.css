@@ -82,3 +82,37 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* Customizer Pen Sketching/Writing Animation on Hover */
+.customizer-icon,
+.customizer-action-icon {
+  transition: transform 0.3s ease, stroke 0.3s ease, color 0.3s ease !important;
+  transform-origin: bottom left !important;
+}
+
+/* Hover State Animations across all templates and elements */
+.menu-list__item--customizer:hover .customizer-icon,
+.menu-list__link--customizer:hover .customizer-icon,
+.menu-drawer__menu-item--customise:hover .customizer-icon,
+.header-actions__customizer:hover .customizer-action-icon {
+  animation: visriva-write-sketch 0.8s ease-in-out infinite !important;
+  stroke: #fcf6ba !important; /* Beautiful bright gold color */
+}
+
+@keyframes visriva-write-sketch {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  25% {
+    transform: rotate(-12deg) translate(1px, -2px);
+  }
+  50% {
+    transform: rotate(-5deg) translate(-1px, 0px);
+  }
+  75% {
+    transform: rotate(-15deg) translate(2px, -3px);
+  }
+  100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+}
