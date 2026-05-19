@@ -484,6 +484,90 @@
       header-actions .desktop\:hidden {
         display: none !important;
       }
+
+      /* === premium cart typography & legibility harmony === */
+      .cart-drawer,
+      .cart-drawer-component,
+      .cart-items__wrapper,
+      .cart-summary__inner,
+      .cart-form,
+      .cart-items,
+      .cart-drawer__inner,
+      .cart-drawer__dialog {
+        color: #ffffff !important;
+      }
+
+      /* Gold Headings, Titles & Prices */
+      .cart-drawer__heading,
+      .cart-drawer__heading--empty,
+      .cart-items__title,
+      .cart__total-label,
+      .cart__total-value,
+      .cart-items__price,
+      .cart-items__price *,
+      .cart-drawer__summary *,
+      .cart-drawer__header *,
+      .cart-items__details a {
+        font-family: 'Cinzel', serif !important;
+        color: #fcf6ba !important;
+        text-shadow: 0 0 8px rgba(252, 246, 186, 0.2) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+      }
+
+      /* White Details, Variants, & Text */
+      .cart-items__property,
+      .cart-items__property *,
+      .cart-items__variants,
+      .cart-items__variants *,
+      .cart-items__variant,
+      .cart-items__variant *,
+      .cart-items__product-info *,
+      .cart-drawer__close-button,
+      .cart-drawer__close-button svg,
+      .cart-items__remove svg,
+      .cart-item__error-text,
+      .volume-pricing-info,
+      .volume-pricing-info *,
+      .cart-items__details dt,
+      .cart-items__details dd,
+      .cart-items__details dl {
+        color: rgba(255, 255, 255, 0.9) !important;
+        fill: #ffffff !important;
+      }
+
+      /* Legible quantity selector text */
+      .cart-items__quantity-controls input,
+      .cart-items__quantity-controls button {
+        color: #ffffff !important;
+      }
+
+      /* Checkout Button Styling (Match Brand Serifs) */
+      .cart-drawer__summary button[type="submit"],
+      .cart-summary__inner button[type="submit"] {
+        font-family: 'Cinzel', serif !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.1em !important;
+        color: #fcf6ba !important;
+        border: 1px solid rgba(212, 175, 55, 0.6) !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .cart-drawer__summary button[type="submit"]:hover,
+      .cart-summary__inner button[type="submit"]:hover {
+        background: rgba(212, 175, 55, 0.2) !important;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.5) !important;
+      }
+
+      /* Align Cart Page Layout & Wrapped Titles */
+      .cart-items__title {
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        line-height: 1.4 !important;
+        font-size: 1rem !important;
+      }
     </style>
     <link href="{{ 'visriva-global.css' | asset_url }}" rel="stylesheet">
   </head>
