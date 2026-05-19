@@ -160,7 +160,22 @@
       </div>
 
       <!-- RIGHT: Form Column -->
-      {%- form 'product', tshirt_prod, class: 'studio-v2-form', data-studio-form: '', enctype: 'multipart/form-data' -%}
+      {%- assign form_product = tshirt_prod -%}
+      {%- if form_product == empty or form_product == nil -%}
+        {%- assign form_product = polo_prod -%}
+      {%- endif -%}
+      {%- if form_product == empty or form_product == nil -%}
+        {%- assign form_product = sweatshirt_prod -%}
+      {%- endif -%}
+      {%- if form_product == empty or form_product == nil -%}
+        {%- assign form_product = collections.all.products.first -%}
+      {%- endif -%}
+
+      {%- if form_product != empty and form_product != nil -%}
+        {%- form 'product', form_product, class: 'studio-v2-form', data-studio-form: '', enctype: 'multipart/form-data' -%}
+      {%- else -%}
+        <form class="studio-v2-form" action="/cart/add" method="post" enctype="multipart/form-data" data-studio-form>
+      {%- endif -%}
         <input type="hidden" name="id" value="47212533547200" data-studio-variant-id>
         <input type="hidden" name="properties[Size]" value="" data-studio-size-property>
         <input type="hidden" name="properties[Garment Color]" value="Acid Wash Blue (#828FB2)" data-studio-color-property>
@@ -280,7 +295,11 @@
         <button type="submit" class="studio-v2-submit" data-studio-submit>
           Add to cart — <span data-studio-price>₹899</span>
         </button>
-      {%- endform -%}
+      {%- if form_product != empty and form_product != nil -%}
+        {%- endform -%}
+      {%- else -%}
+        </form>
+      {%- endif -%}
     </div>
   </div>
 </section>
