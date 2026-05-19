@@ -49,7 +49,7 @@
         background-attachment: fixed !important;
       }
       /* Force Custom Image Logo and Remove Text Logo Fallbacks */
-      .logo-section__image-wrapper, .logo-section__image, .header-logo img, .logo-monogram, .logo-inline img {
+      .logo-section__image-wrapper, .logo-section__image, .logo-monogram, .logo-inline img {
         display: none !important; 
       }
       .header-logo, .logo-title {
@@ -162,6 +162,15 @@
       /* Ensure the transparent header absolute positioning doesn't override fixed positioning */
       .header[transparent] {
         position: fixed !important;
+      }
+
+      /* Make all inner header elements (rows and underlays) completely transparent so only outer header solid background is shown */
+      .header__underlay,
+      .header__underlay-closed,
+      .header__underlay-open,
+      .header__row {
+        background-color: transparent !important;
+        background: transparent !important;
       }
 
       /* Global Transparency & Glassmorphism for Global Background Visibility */
