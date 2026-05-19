@@ -161,13 +161,13 @@
 
       <!-- RIGHT: Form Column -->
       {%- assign form_product = tshirt_prod -%}
-      {%- if form_product == empty or form_product == nil -%}
+      {%- if form_product.id == nil -%}
         {%- assign form_product = polo_prod -%}
       {%- endif -%}
-      {%- if form_product == empty or form_product == nil -%}
+      {%- if form_product.id == nil -%}
         {%- assign form_product = sweatshirt_prod -%}
       {%- endif -%}
-      {%- if form_product == empty or form_product == nil -%}
+      {%- if form_product.id == nil -%}
         {%- assign form_product = collections.all.products.first -%}
       {%- endif -%}
 
