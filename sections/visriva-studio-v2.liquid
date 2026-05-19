@@ -154,7 +154,8 @@
           <p><span>Size</span><strong data-studio-size-readout>Not selected</strong></p>
           <p><span>Selected color</span><strong data-studio-color-readout>Acid Wash Blue</strong></p>
           <p><span>Wash finish</span><strong data-studio-wash-readout>Acid Wash Blue</strong></p>
-          <p><span>Artwork file</span><strong data-studio-file-readout>No file uploaded</strong></p>
+          <p><span>Front Artwork</span><strong data-studio-file-readout-front>No file uploaded</strong></p>
+          <p><span>Back Artwork</span><strong data-studio-file-readout-back>No file uploaded</strong></p>
         </div>
       </div>
 
@@ -167,7 +168,8 @@
         <input type="hidden" name="properties[Color Source]" value="Acid swatch" data-studio-color-source-property>
         <input type="hidden" name="properties[Custom Color Hex]" value="" data-studio-custom-color-property>
         <input type="hidden" name="properties[Print Scale]" value="100%" data-studio-scale-property>
-        <input type="hidden" name="properties[Artwork File Name]" value="" data-studio-artwork-name-property>
+        <input type="hidden" name="properties[Front Artwork Name]" value="" data-studio-artwork-front-name-property>
+        <input type="hidden" name="properties[Back Artwork Name]" value="" data-studio-artwork-back-name-property>
         <input type="hidden" name="properties[Front Artwork Transform]" value="" data-studio-front-transform-property>
         <input type="hidden" name="properties[Back Artwork Transform]" value="" data-studio-back-transform-property>
         <input type="hidden" name="properties[Quoted Price]" value="₹899" data-studio-quoted-price-property>
@@ -232,11 +234,18 @@
         </div>
 
         <div class="studio-v2-fieldset">
-          <label class="studio-v2-label" for="studio-upload">Upload artwork</label>
-          <input id="studio-upload" class="studio-v2-native-upload" type="file" name="properties[Uploaded Artwork]" data-studio-upload accept="image/png,image/jpeg,image/webp">
+          <label class="studio-v2-label" for="studio-upload-front">Upload Front Artwork</label>
+          <input id="studio-upload-front" class="studio-v2-native-upload" type="file" name="properties[Uploaded Front Artwork]" data-studio-upload-front accept="image/png,image/jpeg,image/webp">
+          <div class="studio-v2-upload-row" style="margin-bottom:1rem;">
+            <button type="button" class="studio-v2-small-button" data-studio-upload-trigger-front>Choose front artwork</button>
+            <span class="studio-v2-upload-name" data-studio-upload-name-front>No file selected</span>
+          </div>
+
+          <label class="studio-v2-label" for="studio-upload-back" style="margin-top:1rem; display:block;">Upload Back Artwork</label>
+          <input id="studio-upload-back" class="studio-v2-native-upload" type="file" name="properties[Uploaded Back Artwork]" data-studio-upload-back accept="image/png,image/jpeg,image/webp">
           <div class="studio-v2-upload-row">
-            <button type="button" class="studio-v2-small-button studio-v2-upload-trigger" data-studio-upload-trigger>Choose artwork</button>
-            <span class="studio-v2-upload-name" data-studio-upload-name>No file selected</span>
+            <button type="button" class="studio-v2-small-button" data-studio-upload-trigger-back>Choose back artwork</button>
+            <span class="studio-v2-upload-name" data-studio-upload-name-back>No file selected</span>
           </div>
         </div>
 

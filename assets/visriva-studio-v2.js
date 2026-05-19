@@ -24,9 +24,14 @@
   const customColorPicker = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-picker]'));
   const customColorHex = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-hex]'));
   const customColorApply = /** @type {HTMLButtonElement | null} */ (root.querySelector('[data-studio-custom-color-apply]'));
-  const uploadInput = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-upload]'));
-  const uploadTrigger = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-upload-trigger]'));
-  const uploadName = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-upload-name]'));
+  const uploadInputFront = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-upload-front]'));
+  const uploadTriggerFront = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-upload-trigger-front]'));
+  const uploadNameFront = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-upload-name-front]'));
+
+  const uploadInputBack = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-upload-back]'));
+  const uploadTriggerBack = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-upload-trigger-back]'));
+  const uploadNameBack = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-upload-name-back]'));
+
   const placementSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-placement]'));
   const editTabs = /** @type {NodeListOf<HTMLElement>} */ (root.querySelectorAll('[data-studio-edit-side]'));
   const resetBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector('[data-studio-reset-side]'));
@@ -40,7 +45,8 @@
   const sizeReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-size-readout]'));
   const colorReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-color-readout]'));
   const washReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-wash-readout]'));
-  const fileReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-file-readout]'));
+  const fileReadoutFront = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-file-readout-front]'));
+  const fileReadoutBack = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-file-readout-back]'));
 
   // Hidden inputs
   const variantIdInput = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-variant-id]'));
@@ -50,7 +56,8 @@
   const colorSourceProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-color-source-property]'));
   const customColorProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-property]'));
   const scaleProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-scale-property]'));
-  const artworkNameProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-artwork-name-property]'));
+  const artworkFrontNameProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-artwork-front-name-property]'));
+  const artworkBackNameProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-artwork-back-name-property]'));
   const frontTransformProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-front-transform-property]'));
   const backTransformProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-back-transform-property]'));
 
@@ -61,8 +68,8 @@
   let currentGarment = 'tshirt';
   /** @type {'front' | 'back'} */
   let activeSide = 'front';
-  /** @type {HTMLImageElement | null} */
-  let artworkImg = null;
+  /** @type {Record<'front' | 'back', HTMLImageElement | null>} */
+  let artworkImages = { front: null, back: null };
   /** @type {Record<'front' | 'back', { x: number, y: number, scale: number }>} */
   let artworkTransforms = { front: { x: 0.3, y: 0.25, scale: 0.35 }, back: { x: 0.3, y: 0.25, scale: 0.35 } };
   let isDragging = false;
@@ -120,14 +127,15 @@
     }
 
     // Artwork
+    const img = artworkImages[side];
     const placement = placementSelect?.value || 'both';
-    if (artworkImg && (placement === side || placement === 'both')) {
+    if (img && (placement === side || placement === 'both')) {
       const t = artworkTransforms[side];
       const aw = w * t.scale;
-      const ah = (artworkImg.height / artworkImg.width) * aw;
+      const ah = (img.height / img.width) * aw;
       const ax = t.x * w;
       const ay = t.y * h;
-      ctx.drawImage(artworkImg, ax, ay, aw, ah);
+      ctx.drawImage(img, ax, ay, aw, ah);
 
       // Draw resize handle if active
       if (activeSide === side) {
@@ -235,13 +243,14 @@
     if (!canvas) return;
 
     const onDown = (/** @type {any} */ e) => {
-      if (!artworkImg) return;
+      const img = artworkImages[side];
+      if (!img) return;
       
       const pos = getCanvasCoords(canvas, e);
       const t = artworkTransforms[side];
       
       // Calculate mathematically correct aspect-ratio adjusted height (normalized)
-      const aspect = artworkImg.height / artworkImg.width;
+      const aspect = img.height / img.width;
       const aw = t.scale;
       const ah = aspect * aw * (canvas.width / canvas.height);
       
@@ -359,20 +368,44 @@
     renderBothCanvases();
   });
 
-  uploadTrigger?.addEventListener('click', () => uploadInput?.click());
-
-  uploadInput?.addEventListener('change', () => {
-    const file = uploadInput.files ? uploadInput.files[0] : null;
+  // Handle front upload
+  uploadTriggerFront?.addEventListener('click', () => uploadInputFront?.click());
+  uploadInputFront?.addEventListener('change', () => {
+    const file = uploadInputFront.files ? uploadInputFront.files[0] : null;
     if (!file) return;
-    if (uploadName) uploadName.textContent = file.name;
-    if (fileReadout) fileReadout.textContent = file.name;
-    if (artworkNameProperty) artworkNameProperty.value = file.name;
+    if (uploadNameFront) uploadNameFront.textContent = file.name;
+    if (fileReadoutFront) fileReadoutFront.textContent = file.name;
+    if (artworkFrontNameProperty) artworkFrontNameProperty.value = file.name;
     const reader = new FileReader();
     reader.onload = (/** @type {any} */ e) => {
       const img = new Image();
       img.onload = () => {
-        artworkImg = img;
-        artworkTransforms = { front: { x: 0.3, y: 0.25, scale: 0.35 }, back: { x: 0.3, y: 0.25, scale: 0.35 } };
+        artworkImages.front = img;
+        artworkTransforms.front = { x: 0.3, y: 0.25, scale: 0.35 };
+        renderBothCanvases();
+        updateTransformProperties();
+      };
+      if (e.target && typeof e.target.result === 'string') {
+        img.src = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Handle back upload
+  uploadTriggerBack?.addEventListener('click', () => uploadInputBack?.click());
+  uploadInputBack?.addEventListener('change', () => {
+    const file = uploadInputBack.files ? uploadInputBack.files[0] : null;
+    if (!file) return;
+    if (uploadNameBack) uploadNameBack.textContent = file.name;
+    if (fileReadoutBack) fileReadoutBack.textContent = file.name;
+    if (artworkBackNameProperty) artworkBackNameProperty.value = file.name;
+    const reader = new FileReader();
+    reader.onload = (/** @type {any} */ e) => {
+      const img = new Image();
+      img.onload = () => {
+        artworkImages.back = img;
+        artworkTransforms.back = { x: 0.3, y: 0.25, scale: 0.35 };
         renderBothCanvases();
         updateTransformProperties();
       };
@@ -467,11 +500,18 @@
       const backCloudUrl = await uploadToDriveAPI(backBlob, 'back-preview.png', 'image/png');
 
       // 3. Upload original high-res custom artwork if present
-      let artworkCloudUrl = '';
-      const originalFile = uploadInput?.files ? uploadInput.files[0] : null;
-      if (originalFile) {
-        if (statusEl) statusEl.textContent = 'Uploading original high-res artwork...';
-        artworkCloudUrl = await uploadToDriveAPI(originalFile, originalFile.name, originalFile.type);
+      let frontArtworkCloudUrl = '';
+      let backArtworkCloudUrl = '';
+      const originalFrontFile = uploadInputFront?.files ? uploadInputFront.files[0] : null;
+      const originalBackFile = uploadInputBack?.files ? uploadInputBack.files[0] : null;
+
+      if (originalFrontFile) {
+        if (statusEl) statusEl.textContent = 'Uploading original front artwork...';
+        frontArtworkCloudUrl = await uploadToDriveAPI(originalFrontFile, originalFrontFile.name, originalFrontFile.type);
+      }
+      if (originalBackFile) {
+        if (statusEl) statusEl.textContent = 'Uploading original back artwork...';
+        backArtworkCloudUrl = await uploadToDriveAPI(originalBackFile, originalBackFile.name, originalBackFile.type);
       }
 
       // 4. Inject cloud URLs into Shopify line item properties, falling back to direct binary attachments if uploader is offline
@@ -499,16 +539,24 @@
         formData.delete('properties[Back Preview Snapshot]');
       }
 
-      // Handle original uploaded artwork
-      if (artworkCloudUrl) {
-        formData.set('properties[Original Artwork Cloud URL]', artworkCloudUrl);
-        // Clean up the original file upload from formData so we don't upload it twice
-        formData.delete('properties[Uploaded Artwork]');
-      } else if (originalFile) {
-        // If the cloud upload failed, ensure the original file is attached directly
-        formData.set('properties[Uploaded Artwork]', originalFile, originalFile.name);
+      // Handle original front uploaded artwork
+      if (frontArtworkCloudUrl) {
+        formData.set('properties[Original Front Artwork Cloud URL]', frontArtworkCloudUrl);
+        formData.delete('properties[Uploaded Front Artwork]');
+      } else if (originalFrontFile) {
+        formData.set('properties[Uploaded Front Artwork]', originalFrontFile, originalFrontFile.name);
       } else {
-        formData.delete('properties[Uploaded Artwork]');
+        formData.delete('properties[Uploaded Front Artwork]');
+      }
+
+      // Handle original back uploaded artwork
+      if (backArtworkCloudUrl) {
+        formData.set('properties[Original Back Artwork Cloud URL]', backArtworkCloudUrl);
+        formData.delete('properties[Uploaded Back Artwork]');
+      } else if (originalBackFile) {
+        formData.set('properties[Uploaded Back Artwork]', originalBackFile, originalBackFile.name);
+      } else {
+        formData.delete('properties[Uploaded Back Artwork]');
       }
 
       // Delete any other empty File objects to prevent Shopify cart errors (e.g. from empty inputs)
