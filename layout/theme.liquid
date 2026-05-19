@@ -78,40 +78,57 @@
         100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 2px 5px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.1)); }
       }
 
+      /* Logo container — strictly contained, never overflows */
+      .header-logo {
+        overflow: visible !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        max-width: 280px !important;
+        flex-shrink: 1 !important;
+        flex-grow: 0 !important;
+      }
+
       .logo-title, .logo-section::after, .header-logo::after, .logo-inline::after {
-        content: "";
-        display: inline-block;
+        content: "" !important;
+        display: block !important;
         background-image: url("{{ 'visriva-logo.png' | asset_url }}");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        width: 320px;
-        height: 90px;
+        /* Responsive: shrinks on smaller screens, max 260px on large screens */
+        width: clamp(160px, 18vw, 260px) !important;
+        height: clamp(45px, 5vw, 75px) !important;
+        max-width: 100% !important;
+        flex-shrink: 1 !important;
         animation: elegant-float 5s ease-in-out infinite;
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
       
       .header-logo:hover::after, .logo-inline:hover::after, .logo-title:hover {
-        transform: translateY(-8px) scale(1.08) !important;
+        transform: translateY(-5px) scale(1.06) !important;
         filter: drop-shadow(0 15px 35px rgba(212, 175, 55, 1)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5)) !important;
         animation-play-state: paused;
       }
 
       @media screen and (max-width: 749px) {
+        .header-logo {
+          max-width: 160px !important;
+        }
         .logo-title, .logo-section::after, .header-logo::after, .logo-inline::after {
-          width: 210px !important;
-          height: 60px !important;
+          width: 150px !important;
+          height: 45px !important;
         }
         .header-logo:hover::after, .logo-inline:hover::after, .logo-title:hover {
-          transform: translateY(-4px) scale(1.05) !important;
+          transform: translateY(-3px) scale(1.04) !important;
         }
       }
       .header__column--left .header-logo::after {
         background-position: center left;
       }
       .logo-section::after {
-        width: 250px;
-        height: 80px;
+        width: clamp(140px, 15vw, 220px) !important;
+        height: clamp(40px, 4.5vw, 65px) !important;
       }
       /* Global Transparency & Glassmorphism for Global Background Visibility */
       body,
