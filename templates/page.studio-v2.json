@@ -11,8 +11,15 @@
   "sections": {
     "main": {
       "type": "visriva-studio-v2",
-      "settings": {}
+      "settings": {
+        "tshirt_product": "{{ section.settings.polo_product }}",
+        "polo_product": "anime-t-shirt",
+        "sweatshirt_product": "anime-t-shirt",
+        "hoodie_product": "anime-t-shirt"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
