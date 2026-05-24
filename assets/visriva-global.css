@@ -248,6 +248,43 @@ search-button button:hover {
     grid-area: slides !important;
     width: 100% !important;
   }
+
+  /* Stack product page details below the main image on desktop */
+  .product-information__grid:not(.product-information--media-none) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 3.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: 1fr !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  .product-information__media {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    order: 0 !important;
+  }
+
+  .product-information__media slideshow-component {
+    width: 100% !important;
+    max-width: 700px !important;
+    margin-inline: auto !important;
+  }
+
+  .product-details {
+    width: 100% !important;
+    max-width: 650px !important;
+    margin-inline: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    order: 1 !important;
+  }
 }
 
 /* Beautiful Thumbnail Cards */
@@ -299,6 +336,14 @@ search-button button:hover {
   outline-offset: -2px !important;
   
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+  /* Perfect dynamic gapless frame fitting */
+  aspect-ratio: var(--media-preview-ratio, var(--ratio)) !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  margin-inline: auto !important;
+  display: block !important;
 }
 
 /* Completely enforce transparent backgrounds on containing elements */
@@ -312,6 +357,9 @@ slideshow-slide {
 }
 
 .product-media-container img {
+  object-fit: cover !important; /* Ensure image perfectly covers the container with no sub-pixel gaps */
+  width: 100% !important;
+  height: 100% !important;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
