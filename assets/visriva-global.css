@@ -572,3 +572,59 @@ slideshow-slide {
     border-width: 1px !important;
   }
 }
+
+/* 7. Aggressive Global Background Correction to Completely Strip White Sidebar Panels */
+media-gallery,
+media-gallery *,
+.product-media-container,
+.product-media-container *,
+slideshow-component,
+slideshow-component *,
+slideshow-container,
+slideshow-container *,
+slideshow-slides,
+slideshow-slides *,
+slideshow-slide,
+slideshow-slide *,
+.slideshow-control,
+.slideshow-controls__thumbnail,
+.slideshow-controls__thumbnails-container,
+.media-fit-contain :is(img, .deferred-media__poster-image),
+.product-media-container img,
+.product-media-container--image,
+.slideshow__slide,
+.product-media,
+.product-media__image {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* 8. Luxury Editorial Product Description Lookbook Styling */
+.product-details .rte, 
+.product-details p,
+.rte p {
+  line-height: 1.95 !important;
+  font-size: 0.96rem !important;
+  color: #a3c2b2 !important; /* Premium muted sage emerald */
+  letter-spacing: 0.04em !important;
+  font-weight: 300 !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.product-details .rte strong,
+.product-details p strong,
+.rte strong {
+  color: #fcf6ba !important; /* Elegant glowing gold highlights for key product features */
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-shadow: 0 0 10px rgba(252, 246, 186, 0.35) !important;
+  padding: 0 2px !important;
+  border-bottom: 1px dashed rgba(252, 246, 186, 0.3) !important;
+}
+
+/* Premium Specifications spacing */
+.product-details .rte br,
+.product-details p br {
+  margin-bottom: 0.5rem !important;
+}
+
