@@ -222,3 +222,174 @@ search-button button:hover {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+
+/* ==========================================================================
+   VISRIVA Premium Product Details Page Revamp (Gallery & Size Swatches)
+   ========================================================================== */
+
+/* 1. Professional E-Commerce Image Gallery (Amazon / Myntra Style) */
+@media screen and (min-width: 750px) {
+  /* Dynamic alignment layout for left thumbnails and right featured image */
+  slideshow-component:has(slideshow-controls[thumbnails]) {
+    display: grid !important;
+    grid-template-areas: "controls slides" !important;
+    grid-template-columns: 80px 1fr !important;
+    gap: 1.5rem !important;
+    align-items: start !important;
+  }
+  
+  slideshow-controls[thumbnails][pagination-position="left"] {
+    grid-area: controls !important;
+    min-height: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Beautiful Thumbnail Cards */
+.slideshow-controls__thumbnail {
+  background: rgba(3, 10, 8, 0.75) !important;
+  border: 1.5px solid rgba(191, 149, 63, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 3px !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  box-sizing: border-box !important;
+}
+
+.slideshow-controls__thumbnail:hover {
+  transform: translateY(-2px) scale(1.08) !important;
+  border-color: rgba(252, 246, 186, 0.55) !important;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5), 0 0 10px rgba(191, 149, 63, 0.15) !important;
+}
+
+/* Highlighted active thumbnail */
+.slideshow-controls__thumbnail[aria-selected="true"] {
+  outline: none !important;
+  border-color: #fcf6ba !important;
+  box-shadow: 0 0 15px rgba(252, 246, 186, 0.4), inset 0 0 8px rgba(252, 246, 186, 0.1) !important;
+  transform: translateY(-2px) scale(1.06) !important;
+}
+
+/* Main Upfront Active Image Frame */
+.product-media-container {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  background: #040a08 !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75) !important;
+  border: 1.5px solid rgba(191, 149, 63, 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.product-media-container img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* High-end hover zoom on upfront image */
+.product-media-container:hover img {
+  transform: scale(1.04) !important;
+}
+
+.product-media-container:hover {
+  border-color: rgba(191, 149, 63, 0.35) !important;
+}
+
+/* 2. Premium Animated Size Swatches (Editorial Cards) */
+.variant-option--buttons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.85rem !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-top: 1.5rem !important;
+}
+
+.variant-option--buttons legend {
+  font-family: 'Cinzel', serif !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  color: #fcf6ba !important;
+  margin-bottom: 0.85rem !important;
+  font-weight: 600 !important;
+  display: block !important;
+}
+
+.variant-option__button-label {
+  background: rgba(3, 10, 8, 0.75) !important;
+  border: 1.5px solid rgba(191, 149, 63, 0.25) !important;
+  color: #8ea89c !important;
+  border-radius: 8px !important;
+  padding: 0.9rem 1.5rem !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(0,0,0,0.5) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  min-width: 52px !important;
+  height: 48px !important;
+}
+
+/* Hover dynamic scaling animation */
+.variant-option__button-label:hover {
+  border-color: rgba(252, 246, 186, 0.55) !important;
+  background: rgba(13, 33, 27, 0.85) !important;
+  color: #fff !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* Checked / Selected Size Cards */
+.variant-option__button-label:has(input:checked) {
+  border-color: #fcf6ba !important;
+  background: linear-gradient(135deg, rgba(191, 149, 63, 0.25), rgba(252, 246, 186, 0.08)) !important;
+  box-shadow: 0 0 20px rgba(191, 149, 63, 0.2), 0 8px 20px rgba(0, 0, 0, 0.65), inset 0 0 8px rgba(252, 246, 186, 0.1) !important;
+  color: #ffffff !important;
+  transform: translateY(-4px) scale(1.03) !important;
+}
+
+.variant-option__button-label:has(input:checked)::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 6px;
+  border: 1px solid rgba(252, 246, 186, 0.35) !important;
+  pointer-events: none;
+}
+
+/* Hide native default indicator pills */
+.variant-option__button-label__pill {
+  display: none !important;
+}
+
+/* Disable sold out size cards gracefully */
+.variant-option__button-label:has(input[aria-disabled="true"]),
+.variant-option__button-label:has(input[data-option-available="false"]) {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  border: 1px dashed rgba(191, 149, 63, 0.15) !important;
+  background: rgba(3, 10, 8, 0.3) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  color: #5a7366 !important;
+  text-decoration: line-through !important;
+}
+
+/* Make standard radio input completely hidden */
+.variant-option__button-label input[type="radio"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+}
+

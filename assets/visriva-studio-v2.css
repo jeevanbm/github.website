@@ -671,105 +671,82 @@
   clip: rect(0,0,0,0); 
 }
 
-/* Premium Visual Size Swatches Grid */
-.studio-v2-size-picker-container {
-  margin-top: 0.5rem;
-}
-
-.studio-v2-hidden-select {
-  position: absolute; 
-  width: 1px; 
-  height: 1px; 
-  overflow: hidden; 
-  clip: rect(0,0,0,0);
-}
-
-.studio-v2-size-picker {
+/* Premium Sizes Button Swatches Container */
+.studio-v2-sizes-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
   gap: 0.85rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.studio-v2-size-btn {
-  background: rgba(3, 10, 8, 0.65);
-  border: 1px solid var(--v2-border);
-  border-radius: 6px;
-  padding: 0.85rem 0.5rem;
+.studio-v2-size-card {
+  background: rgba(3, 10, 8, 0.75);
+  border: 1.5px solid var(--v2-border);
+  color: var(--v2-text);
+  border-radius: 8px;
+  padding: 1rem 0.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+  gap: 4px;
 }
 
-.studio-v2-size-btn:hover:not(:disabled) {
-  border-color: rgba(191, 149, 63, 0.6);
-  background: rgba(13, 33, 27, 0.8);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 2px 4px rgba(0,0,0,0.3);
+.studio-v2-size-card:hover:not(:disabled) {
+  border-color: rgba(252, 246, 186, 0.55);
+  background: rgba(13, 33, 27, 0.85);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.studio-v2-size-btn.is-active {
+.studio-v2-size-card.is-active {
   border-color: var(--v2-gold-light);
-  background: linear-gradient(135deg, rgba(191, 149, 63, 0.15), rgba(252, 246, 186, 0.05));
-  box-shadow: 0 0 15px var(--v2-gold-glow), inset 0 0 10px rgba(191, 149, 63, 0.15);
-  transform: translateY(-2px) scale(1.02);
-}
-
-.size-btn-code {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--v2-text);
-  line-height: 1.1;
-  transition: color 0.3s ease;
-}
-
-.studio-v2-size-btn.is-active .size-btn-code {
-  color: var(--v2-gold-light);
-  text-shadow: 0 0 8px var(--v2-gold-glow);
-}
-
-.size-btn-sub {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--v2-muted);
-  margin-top: 4px;
-  transition: color 0.3s ease;
-}
-
-.studio-v2-size-btn.is-active .size-btn-sub {
+  background: linear-gradient(135deg, rgba(191, 149, 63, 0.25), rgba(252, 246, 186, 0.08));
+  box-shadow: 0 0 20px rgba(191, 149, 63, 0.2), 0 8px 20px rgba(0, 0, 0, 0.65), inset 0 0 8px rgba(252, 246, 186, 0.1);
   color: #ffffff;
+  transform: translateY(-4px) scale(1.03);
 }
 
-/* Out of Stock Style */
-.studio-v2-size-btn.is-out-of-stock {
+.studio-v2-size-card.is-active::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 6px;
+  border: 1px solid rgba(252, 246, 186, 0.35);
+  pointer-events: none;
+}
+
+/* Sold Out State styling */
+.studio-v2-size-card.is-sold-out {
   opacity: 0.35;
   cursor: not-allowed;
-  background: rgba(10, 15, 12, 0.4);
-  border-color: rgba(191, 149, 63, 0.08);
+  border: 1px dashed rgba(191, 149, 63, 0.15);
+  background: rgba(3, 10, 8, 0.3);
   box-shadow: none;
+  transform: none !important;
 }
 
-.studio-v2-size-btn.is-out-of-stock .size-btn-code {
-  color: rgba(244, 248, 246, 0.5);
+.studio-v2-size-title {
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.out-of-stock-line {
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  width: 80%;
-  height: 1.5px;
-  background: rgba(191, 149, 63, 0.4);
-  transform: rotate(-25deg);
-  transform-origin: center;
-  pointer-events: none;
+.studio-v2-size-badge {
+  font-size: 0.55rem;
+  color: #ff6b6b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-top: 2px;
 }
