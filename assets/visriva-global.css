@@ -793,3 +793,64 @@ slideshow-slide *,
   border-bottom: 1px solid rgba(191, 149, 63, 0.4) !important;
 }
 
+/* =========================================================
+   9. Luxury Login / Account Popup Styling (shopify-account)
+   ========================================================= */
+
+/* Override shopify-account CSS custom properties to match dark theme */
+shopify-account {
+  --shopify-account-color-background: #0e1208 !important; /* Deep dark green-black */
+  --shopify-account-color-text: #e8f5ee !important; /* Soft silver-green text */
+  --shopify-account-color-accent: #bf953f !important; /* Gold accent */
+  --shopify-account-color-accent-text: #0e1208 !important; /* Dark text on gold buttons */
+  --shopify-account-radius-base: 14px !important;
+  --shopify-account-radius-button: 8px !important;
+  --shopify-account-radius-input: 8px !important;
+  --shopify-account-font-heading: 'Outfit', sans-serif !important;
+  --shopify-account-font-body: 'Outfit', sans-serif !important;
+}
+
+/* Style the popup panel/dialog shadow host with glassmorphism dark card */
+shopify-account::part(dialog),
+shopify-account::part(popover),
+.shopify-account-dialog,
+.shopify-account__dialog {
+  background: rgba(10, 14, 6, 0.97) !important;
+  border: 1px solid rgba(191, 149, 63, 0.4) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(191, 149, 63, 0.12),
+    inset 0 1px 0 rgba(252, 246, 186, 0.08) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  color: #e8f5ee !important;
+}
+
+/* Style using color-scheme class applied to the account-button wrapper */
+.account-button.color-scheme-1,
+.account-button[class*="color-"],
+.account-button {
+  --color-background: #0e1208 !important;
+  --color-foreground: #e8f5ee !important;
+  --color-border: rgba(191, 149, 63, 0.3) !important;
+  --color-primary-button-background: #bf953f !important;
+  --color-primary-button-text: #0e1208 !important;
+  --color-input-background: rgba(255, 255, 255, 0.05) !important;
+  --color-input-border: rgba(191, 149, 63, 0.3) !important;
+  --color-input-text: #e8f5ee !important;
+}
+
+/* Deep override: force the actual rendered popover element dark */
+:where(.account-button) :is(
+  [class*="shopify-account"],
+  [part*="panel"],
+  [part*="dialog"],
+  [part*="form"]
+) {
+  background-color: #0e1208 !important;
+  color: #e8f5ee !important;
+  border-color: rgba(191, 149, 63, 0.4) !important;
+}
+
+
