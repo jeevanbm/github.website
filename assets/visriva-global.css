@@ -649,14 +649,23 @@ slideshow-slide {
 /* Force currency selector to display correct Indian flag SVG from Shopify CDN */
 .dropdown-localization__button .icon-flag,
 .localization-selector .icon-flag {
+  display: none !important; /* Hide native flag to prevent duplicates if enabled */
+}
+
+/* Prepend a beautiful Indian flag next to the INR currency code text */
+.dropdown-localization__button .currency-code::before,
+.localization-selector .currency-code::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 18px !important;
+  height: 13px !important;
   background-image: url("https://cdn.shopify.com/assets/images/flags/in.svg") !important;
   background-size: cover !important;
   background-position: center !important;
   border-radius: 2px !important;
-  display: inline-block !important;
-  width: 18px !important;
-  height: 13px !important;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+  margin-right: 6px !important;
+  vertical-align: middle !important;
 }
 
 .dropdown-localization__button .icon-caret,
