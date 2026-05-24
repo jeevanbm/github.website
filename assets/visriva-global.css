@@ -794,60 +794,80 @@ slideshow-slide *,
   border-bottom: 1px solid rgba(191, 149, 63, 0.4) !important;
 }
 
-/* Compact right-side product details — smaller elements for more image space */
+/* Right-side product details — enlarged for strong readability and premium visibility */
 
-/* Product title — slightly smaller */
+/* Product title — bold and dominant */
 .product-details .product-title,
 .product-details h1,
 .product-details .h1 {
-  font-size: clamp(1.1rem, 2vw, 1.6rem) !important;
-  line-height: 1.25 !important;
-  margin-bottom: 0.5rem !important;
+  font-size: clamp(1.55rem, 2.6vw, 2.2rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.04em !important;
+  margin-bottom: 0.6rem !important;
 }
 
-/* Price — compact */
+/* Price — clear and prominent */
 .product-details .price,
 .product-details .price__regular,
-.product-details .price-item {
+.product-details .price-item,
+.product-details .price__sale {
+  font-size: 1.45rem !important;
+  font-weight: 700 !important;
+}
+
+/* Size label text */
+.product-details .variant-option__label,
+.product-details .variant-option .label,
+.product-details [class*="variant"] label {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* Size variant buttons — readable */
+.product-details .variant-option__button-label,
+.product-details .variant-option__button {
+  font-size: 0.95rem !important;
+  padding: 0.45rem 0.9rem !important;
+  min-width: 44px !important;
+  min-height: 40px !important;
+}
+
+/* Quantity selector */
+.product-details .quantity-selector {
+  height: 46px !important;
+}
+
+.product-details .quantity-selector input,
+.product-details .quantity-selector button {
   font-size: 1.05rem !important;
 }
 
-/* Size variant buttons — smaller */
-.product-details .variant-option__button-label,
-.product-details .variant-option__button {
-  font-size: 0.75rem !important;
-  padding: 0.3rem 0.65rem !important;
-  min-width: 36px !important;
-  min-height: 32px !important;
-}
-
-/* Quantity selector — more compact */
-.product-details .quantity-selector {
-  --quantity-selector-width: 96px !important;
-  height: 38px !important;
-}
-
-.product-details .quantity-selector button {
-  padding: 0.3rem 0.6rem !important;
-  font-size: 0.9rem !important;
-}
-
-/* Add to Cart button — slimmer height */
+/* Add to Cart button — slim but bold text */
 .product-details .add-to-cart-button,
 .product-details .product-form-buttons button {
-  padding-block: 0.6rem !important;
-  height: 42px !important;
-  font-size: 0.82rem !important;
-  letter-spacing: 0.08em !important;
+  padding-block: 0.7rem !important;
+  height: 46px !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.1em !important;
 }
 
-/* Buy Now / Accelerated checkout — match ATC height */
+/* Buy Now / Accelerated checkout */
 .product-details shopify-payment-button,
 .product-details .shopify-payment-button__button,
 .product-details .accelerated-checkout-block button {
-  min-height: 42px !important;
-  font-size: 0.82rem !important;
+  min-height: 46px !important;
+  font-size: 0.95rem !important;
 }
+
+/* Description / body text in RTE */
+.product-details .rte,
+.product-details .rte p,
+.product-details p {
+  font-size: 0.97rem !important;
+  line-height: 1.75 !important;
+}
+
 
 
 /* =========================================================
