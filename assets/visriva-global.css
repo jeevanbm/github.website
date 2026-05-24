@@ -236,7 +236,16 @@ search-button button:hover {
     gap: 0.5rem !important; /* Reduced gap to pull thumbnails closer to main image */
     align-items: center !important;
     width: 100% !important;
+    height: auto !important; /* Collapse height to match active image */
+    min-height: auto !important;
     --cursor: default !important; /* Disable grab hand cursor */
+  }
+
+  slideshow-component:has(slideshow-controls[thumbnails]) slideshow-container,
+  slideshow-component:has(slideshow-controls[thumbnails]) slideshow-slides,
+  slideshow-component:has(slideshow-controls[thumbnails]) slideshow-slide {
+    height: auto !important;
+    min-height: auto !important;
   }
 
   /* Disable manual horizontal touch/drag scroll over the main product image */
@@ -252,7 +261,7 @@ search-button button:hover {
     height: auto !important;
     display: flex !important;
     justify-content: center !important;
-    margin-top: -0.5rem !important; /* Shift thumbnails slightly upward closer to the gold frame */
+    margin-top: 0.25rem !important; /* Shift thumbnails slightly upward closer to the gold frame */
   }
 
   slideshow-component:has(slideshow-controls[thumbnails]) slideshow-container {
@@ -286,10 +295,10 @@ search-button button:hover {
     gap: var(--gap-xs) !important;
   }
 
-  /* Spacious side-by-side layout like Amazon */
+  /* Spacious side-by-side layout like Amazon with perfect width column matching */
   .product-information__grid:not(.product-information--media-none) {
     display: grid !important;
-    grid-template-columns: 1.15fr 0.85fr !important;
+    grid-template-columns: 500px 1fr !important; /* Left column matches product image exactly, right column takes rest */
     gap: 4.5rem !important;
     width: 100% !important;
     max-width: var(--page-width, 1400px) !important;
@@ -310,7 +319,7 @@ search-button button:hover {
 
   .product-information__media slideshow-component {
     width: 100% !important;
-    max-width: 750px !important; /* Majestic premium visual width for active media */
+    max-width: 500px !important; /* Matches perfect premium visual width for active media */
     margin-inline: auto !important;
   }
 
@@ -362,7 +371,8 @@ search-button button:hover {
   /* Isolate active slide to 100% width, hiding any peeking images on left/right */
   width: 100% !important;
   max-width: 100% !important;
-  height: 100% !important;
+  height: auto !important; /* Collapse height to match active image */
+  min-height: auto !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -377,9 +387,9 @@ search-button button:hover {
 /* Beautiful dynamic gapless frame styled directly on inner .product-media */
 .product-media {
   aspect-ratio: var(--media-preview-ratio, var(--ratio)) !important;
-  width: auto !important;
-  max-width: 100% !important;
-  height: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important; /* Fills the 500px slideshow parent completely */
+  height: auto !important; /* Let height calculate automatically based on aspect-ratio and width! */
   margin-inline: auto !important;
   display: block !important;
 
@@ -739,7 +749,15 @@ slideshow-slide *,
 }
 
 /* Tighten spacing in the details block to remove gaps for formal professional look */
+.product-details,
+.product-details .group-block,
+.product-details .group-block-content,
+.product-details .rte,
+.product-details p,
+.product-details .rte p,
 .product-details > * {
+  width: 100% !important;
+  max-width: 100% !important;
   margin-block-start: 0 !important;
   margin-block-end: 1rem !important;
 }
