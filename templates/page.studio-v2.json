@@ -11,8 +11,15 @@
   "sections": {
     "main": {
       "type": "visriva-studio-v2",
-      "settings": {}
+      "settings": {
+        "tshirt_product": "premium-monkey-d-luffy-one-piece",
+        "polo_product": "premium-monkey-d-luffy-one-piece",
+        "sweatshirt_product": "premium-monkey-d-luffy-one-piece",
+        "hoodie_product": "premium-monkey-d-luffy-one-piece"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
