@@ -1,0 +1,322 @@
+{{ 'visriva-global.css' | asset_url | stylesheet_tag }}
+
+<div class="customer-account-page">
+  <div class="customer-account-card">
+    
+    <div id="recover-container" style="display: none;">
+      <h1 class="customer-account-title">Reset Your Password</h1>
+      <p class="customer-account-subtitle">We will send you an email to reset your password.</p>
+      
+      {%- form 'recover_customer_password' -%}
+        {%- if form.errors -%}
+          <div class="form-error">
+            {{ form.errors.messages['form'] }}
+          </div>
+        {%- endif -%}
+        
+        <div class="field">
+          <label for="RecoverEmail">Email</label>
+          <input
+            type="email"
+            value=""
+            name="email"
+            id="RecoverEmail"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            required
+            placeholder="Email address"
+          >
+        </div>
+        
+        <div class="customer-account-actions">
+          <button type="submit" class="button premium-button">Submit</button>
+          <a href="#login" onclick="document.getElementById('recover-container').style.display = 'none'; document.getElementById('login-container').style.display = 'block'; return false;" class="secondary-link">Cancel</a>
+        </div>
+      {%- endform -%}
+    </div>
+
+    <div id="login-container">
+      <h1 class="customer-account-title">Sign In</h1>
+      <p class="customer-account-subtitle">Welcome back to Visriva</p>
+
+      {%- if recover_success == true -%}
+        <div class="form-success">
+          We've sent you an email with a link to update your password.
+        </div>
+      {%- endif -%}
+
+      {%- form 'customer_login' -%}
+        {%- if form.errors -%}
+          <div class="form-error">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="field">
+          <label for="CustomerEmail">Email</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+            placeholder="Email address"
+          >
+        </div>
+
+        {%- if form.password_needed -%}
+          <div class="field">
+            <div class="label-with-link">
+              <label for="CustomerPassword">Password</label>
+              <a href="#recover" onclick="document.getElementById('recover-container').style.display = 'block'; document.getElementById('login-container').style.display = 'none'; return false;" class="text-link">Forgot password?</a>
+            </div>
+            <input
+              type="password"
+              value=""
+              name="customer[password]"
+              id="CustomerPassword"
+              autocomplete="current-password"
+              required
+              placeholder="Password"
+            >
+          </div>
+        {%- endif -%}
+
+        <button type="submit" class="button premium-button">Sign In</button>
+        
+        <div class="customer-account-footer">
+          <span>New to Visriva?</span>
+          <a href="{{ routes.account_register_url }}" class="text-link gold-link">Create an account</a>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+<style>
+/* Premium Login Page CSS */
+.customer-account-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 4rem 2rem;
+  background-color: #040d0a;
+  color: #e8f5ee;
+  font-family: 'Outfit', 'Montserrat', sans-serif;
+}
+
+.customer-account-card {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(10, 14, 6, 0.7);
+  border: 1px solid rgba(191, 149, 63, 0.3);
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 
+              0 0 30px rgba(191, 149, 63, 0.12), 
+              inset 0 1px 0 rgba(252, 246, 186, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.customer-account-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fcf6ba;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.customer-account-subtitle {
+  text-align: center;
+  color: rgba(232, 245, 238, 0.7);
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.form-error {
+  background: rgba(255, 0, 0, 0.1);
+  border-left: 3px solid #ff4444;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+  color: #ffb3b3;
+  font-size: 0.9rem;
+}
+
+.form-success {
+  background: rgba(191, 149, 63, 0.1);
+  border-left: 3px solid #bf953f;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+  color: #fcf6ba;
+  font-size: 0.9rem;
+}
+
+.customer-account-page .field {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-account-page label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e8f5ee;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.label-with-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.label-with-link label {
+  margin-bottom: 0;
+}
+
+.customer-account-page input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(191, 149, 63, 0.4);
+  border-radius: 8px;
+  color: #e8f5ee;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.customer-account-page input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: #fcf6ba;
+  box-shadow: 0 0 10px rgba(191, 149, 63, 0.3);
+}
+
+.customer-account-page input::placeholder {
+  color: rgba(232, 245, 238, 0.3);
+}
+
+.premium-button {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  height: 52px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  color: #0a0e06 !important;
+  background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #bf953f 70%, #aa771c 100%);
+  background-size: 250% 100%;
+  border: none !important;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(191, 149, 63, 0.45), 0 1px 3px rgba(0,0,0,0.4);
+  transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.premium-button:hover {
+  background-position: 100% 0;
+  box-shadow: 0 6px 28px rgba(191, 149, 63, 0.65), 0 2px 6px rgba(0,0,0,0.5);
+  transform: translateY(-1px);
+}
+
+.premium-button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 12px rgba(191, 149, 63, 0.4);
+}
+
+.premium-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+  animation: atc-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.customer-account-footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: rgba(232, 245, 238, 0.8);
+}
+
+.text-link {
+  color: rgba(232, 245, 238, 0.6);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.text-link:hover {
+  color: #fcf6ba;
+}
+
+.gold-link {
+  color: #bf953f;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.gold-link:hover {
+  color: #fcf6ba;
+}
+
+.customer-account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.secondary-link {
+  color: rgba(232, 245, 238, 0.6);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.secondary-link:hover {
+  color: #fcf6ba;
+}
+
+@media (max-width: 768px) {
+  .customer-account-page {
+    padding: 2rem 1rem;
+  }
+  .customer-account-card {
+    padding: 2rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Customer Login",
+  "settings": []
+}
+{% endschema %}
