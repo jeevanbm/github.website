@@ -386,8 +386,7 @@ search-button button:hover {
 
 /* Beautiful dynamic gapless frame styled directly on inner .product-media */
 .product-media {
-  aspect-ratio: 3 / 4 !important; /* Stable, consistent premium portrait aspect ratio */
-  background-color: #ffffff !important; /* Pure white backdrop fill for landscape/square images */
+  aspect-ratio: var(--media-preview-ratio, var(--ratio)) !important;
   width: 100% !important;
   max-width: 100% !important; /* Fills the 500px slideshow parent completely */
   height: auto !important; /* Let height calculate automatically based on aspect-ratio and width! */
@@ -406,8 +405,9 @@ search-button button:hover {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Completely enforce transparent backgrounds on containing layout elements */
-.media-fit-contain .deferred-media__poster-image,
+/* Completely enforce transparent backgrounds on containing elements */
+.media-fit-contain :is(img, .deferred-media__poster-image),
+.product-media-container img,
 .product-media-container--image,
 .slideshow__slide,
 slideshow-slide {
@@ -415,12 +415,10 @@ slideshow-slide {
   background-color: transparent !important;
 }
 
-.product-media img,
 .product-media-container img {
-  object-fit: contain !important; /* Contains the image perfectly so it never crosses the border */
+  object-fit: cover !important; /* Ensure image perfectly covers the container with no sub-pixel gaps */
   width: 100% !important;
   height: 100% !important;
-  background-color: #ffffff !important; /* Pure white background behind contained images */
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
