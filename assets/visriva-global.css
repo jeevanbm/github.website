@@ -295,13 +295,13 @@ search-button button:hover {
     gap: var(--gap-xs) !important;
   }
 
-  /* Spacious side-by-side layout like Amazon with perfect width column matching */
+  /* Spacious side-by-side layout — enlarged image column, compact details */
   .product-information__grid:not(.product-information--media-none) {
     display: grid !important;
-    grid-template-columns: 650px 1fr !important; /* Left column matches product image exactly, right column takes rest */
-    gap: 4.5rem !important;
+    grid-template-columns: 750px 1fr !important; /* Wider image, compact right details */
+    gap: 3.5rem !important;
     width: 100% !important;
-    max-width: var(--page-width, 1400px) !important;
+    max-width: var(--page-width, 1440px) !important;
     margin-inline: auto !important;
   }
 
@@ -313,13 +313,13 @@ search-button button:hover {
     justify-content: flex-start !important;
     align-items: center !important;
     padding: 0 !important;
-    padding-top: 2rem !important; /* Elegant vertical breathing room below the header menu */
+    padding-top: 2rem !important;
     order: 0 !important;
   }
 
   .product-information__media slideshow-component {
     width: 100% !important;
-    max-width: 650px !important; /* Matches perfect premium visual width for active media */
+    max-width: 750px !important;
     margin-inline: auto !important;
   }
 
@@ -328,6 +328,7 @@ search-button button:hover {
     max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    padding-top: 2rem !important;
     order: 1 !important;
   }
 }
@@ -792,6 +793,62 @@ slideshow-slide *,
   border: none !important;
   border-bottom: 1px solid rgba(191, 149, 63, 0.4) !important;
 }
+
+/* Compact right-side product details — smaller elements for more image space */
+
+/* Product title — slightly smaller */
+.product-details .product-title,
+.product-details h1,
+.product-details .h1 {
+  font-size: clamp(1.1rem, 2vw, 1.6rem) !important;
+  line-height: 1.25 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Price — compact */
+.product-details .price,
+.product-details .price__regular,
+.product-details .price-item {
+  font-size: 1.05rem !important;
+}
+
+/* Size variant buttons — smaller */
+.product-details .variant-option__button-label,
+.product-details .variant-option__button {
+  font-size: 0.75rem !important;
+  padding: 0.3rem 0.65rem !important;
+  min-width: 36px !important;
+  min-height: 32px !important;
+}
+
+/* Quantity selector — more compact */
+.product-details .quantity-selector {
+  --quantity-selector-width: 96px !important;
+  height: 38px !important;
+}
+
+.product-details .quantity-selector button {
+  padding: 0.3rem 0.6rem !important;
+  font-size: 0.9rem !important;
+}
+
+/* Add to Cart button — slimmer height */
+.product-details .add-to-cart-button,
+.product-details .product-form-buttons button {
+  padding-block: 0.6rem !important;
+  height: 42px !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Buy Now / Accelerated checkout — match ATC height */
+.product-details shopify-payment-button,
+.product-details .shopify-payment-button__button,
+.product-details .accelerated-checkout-block button {
+  min-height: 42px !important;
+  font-size: 0.82rem !important;
+}
+
 
 /* =========================================================
    9. Luxury Login / Account Popup Styling (shopify-account)
