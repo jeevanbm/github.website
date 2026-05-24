@@ -298,7 +298,7 @@ search-button button:hover {
   /* Spacious side-by-side layout like Amazon with perfect width column matching */
   .product-information__grid:not(.product-information--media-none) {
     display: grid !important;
-    grid-template-columns: 500px 1fr !important; /* Left column matches product image exactly, right column takes rest */
+    grid-template-columns: 650px 1fr !important; /* Left column matches product image exactly, right column takes rest */
     gap: 4.5rem !important;
     width: 100% !important;
     max-width: var(--page-width, 1400px) !important;
@@ -319,7 +319,7 @@ search-button button:hover {
 
   .product-information__media slideshow-component {
     width: 100% !important;
-    max-width: 500px !important; /* Matches perfect premium visual width for active media */
+    max-width: 650px !important; /* Matches perfect premium visual width for active media */
     margin-inline: auto !important;
   }
 
@@ -724,7 +724,7 @@ slideshow-slide *,
 .product-details p,
 .rte p {
   line-height: 1.95 !important;
-  font-size: 1.12rem !important; /* Expanded slightly to fill the vertical space */
+  font-size: 0.98rem !important; /* Elegant, smaller text sizing */
   color: #e8f5ee !important; /* Brighter, highly premium silver-sand */
   letter-spacing: 0.03em !important;
   font-weight: 400 !important;
