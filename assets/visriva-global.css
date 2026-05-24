@@ -233,9 +233,16 @@ search-button button:hover {
   slideshow-component:has(slideshow-controls[thumbnails]) {
     display: flex !important;
     flex-direction: column !important;
-    gap: 1.5rem !important;
+    gap: 0.5rem !important; /* Reduced gap to pull thumbnails closer to main image */
     align-items: center !important;
     width: 100% !important;
+    --cursor: default !important; /* Disable grab hand cursor */
+  }
+
+  /* Disable manual horizontal touch/drag scroll over the main product image */
+  slideshow-component slideshow-slides {
+    overflow-x: hidden !important;
+    touch-action: none !important;
   }
   
   slideshow-controls[thumbnails] {
@@ -245,6 +252,7 @@ search-button button:hover {
     height: auto !important;
     display: flex !important;
     justify-content: center !important;
+    margin-top: -0.5rem !important; /* Shift thumbnails slightly upward closer to the gold frame */
   }
 
   slideshow-component:has(slideshow-controls[thumbnails]) slideshow-container {
@@ -705,12 +713,12 @@ slideshow-slide *,
 .product-details .rte, 
 .product-details p,
 .rte p {
-  line-height: 1.85 !important;
-  font-size: 1.08rem !important;
-  color: #e0ece6 !important; /* Brighter, highly premium warm silver-sand */
+  line-height: 1.95 !important;
+  font-size: 1.12rem !important; /* Expanded slightly to fill the vertical space */
+  color: #e8f5ee !important; /* Brighter, highly premium silver-sand */
   letter-spacing: 0.03em !important;
   font-weight: 400 !important;
-  margin-bottom: 1rem !important;
+  margin-bottom: 1.2rem !important;
 }
 
 .product-details .rte strong,
