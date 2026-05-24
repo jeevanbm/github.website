@@ -243,6 +243,11 @@ search-button button:hover {
     min-height: 100% !important;
     height: 100% !important;
   }
+
+  slideshow-component:has(slideshow-controls[thumbnails]) slideshow-container {
+    grid-area: slides !important;
+    width: 100% !important;
+  }
 }
 
 /* Beautiful Thumbnail Cards */
@@ -256,6 +261,13 @@ search-button button:hover {
   cursor: pointer !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
   box-sizing: border-box !important;
+}
+
+.slideshow-controls__thumbnail img {
+  border-radius: 6px !important;
+  object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .slideshow-controls__thumbnail:hover {
@@ -392,4 +404,134 @@ search-button button:hover {
   overflow: hidden !important;
   clip: rect(0,0,0,0) !important;
 }
+
+/* 3. Premium E-Commerce Price Detailing */
+.price,
+.price-item,
+.price-item--sale {
+  font-family: 'Cinzel', serif !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  color: #fcf6ba !important; /* Premium sand gold */
+  letter-spacing: 0.05em !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6) !important;
+  display: inline-block !important;
+  margin-top: 0.25rem !important;
+}
+
+.price-item--regular.compare-at-price {
+  font-family: 'Cinzel', serif !important;
+  font-size: 1.2rem !important;
+  color: #7b9c8c !important; /* Sage emerald */
+  text-decoration: line-through !important;
+  margin-left: 0.75rem !important;
+  opacity: 0.7 !important;
+}
+
+/* 4. Premium Quantity Selector Revamp */
+.quantity-selector {
+  background: rgba(3, 10, 8, 0.75) !important;
+  border: 1.5px solid rgba(191, 149, 63, 0.25) !important;
+  border-radius: 25px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(0,0,0,0.5) !important;
+  overflow: hidden !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  padding: 2px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-width: 130px !important;
+  height: 44px !important;
+}
+
+.quantity-selector:hover {
+  border-color: rgba(252, 246, 186, 0.55) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65), 0 0 15px rgba(252, 246, 186, 0.15) !important;
+}
+
+.quantity-selector :is(.quantity-minus, .quantity-plus) {
+  background: transparent !important;
+  color: #8ea89c !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 100% !important;
+  border: none !important;
+}
+
+.quantity-selector :is(.quantity-minus, .quantity-plus):hover {
+  color: #fcf6ba !important;
+  transform: scale(1.2) !important;
+}
+
+.quantity-selector .quantity-minus:active {
+  transform: scale(0.9) rotate(-10deg) !important;
+}
+
+.quantity-selector .quantity-plus:active {
+  transform: scale(0.9) rotate(10deg) !important;
+}
+
+.quantity-selector input[type='number'] {
+  background: transparent !important;
+  color: #ffffff !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  border: none !important;
+  text-align: center !important;
+  width: 44px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 5. Premium Currency Selector (INR) Header Revamp */
+.dropdown-localization__button,
+.localization-selector {
+  background: transparent !important;
+  border: 1px solid rgba(191, 149, 63, 0.25) !important;
+  border-radius: 20px !important;
+  padding: 6px 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  color: #fcf6ba !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+  cursor: pointer !important;
+}
+
+.dropdown-localization__button:hover,
+.localization-selector:hover {
+  border-color: #fcf6ba !important;
+  background: rgba(191, 149, 63, 0.1) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 15px rgba(191, 149, 63, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.dropdown-localization__button .icon-caret,
+.localization-selector .icon-caret {
+  display: inline-flex !important;
+  align-items: center !important;
+  transition: transform 0.3s ease !important;
+  width: 8px !important;
+  height: 8px !important;
+  color: #bf953f !important;
+}
+
+.dropdown-localization__button:hover .icon-caret,
+.localization-selector:hover .icon-caret {
+  transform: rotate(180deg) !important;
+  color: #fcf6ba !important;
+}
+
 
