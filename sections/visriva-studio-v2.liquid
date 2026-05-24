@@ -1,6 +1,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="{{ 'visriva-studio-v2.css' | asset_url }}" rel="stylesheet">
 
 {%- comment -%} Look up products by settings selection, fallback handle search, or collection matching {%- endcomment -%}
@@ -139,12 +139,24 @@
         <div class="studio-v2-preview-grid">
           <article class="studio-v2-preview-card is-active" data-studio-preview-card="front">
             <h3>Front</h3>
-            <canvas width="440" height="560" data-studio-canvas="front" aria-label="Front preview canvas"></canvas>
+            <div class="studio-v2-frame-wrapper">
+              <span class="frame-corner corner-tl"></span>
+              <span class="frame-corner corner-tr"></span>
+              <span class="frame-corner corner-bl"></span>
+              <span class="frame-corner corner-br"></span>
+              <canvas width="440" height="560" data-studio-canvas="front" aria-label="Front preview canvas"></canvas>
+            </div>
             <p class="studio-v2-model-hint">Click to edit front design</p>
           </article>
           <article class="studio-v2-preview-card" data-studio-preview-card="back">
             <h3>Back</h3>
-            <canvas width="440" height="560" data-studio-canvas="back" aria-label="Back preview canvas"></canvas>
+            <div class="studio-v2-frame-wrapper">
+              <span class="frame-corner corner-tl"></span>
+              <span class="frame-corner corner-tr"></span>
+              <span class="frame-corner corner-bl"></span>
+              <span class="frame-corner corner-br"></span>
+              <canvas width="440" height="560" data-studio-canvas="back" aria-label="Back preview canvas"></canvas>
+            </div>
             <p class="studio-v2-model-hint">Click to edit back design</p>
           </article>
         </div>
@@ -198,9 +210,10 @@
             </select>
           </div>
 
-          <label class="studio-v2-label" for="studio-size" style="margin-top:1rem">Size</label>
-          <div class="studio-v2-select-wrap">
-            <select id="studio-size" data-studio-size></select>
+          <label class="studio-v2-label" style="margin-top:1rem">Size</label>
+          <div class="studio-v2-size-picker-container">
+            <div class="studio-v2-size-picker" data-studio-size-picker role="radiogroup" aria-label="Select garment size"></div>
+            <select id="studio-size" class="studio-v2-hidden-select" data-studio-size aria-hidden="true" tabindex="-1"></select>
           </div>
         </div>
 

@@ -20,6 +20,7 @@
   const backCard = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-preview-card="back"]'));
   const garmentSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-garment]'));
   const sizeSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-size]'));
+  const sizePicker = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-size-picker]'));
   const swatches = /** @type {NodeListOf<HTMLElement>} */ (root.querySelectorAll('[data-studio-swatch]'));
   const customColorPicker = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-picker]'));
   const customColorHex = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-hex]'));
@@ -156,19 +157,89 @@
     renderCanvas(backCtx, backCanvas, 'back');
   }
 
-  // Populate size dropdown
+  // Populate size dropdown and size picker grid
   function populateSizes() {
     if (!sizeSelect) return;
     const product = PRODUCTS[currentGarment];
     if (!product) return;
+    
+    // Clear elements
     sizeSelect.innerHTML = '';
+    if (sizePicker) sizePicker.innerHTML = '';
+    
     product.variants.forEach((/** @type {any} */ v) => {
+      // 1. Populate hidden native select option
       const opt = document.createElement('option');
       opt.value = v.id;
       opt.textContent = v.title;
       if (!v.available) opt.disabled = true;
       sizeSelect.appendChild(opt);
+
+      // 2. Populate premium visual button
+      if (sizePicker) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'studio-v2-size-btn';
+        btn.dataset.variantId = v.id;
+        
+        // Parse variant title: e.g., "S / 430 GSM" or just "S"
+        const parts = v.title.split('/');
+        const sizeCode = parts[0]?.trim() || v.title;
+        const subText = parts[1]?.trim() || '';
+        
+        const codeSpan = document.createElement('span');
+        codeSpan.className = 'size-btn-code';
+        codeSpan.textContent = sizeCode;
+        btn.appendChild(codeSpan);
+        
+        if (subText) {
+          const subSpan = document.createElement('span');
+          subSpan.className = 'size-btn-sub';
+          subSpan.textContent = subText;
+          btn.appendChild(subSpan);
+        }
+        
+        if (!v.available) {
+          btn.disabled = true;
+          btn.classList.add('is-out-of-stock');
+          // Add a diagonal slash for out of stock visual
+          const line = document.createElement('span');
+          line.className = 'out-of-stock-line';
+          btn.appendChild(line);
+        } else {
+          btn.addEventListener('click', () => {
+            // Remove active classes from all size buttons
+            sizePicker.querySelectorAll('.studio-v2-size-btn').forEach(b => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            
+            // Sync with hidden select
+            sizeSelect.value = v.id;
+            
+            // Dispatch change event to trigger updates
+            sizeSelect.dispatchEvent(new Event('change'));
+          });
+        }
+        
+        sizePicker.appendChild(btn);
+      }
     });
+
+    // Select the first available variant by default
+    const firstAvailable = product.variants.find((/** @type {any} */ v) => v.available);
+    if (firstAvailable) {
+      sizeSelect.value = firstAvailable.id;
+      if (sizePicker) {
+        const activeBtn = sizePicker.querySelector(`[data-variant-id="${firstAvailable.id}"]`);
+        if (activeBtn) activeBtn.classList.add('is-active');
+      }
+    } else if (product.variants.length > 0) {
+      sizeSelect.value = product.variants[0].id;
+      if (sizePicker) {
+        const activeBtn = sizePicker.querySelector(`[data-variant-id="${product.variants[0].id}"]`);
+        if (activeBtn) activeBtn.classList.add('is-active');
+      }
+    }
+    
     updateSizeReadout();
     updateVariantId();
   }
