@@ -621,32 +621,32 @@ slideshow-slide {
 .dropdown-localization__button,
 .localization-selector {
   background: transparent !important;
-  border: 1px solid rgba(191, 149, 63, 0.25) !important;
-  border-radius: 20px !important;
-  padding: 6px 14px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 4px 8px !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
+  gap: 5px !important;
   color: #fcf6ba !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 0.85rem !important;
   font-weight: 600 !important;
   letter-spacing: 0.08em !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+  box-shadow: none !important;
   cursor: pointer;
 }
 
 .dropdown-localization__button:hover,
 .localization-selector:hover {
-  border-color: #fcf6ba !important;
-  background: rgba(191, 149, 63, 0.1) !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 6px 15px rgba(191, 149, 63, 0.15) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
   color: #ffffff !important;
+  border: none !important;
 }
 
-/* Force currency selector to display correct Indian flag SVG from Shopify CDN */
+/* Force currency selector Indian flag to display as a clean circle like native theme */
 .dropdown-localization__button .icon-flag,
 .localization-selector .icon-flag {
   display: none !important; /* Hide native flag to prevent duplicates if enabled */
@@ -658,15 +658,16 @@ slideshow-slide {
   content: "" !important;
   display: inline-block !important;
   width: 18px !important;
-  height: 13px !important;
+  height: 18px !important;
   background-image: url("https://cdn.shopify.com/assets/images/flags/in.svg") !important;
   background-size: cover !important;
   background-position: center !important;
-  border-radius: 2px !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-  margin-right: 6px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35) !important;
+  margin-right: 5px !important;
   vertical-align: middle !important;
 }
+
 
 .dropdown-localization__button .icon-caret,
 .localization-selector .icon-caret {
