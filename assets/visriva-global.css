@@ -284,14 +284,31 @@ search-button button:hover {
   transform: translateY(-2px) scale(1.06) !important;
 }
 
-/* Main Upfront Active Image Frame */
+/* Main Upfront Active Image Frame & White Border Removal */
 .product-media-container {
   border-radius: 12px !important;
   overflow: hidden !important;
-  background: #040a08 !important;
+  /* Transparent background to prevent ugly white sidebar block shapes */
+  background: transparent !important;
+  background-color: transparent !important;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75) !important;
-  border: 1.5px solid rgba(191, 149, 63, 0.15) !important;
+  
+  /* Beveled structural obsidian & gold designer frame */
+  border: 2px solid #141c19 !important;
+  outline: 1.5px solid rgba(191, 149, 63, 0.3) !important;
+  outline-offset: -2px !important;
+  
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Completely enforce transparent backgrounds on containing elements */
+.media-fit-contain :is(img, .deferred-media__poster-image),
+.product-media-container img,
+.product-media-container--image,
+.slideshow__slide,
+slideshow-slide {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .product-media-container img {
@@ -304,10 +321,12 @@ search-button button:hover {
 }
 
 .product-media-container:hover {
-  border-color: rgba(191, 149, 63, 0.35) !important;
+  border-color: #1d2824 !important;
+  outline-color: rgba(252, 246, 186, 0.55) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), 0 0 20px rgba(252, 246, 186, 0.1) !important;
 }
 
-/* 2. Premium Animated Size Swatches (Editorial Cards) */
+/* 2. Premium Animated Size Swatches (Editorial Cards) - Optimized for Laptop & Phone */
 .variant-option--buttons {
   display: flex !important;
   flex-wrap: wrap !important;
@@ -405,23 +424,23 @@ search-button button:hover {
   clip: rect(0,0,0,0) !important;
 }
 
-/* 3. Premium E-Commerce Price Detailing */
+/* 3. Premium E-Commerce Price Detailing - Readable Sans-Serif Body Font (Outfit) */
 .price,
 .price-item,
 .price-item--sale {
-  font-family: 'Cinzel', serif !important;
-  font-size: 1.75rem !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 1.65rem !important;
   font-weight: 700 !important;
   color: #fcf6ba !important; /* Premium sand gold */
-  letter-spacing: 0.05em !important;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6) !important;
+  letter-spacing: 0.02em !important;
+  text-shadow: none !important;
   display: inline-block !important;
   margin-top: 0.25rem !important;
 }
 
 .price-item--regular.compare-at-price {
-  font-family: 'Cinzel', serif !important;
-  font-size: 1.2rem !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 1.15rem !important;
   color: #7b9c8c !important; /* Sage emerald */
   text-decoration: line-through !important;
   margin-left: 0.75rem !important;
@@ -506,7 +525,7 @@ search-button button:hover {
   letter-spacing: 0.08em !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .dropdown-localization__button:hover,
@@ -534,4 +553,22 @@ search-button button:hover {
   color: #fcf6ba !important;
 }
 
+/* 6. High-End Phone & Tablet Pagination Indicators */
+.slideshow-controls__dots button::after {
+  background-color: rgba(191, 149, 63, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
 
+.slideshow-controls__dots button[aria-selected="true"]::after {
+  background-color: var(--v2-gold-light) !important;
+  box-shadow: 0 0 8px var(--v2-gold-glow) !important;
+  transform: scale(1.2) !important;
+}
+
+@media screen and (max-width: 749px) {
+  .product-media-container {
+    border-radius: 8px !important;
+    margin-inline: 0 !important;
+    border-width: 1px !important;
+  }
+}
