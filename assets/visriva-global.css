@@ -296,6 +296,7 @@ search-button button:hover {
     justify-content: flex-start !important;
     align-items: center !important;
     padding: 0 !important;
+    padding-top: 2rem !important; /* Elegant vertical breathing room below the header menu */
     order: 0 !important;
   }
 
@@ -355,11 +356,11 @@ search-button button:hover {
   /* Transparent background to prevent ugly white sidebar block shapes */
   background: transparent !important;
   background-color: transparent !important;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(191, 149, 63, 0.25) !important;
   
-  /* Beveled structural obsidian & gold designer frame */
-  border: 2px solid #141c19 !important;
-  outline: 1.5px solid rgba(191, 149, 63, 0.3) !important;
+  /* Beveled structural gold designer frame */
+  border: 2px solid #bf953f !important;
+  outline: 1.5px solid #fcf6ba !important;
   outline-offset: -2px !important;
   
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -396,9 +397,9 @@ slideshow-slide {
 }
 
 .product-media-container:hover {
-  border-color: #1d2824 !important;
-  outline-color: rgba(252, 246, 186, 0.55) !important;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), 0 0 20px rgba(252, 246, 186, 0.1) !important;
+  border-color: #fcf6ba !important;
+  outline-color: #ffffff !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(252, 246, 186, 0.45) !important;
 }
 
 /* 2. Premium Animated Size Swatches (Editorial Cards) - Optimized for Laptop & Phone */
@@ -610,6 +611,19 @@ slideshow-slide {
   transform: translateY(-1px) !important;
   box-shadow: 0 6px 15px rgba(191, 149, 63, 0.15) !important;
   color: #ffffff !important;
+}
+
+/* Force currency selector to display correct Indian flag SVG from Shopify CDN */
+.dropdown-localization__button .icon-flag,
+.localization-selector .icon-flag {
+  background-image: url("https://cdn.shopify.com/assets/images/flags/in.svg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border-radius: 2px !important;
+  display: inline-block !important;
+  width: 18px !important;
+  height: 13px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
 }
 
 .dropdown-localization__button .icon-caret,
