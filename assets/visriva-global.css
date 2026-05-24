@@ -351,11 +351,32 @@ search-button button:hover {
 
 /* Main Upfront Active Image Frame & White Border Removal */
 .product-media-container {
-  border-radius: 12px !important;
-  overflow: hidden !important;
-  /* Transparent background to prevent ugly white sidebar block shapes */
+  /* Isolate active slide to 100% width, hiding any peeking images on left/right */
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   background: transparent !important;
   background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  overflow: visible !important; /* Allow the inner frame shadow to show perfectly */
+}
+
+/* Beautiful dynamic gapless frame styled directly on inner .product-media */
+.product-media {
+  aspect-ratio: var(--media-preview-ratio, var(--ratio)) !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  margin-inline: auto !important;
+  display: block !important;
+
+  border-radius: 12px !important;
+  overflow: hidden !important;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(191, 149, 63, 0.25) !important;
   
   /* Beveled structural gold designer frame */
@@ -364,14 +385,6 @@ search-button button:hover {
   outline-offset: -2px !important;
   
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-
-  /* Perfect dynamic gapless frame fitting */
-  aspect-ratio: var(--media-preview-ratio, var(--ratio)) !important;
-  width: auto !important;
-  max-width: 100% !important;
-  height: 100% !important;
-  margin-inline: auto !important;
-  display: block !important;
 }
 
 /* Completely enforce transparent backgrounds on containing elements */
@@ -392,11 +405,11 @@ slideshow-slide {
 }
 
 /* High-end hover zoom on upfront image */
-.product-media-container:hover img {
+.product-media:hover img {
   transform: scale(1.04) !important;
 }
 
-.product-media-container:hover {
+.product-media:hover {
   border-color: #fcf6ba !important;
   outline-color: #ffffff !important;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(252, 246, 186, 0.45) !important;
@@ -688,16 +701,16 @@ slideshow-slide *,
   background: transparent !important;
 }
 
-/* 8. Luxury Editorial Product Description Lookbook Styling */
+/* 8. Luxury Editorial Product Description Lookbook Styling & Cohesive Spacing Revamp */
 .product-details .rte, 
 .product-details p,
 .rte p {
-  line-height: 1.95 !important;
-  font-size: 0.96rem !important;
-  color: #a3c2b2 !important; /* Premium muted sage emerald */
-  letter-spacing: 0.04em !important;
-  font-weight: 300 !important;
-  margin-bottom: 1.25rem !important;
+  line-height: 1.85 !important;
+  font-size: 1.08rem !important;
+  color: #e0ece6 !important; /* Brighter, highly premium warm silver-sand */
+  letter-spacing: 0.03em !important;
+  font-weight: 400 !important;
+  margin-bottom: 1rem !important;
 }
 
 .product-details .rte strong,
@@ -706,7 +719,7 @@ slideshow-slide *,
   color: #fcf6ba !important; /* Elegant glowing gold highlights for key product features */
   font-weight: 600 !important;
   letter-spacing: 0.05em !important;
-  text-shadow: 0 0 10px rgba(252, 246, 186, 0.35) !important;
+  text-shadow: 0 0 10px rgba(252, 246, 186, 0.45) !important;
   padding: 0 2px !important;
   border-bottom: 1px dashed rgba(252, 246, 186, 0.3) !important;
 }
@@ -715,5 +728,30 @@ slideshow-slide *,
 .product-details .rte br,
 .product-details p br {
   margin-bottom: 0.5rem !important;
+}
+
+/* Tighten spacing in the details block to remove gaps for formal professional look */
+.product-details > * {
+  margin-block-start: 0 !important;
+  margin-block-end: 1rem !important;
+}
+
+.product-details .variant-option--buttons {
+  margin-top: 1rem !important;
+  margin-bottom: 1.2rem !important;
+}
+
+.product-details .buy-buttons {
+  margin-top: 1.2rem !important;
+  margin-bottom: 1.8rem !important;
+}
+
+.product-details .divider,
+.product-details hr {
+  margin-top: 0.8rem !important;
+  margin-bottom: 1rem !important;
+  opacity: 0.2 !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(191, 149, 63, 0.4) !important;
 }
 
