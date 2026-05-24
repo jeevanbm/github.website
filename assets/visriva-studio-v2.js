@@ -166,10 +166,10 @@
     sizeSelect.innerHTML = '';
     
     // Clear visible size button container if it exists
-    const sizesContainer = root.querySelector('[data-studio-sizes-container]');
+    const sizesContainer = root?.querySelector('[data-studio-sizes-container]');
     if (sizesContainer) sizesContainer.innerHTML = '';
     
-    product.variants.forEach((/** @type {any} */ v, index) => {
+    product.variants.forEach((/** @type {any} */ v, /** @type {number} */ index) => {
       // 1. Add to the hidden select
       const opt = document.createElement('option');
       opt.value = v.id;
