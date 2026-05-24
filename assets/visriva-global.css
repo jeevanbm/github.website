@@ -229,43 +229,71 @@ search-button button:hover {
 
 /* 1. Professional E-Commerce Image Gallery (Amazon / Myntra Style) */
 @media screen and (min-width: 750px) {
-  /* Dynamic alignment layout for left thumbnails and right featured image */
+  /* Position thumbnails horizontally below the main product image (Amazon-style) */
   slideshow-component:has(slideshow-controls[thumbnails]) {
-    display: grid !important;
-    grid-template-areas: "controls slides" !important;
-    grid-template-columns: 80px 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 1.5rem !important;
-    align-items: start !important;
+    align-items: center !important;
+    width: 100% !important;
   }
   
-  slideshow-controls[thumbnails][pagination-position="left"] {
-    grid-area: controls !important;
-    min-height: 100% !important;
-    height: 100% !important;
+  slideshow-controls[thumbnails] {
+    order: 1 !important; /* Put thumbnails below the image */
+    width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    display: flex !important;
+    justify-content: center !important;
   }
 
   slideshow-component:has(slideshow-controls[thumbnails]) slideshow-container {
-    grid-area: slides !important;
+    order: 0 !important; /* Main image on top */
     width: 100% !important;
   }
 
-  /* Stack product page details below the main image on desktop */
-  .product-information__grid:not(.product-information--media-none) {
+  /* Force thumbnails to scroll horizontally and center on desktop */
+  slideshow-controls[thumbnails]:is([pagination-position='right'], [pagination-position='left']) {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 3.5rem !important;
+    flex-direction: row !important;
+    height: auto !important;
+    min-height: auto !important;
     width: 100% !important;
-    max-width: 100% !important;
-    grid-template-columns: 1fr !important;
-    grid-column: 1 / -1 !important;
+    justify-content: center !important;
+  }
+
+  slideshow-controls[thumbnails]:is([pagination-position='right'], [pagination-position='left']) .slideshow-controls__thumbnails-container {
+    overflow: auto hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  slideshow-controls[thumbnails]:is([pagination-position='right'], [pagination-position='left']) .slideshow-controls__thumbnails {
+    flex-direction: row !important;
+    padding-block: var(--padding-2xs) !important;
+    padding-inline: 0 !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    gap: var(--gap-xs) !important;
+  }
+
+  /* Spacious side-by-side layout like Amazon */
+  .product-information__grid:not(.product-information--media-none) {
+    display: grid !important;
+    grid-template-columns: 1.15fr 0.85fr !important;
+    gap: 4.5rem !important;
+    width: 100% !important;
+    max-width: var(--page-width, 1400px) !important;
+    margin-inline: auto !important;
   }
 
   .product-information__media {
     width: 100% !important;
     max-width: 100% !important;
     display: flex !important;
-    justify-content: center !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
     align-items: center !important;
     padding: 0 !important;
     order: 0 !important;
@@ -273,16 +301,15 @@ search-button button:hover {
 
   .product-information__media slideshow-component {
     width: 100% !important;
-    max-width: 700px !important;
+    max-width: 750px !important; /* Majestic premium visual width for active media */
     margin-inline: auto !important;
   }
 
   .product-details {
     width: 100% !important;
-    max-width: 650px !important;
-    margin-inline: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
     order: 1 !important;
   }
 }
