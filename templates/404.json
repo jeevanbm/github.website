@@ -12,7 +12,12 @@
     "visriva_studio_v2_VtfWen": {
       "type": "visriva-studio-v2",
       "name": "VISRIVA Studio V2",
-      "settings": {}
+      "settings": {
+        "tshirt_product": "premium-monkey-d-luffy-one-piece",
+        "polo_product": "premium-monkey-d-luffy-one-piece",
+        "sweatshirt_product": "premium-monkey-d-luffy-one-piece",
+        "hoodie_product": "premium-monkey-d-luffy-one-piece"
+      }
     },
     "main": {
       "type": "main-404",
