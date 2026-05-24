@@ -10,7 +10,83 @@ body {
   font-family: 'Montserrat', sans-serif !important;
 }
 
-/* Logo will be handled via theme.liquid inline styles to support asset_url */
+/* ✦ VISRIVA Logo — Premium Elegant Treatment */
+
+/* Force logo image to render at a larger, more dominant size */
+.header-logo__image {
+  object-fit: contain !important;
+  /* min-height ensures it's always large regardless of theme setting */
+  min-height: 52px !important;
+  max-height: 70px !important;
+  width: auto !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.4s ease,
+              opacity 0.3s ease !important;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)) !important;
+}
+
+/* Hover: elegant gold glow halo + gentle lift */
+.header-logo:hover .header-logo__image {
+  transform: scale(1.06) translateY(-1px) !important;
+  filter:
+    drop-shadow(0 0 12px rgba(191, 149, 63, 0.6))
+    drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5)) !important;
+}
+
+/* Logo link — remove any default styling, add smooth interaction */
+.header-logo {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  position: relative !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* Elegant golden shimmer sweep over logo on hover */
+.header-logo::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: -6px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(ellipse at center,
+    rgba(191, 149, 63, 0.12) 0%,
+    transparent 70%) !important;
+  opacity: 0 !important;
+  transition: opacity 0.4s ease !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+.header-logo:hover::after {
+  opacity: 1 !important;
+}
+
+/* Mobile logo — also elegantly sized */
+@media screen and (max-width: 749px) {
+  .header-logo__image {
+    min-height: 38px !important;
+    max-height: 52px !important;
+  }
+}
+
+/* Entrance animation — logo gracefully fades in on load */
+@keyframes logo-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  }
+}
+
+.header-logo__image-container {
+  animation: logo-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
 
 .logo-section::after {
   font-size: 3rem;
