@@ -843,22 +843,96 @@ slideshow-slide *,
   font-size: 1.05rem !important;
 }
 
-/* Add to Cart button — slim but bold text */
+/* ✦ Add to Cart — Premium Gold Luxury Button */
 .product-details .add-to-cart-button,
-.product-details .product-form-buttons button {
-  padding-block: 0.7rem !important;
-  height: 46px !important;
-  font-size: 0.95rem !important;
-  letter-spacing: 0.1em !important;
+.product-details .product-form-buttons .add-to-cart-button {
+  position: relative !important;
+  overflow: hidden !important;
+  height: 52px !important;
+  padding-block: 0 !important;
+  padding-inline: 2rem !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  font-family: 'Outfit', sans-serif !important;
+  color: #0a0e06 !important;
+  background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #bf953f 70%, #aa771c 100%) !important;
+  background-size: 250% 100% !important;
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 20px rgba(191, 149, 63, 0.45), 0 1px 3px rgba(0,0,0,0.4) !important;
+  transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+  cursor: pointer !important;
 }
 
-/* Buy Now / Accelerated checkout */
-.product-details shopify-payment-button,
-.product-details .shopify-payment-button__button,
-.product-details .accelerated-checkout-block button {
-  min-height: 46px !important;
-  font-size: 0.95rem !important;
+.product-details .add-to-cart-button:hover {
+  background-position: 100% 0 !important;
+  box-shadow: 0 6px 28px rgba(191, 149, 63, 0.65), 0 2px 6px rgba(0,0,0,0.5) !important;
+  transform: translateY(-1px) !important;
 }
+
+.product-details .add-to-cart-button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 3px 12px rgba(191, 149, 63, 0.4) !important;
+}
+
+/* Shimmer sweep animation on ATC */
+.product-details .add-to-cart-button::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -75% !important;
+  width: 50% !important;
+  height: 100% !important;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%) !important;
+  animation: atc-shimmer 3s ease-in-out infinite !important;
+  pointer-events: none !important;
+}
+
+@keyframes atc-shimmer {
+  0%   { left: -75%; }
+  60%  { left: 130%; }
+  100% { left: 130%; }
+}
+
+/* ✦ Buy Now — Deep Premium Dark Button */
+.product-details shopify-payment-button .shopify-payment-button__button--unbranded,
+.product-details .shopify-payment-button__button--unbranded {
+  height: 52px !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  font-family: 'Outfit', sans-serif !important;
+  background: linear-gradient(135deg, #1a0533 0%, #3d0080 50%, #1a0533 100%) !important;
+  background-size: 200% 100% !important;
+  border: 1px solid rgba(191, 149, 63, 0.3) !important;
+  border-radius: 6px !important;
+  color: #fcf6ba !important;
+  box-shadow: 0 4px 18px rgba(61, 0, 128, 0.5), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+}
+
+.product-details shopify-payment-button .shopify-payment-button__button--unbranded:hover,
+.product-details .shopify-payment-button__button--unbranded:hover {
+  background-position: 100% 0 !important;
+  box-shadow: 0 6px 26px rgba(61, 0, 128, 0.7), 0 0 0 1px rgba(191,149,63,0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.product-details shopify-payment-button .shopify-payment-button__button--unbranded:active,
+.product-details .shopify-payment-button__button--unbranded:active {
+  transform: translateY(0) !important;
+}
+
+/* Accelerated checkout (branded) buttons wrapper */
+.product-details .accelerated-checkout-block {
+  border-radius: 6px !important;
+  overflow: hidden !important;
+}
+
+
 
 /* Description / body text in RTE */
 .product-details .rte,
