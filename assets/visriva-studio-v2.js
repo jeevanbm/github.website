@@ -166,27 +166,38 @@
     renderCanvas(backCtx, backCanvas, 'back');
   }
 
-  // Populate size dropdown and size button cards
+  // Populate size dropdown and size button cards based on current garment + GSM
   function populateSizes() {
     if (!sizeSelect) return;
-    const product = PRODUCTS[currentGarment];
-    if (!product) return;
-    
+    const garmentData = PRODUCTS[currentGarment];
+    if (!garmentData) return;
+
+    // Get the currently selected GSM from the dropdown
+    const currentGsm = gsmSelect ? gsmSelect.value : (garmentData.default_gsm || '');
+
+    // Look up the product for this garment+GSM combo
+    const gsmProducts = garmentData.gsm_products || {};
+    const product = gsmProducts[currentGsm] || Object.values(gsmProducts)[0];
+    if (!product || !product.variants) return;
+
     // Clear select
     sizeSelect.innerHTML = '';
-    
-    // Clear visible size button container if it exists
+
+    // Clear visible size button container
     const sizesContainer = root?.querySelector('[data-studio-sizes-container]');
     if (sizesContainer) sizesContainer.innerHTML = '';
-    
-    product.variants.forEach((/** @type {any} */ v, /** @type {number} */ index) => {
+
+    product.variants.forEach((/** @type {any} */ v, /** @type {number} */ _index) => {
       // 1. Add to the hidden select
       const opt = document.createElement('option');
       opt.value = v.id;
-      opt.textContent = v.title;
+      // Support both "S" and "S / 220 GSM" style titles — display only the size part
+      const rawTitle = v.title || '';
+      const displayTitle = rawTitle.split('/')[0].trim();
+      opt.textContent = displayTitle;
       if (!v.available) opt.disabled = true;
       sizeSelect.appendChild(opt);
-      
+
       // 2. Add a visible premium button card
       if (sizesContainer) {
         const btn = document.createElement('button');
@@ -196,46 +207,41 @@
           btn.classList.add('is-sold-out');
           btn.disabled = true;
         }
-        
-        // Extract size title (e.g., "S" from "S / 430 GSM")
-        const rawTitle = v.title || '';
-        const displayTitle = rawTitle.split('/')[0].trim();
-        
+
         btn.innerHTML = `
           <span class="studio-v2-size-title">${displayTitle}</span>
           ${v.available ? '' : '<span class="studio-v2-size-badge">Sold Out</span>'}
         `;
-        
-        btn.setAttribute('aria-label', `Size ${v.title}`);
-        
-        // Event listener for button click
+
+        btn.setAttribute('aria-label', `Size ${displayTitle}`);
+
         btn.addEventListener('click', () => {
           if (!v.available) return;
-          
-          // Select this option in the hidden select
           sizeSelect.value = v.id;
-          
-          // Trigger change event to fire existing listeners
           sizeSelect.dispatchEvent(new Event('change'));
         });
-        
+
         sizesContainer.appendChild(btn);
       }
     });
-    
-    // Auto-select the first available variant on load
+
+    // Auto-select the first available variant
     if (sizesContainer) {
       const activeVariant = product.variants.find((/** @type {any} */ v) => v.available);
       if (activeVariant) {
         sizeSelect.value = activeVariant.id;
         const index = product.variants.findIndex((/** @type {any} */ v) => v.id === activeVariant.id);
         const buttons = sizesContainer.querySelectorAll('.studio-v2-size-card');
-        if (buttons[index]) {
-          buttons[index].classList.add('is-active');
+        if (buttons[index]) buttons[index].classList.add('is-active');
+
+        // Update the price display from this product's variant price (in paise → rupees)
+        if (priceDisplay && activeVariant.price) {
+          const priceInRupees = Math.round(activeVariant.price / 100);
+          priceDisplay.textContent = `${CURRENCY}${priceInRupees}`;
         }
       }
     }
-    
+
     updateSizeReadout();
     updateVariantId();
   }
@@ -257,47 +263,40 @@
 
   function updateConditionalFields() {
     const garment = currentGarment;
+    const garmentData = PRODUCTS[garment] || {};
+    const gsmProducts = garmentData.gsm_products || {};
     /** @type {string[]} */
-    let gsmOptions = [];
+    const gsmOptions = Object.keys(gsmProducts);
     const isHoodie = garment === 'hoodie';
-    
-    if (garment === 'tshirt') {
-      gsmOptions = ['180 GSM', '220 GSM', '240 GSM'];
-      if (materialWrapper) materialWrapper.style.display = 'block';
-      if (gsmWrapper) gsmWrapper.style.display = 'block';
-    } else if (garment === 'hoodie') {
-      gsmOptions = ['300 GSM', '350 GSM', '400 GSM'];
-      if (materialWrapper) materialWrapper.style.display = 'none';
-      if (gsmWrapper) gsmWrapper.style.display = 'block';
-    } else if (garment === 'polo') {
-      gsmOptions = ['160 GSM', '200 GSM', '240 GSM'];
-      if (materialWrapper) materialWrapper.style.display = 'block';
-      if (gsmWrapper) gsmWrapper.style.display = 'block';
-    } else if (garment === 'sweatshirt') {
-      gsmOptions = ['280 GSM', '320 GSM', '360 GSM'];
-      if (materialWrapper) materialWrapper.style.display = 'none';
-      if (gsmWrapper) gsmWrapper.style.display = 'block';
+
+    // Show/hide material selector (hoodies and sweatshirts are fleece — no material choice)
+    if (materialWrapper) {
+      materialWrapper.style.display = (garment === 'tshirt' || garment === 'polo') ? 'block' : 'none';
     }
+    if (gsmWrapper) gsmWrapper.style.display = gsmOptions.length > 0 ? 'block' : 'none';
 
     if (defaultSwatchesContainer) defaultSwatchesContainer.style.display = isHoodie ? 'none' : 'block';
     if (hoodieSwatchesContainer) hoodieSwatchesContainer.style.display = isHoodie ? 'block' : 'none';
 
-    // Auto-select first visible swatch if the currently active swatch is now hidden
+    // Auto-select first visible swatch
     const activeContainer = isHoodie ? hoodieSwatchesContainer : defaultSwatchesContainer;
     if (activeContainer) {
-       const activeSwatchInContainer = activeContainer.querySelector('.is-active');
-       if (!activeSwatchInContainer) {
-         const firstSwatch = /** @type {HTMLElement | null} */ (activeContainer.querySelector('[data-studio-swatch]'));
-         if (firstSwatch) selectSwatch(firstSwatch);
-       }
+      const activeSwatchInContainer = activeContainer.querySelector('.is-active');
+      if (!activeSwatchInContainer) {
+        const firstSwatch = /** @type {HTMLElement | null} */ (activeContainer.querySelector('[data-studio-swatch]'));
+        if (firstSwatch) selectSwatch(firstSwatch);
+      }
     }
 
     if (gsmSelect) {
-      // Preserve current selection if it exists in the new options
       const currentSelection = gsmSelect.value;
       gsmSelect.innerHTML = gsmOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('');
       if (gsmOptions.includes(currentSelection)) {
         gsmSelect.value = currentSelection;
+      } else {
+        // Default to the garment's default_gsm if available
+        const defaultGsm = garmentData.default_gsm || gsmOptions[0] || '';
+        if (defaultGsm) gsmSelect.value = defaultGsm;
       }
     }
 
@@ -470,7 +469,11 @@
     renderBothCanvases();
   });
 
-  gsmSelect?.addEventListener('change', updateGsmAndMaterialReadouts);
+  gsmSelect?.addEventListener('change', () => {
+    // When GSM changes, reload sizes from the newly selected GSM's product
+    populateSizes();
+    updateGsmAndMaterialReadouts();
+  });
   materialSelect?.addEventListener('change', updateGsmAndMaterialReadouts);
 
   sizeSelect?.addEventListener('change', () => {

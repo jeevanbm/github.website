@@ -3,29 +3,43 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="{{ 'visriva-studio-v2.css' | asset_url }}" rel="stylesheet">
 
-{%- comment -%} Look up products by settings selection, fallback handle search, or collection matching {%- endcomment -%}
-{%- assign tshirt_prod = all_products[section.settings.tshirt_product] -%}
-{%- if tshirt_prod == empty -%}{%- assign tshirt_prod = all_products['custom-t-shirt'] -%}{%- endif -%}
-{%- if tshirt_prod == empty -%}{%- assign tshirt_prod = all_products['t-shirt'] -%}{%- endif -%}
-{%- if tshirt_prod == empty -%}
-  {%- for product in collections.all.products -%}
-    {%- if product.handle contains 'custom' or product.handle contains 'design' or product.handle contains 't-shirt' -%}
-      {%- assign tshirt_prod = product -%}{%- break -%}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endif -%}
+{%- comment -%} ── Per-GSM product lookups for T-Shirt ── {%- endcomment -%}
+{%- assign tshirt_180 = all_products[section.settings.tshirt_180_product] -%}
+{%- assign tshirt_200 = all_products[section.settings.tshirt_200_product] -%}
+{%- assign tshirt_220 = all_products[section.settings.tshirt_220_product] -%}
+{%- assign tshirt_240 = all_products[section.settings.tshirt_240_product] -%}
+{%- comment -%} Fallback: if no per-GSM product set, try generic handle {%- endcomment -%}
+{%- if tshirt_220 == empty -%}{%- assign tshirt_220 = all_products['custom-t-shirt'] -%}{%- endif -%}
+{%- if tshirt_220 == empty -%}{%- assign tshirt_220 = all_products['t-shirt'] -%}{%- endif -%}
 
-{%- assign polo_prod = all_products[section.settings.polo_product] -%}
-{%- if polo_prod == empty -%}{%- assign polo_prod = all_products['custom-polo'] -%}{%- endif -%}
-{%- if polo_prod == empty -%}{%- assign polo_prod = all_products['polo'] -%}{%- endif -%}
+{%- comment -%} ── Per-GSM product lookups for Polo ── {%- endcomment -%}
+{%- assign polo_160 = all_products[section.settings.polo_160_product] -%}
+{%- assign polo_180 = all_products[section.settings.polo_180_product] -%}
+{%- assign polo_200 = all_products[section.settings.polo_200_product] -%}
+{%- assign polo_220 = all_products[section.settings.polo_220_product] -%}
+{%- assign polo_240 = all_products[section.settings.polo_240_product] -%}
+{%- if polo_220 == empty -%}{%- assign polo_220 = all_products['custom-polo'] -%}{%- endif -%}
+{%- if polo_220 == empty -%}{%- assign polo_220 = all_products['polo'] -%}{%- endif -%}
 
-{%- assign sweatshirt_prod = all_products[section.settings.sweatshirt_product] -%}
-{%- if sweatshirt_prod == empty -%}{%- assign sweatshirt_prod = all_products['custom-sweatshirt'] -%}{%- endif -%}
-{%- if sweatshirt_prod == empty -%}{%- assign sweatshirt_prod = all_products['sweatshirt'] -%}{%- endif -%}
+{%- comment -%} ── Per-GSM product lookups for Sweatshirt ── {%- endcomment -%}
+{%- assign sweatshirt_280 = all_products[section.settings.sweatshirt_280_product] -%}
+{%- assign sweatshirt_320 = all_products[section.settings.sweatshirt_320_product] -%}
+{%- assign sweatshirt_360 = all_products[section.settings.sweatshirt_360_product] -%}
+{%- if sweatshirt_320 == empty -%}{%- assign sweatshirt_320 = all_products['custom-sweatshirt'] -%}{%- endif -%}
+{%- if sweatshirt_320 == empty -%}{%- assign sweatshirt_320 = all_products['sweatshirt'] -%}{%- endif -%}
 
-{%- assign hoodie_prod = all_products[section.settings.hoodie_product] -%}
-{%- if hoodie_prod == empty -%}{%- assign hoodie_prod = all_products['custom-hoodie'] -%}{%- endif -%}
-{%- if hoodie_prod == empty -%}{%- assign hoodie_prod = all_products['hoodie'] -%}{%- endif -%}
+{%- comment -%} ── Per-GSM product lookups for Hoodie ── {%- endcomment -%}
+{%- assign hoodie_300 = all_products[section.settings.hoodie_300_product] -%}
+{%- assign hoodie_350 = all_products[section.settings.hoodie_350_product] -%}
+{%- assign hoodie_400 = all_products[section.settings.hoodie_400_product] -%}
+{%- if hoodie_350 == empty -%}{%- assign hoodie_350 = all_products['custom-hoodie'] -%}{%- endif -%}
+{%- if hoodie_350 == empty -%}{%- assign hoodie_350 = all_products['hoodie'] -%}{%- endif -%}
+
+{%- comment -%} Convenience: first available tshirt product for the form action {%- endcomment -%}
+{%- assign tshirt_prod = tshirt_220 | default: tshirt_240 | default: tshirt_180 | default: tshirt_200 -%}
+{%- assign polo_prod   = polo_220 | default: polo_240 | default: polo_160 -%}
+{%- assign sweatshirt_prod = sweatshirt_320 | default: sweatshirt_280 | default: sweatshirt_360 -%}
+{%- assign hoodie_prod = hoodie_350 | default: hoodie_300 | default: hoodie_400 -%}
 
 <section
   class="studio-v2"
@@ -42,87 +56,207 @@
     {
       "tshirt": {
         "label": "T-Shirt",
-        "title": {{ tshirt_prod.title | default: "Custom T-Shirt" | json }},
-        "variants": [
-          {%- if tshirt_prod != empty and tshirt_prod.variants.size > 0 -%}
-            {%- for variant in tshirt_prod.variants -%}
-              {
-                "id": {{ variant.id | json }},
-                "title": {{ variant.title | json }},
-                "available": {{ variant.available | json }}
-              }{%- unless forloop.last -%},{%- endunless -%}
-            {%- endfor -%}
-          {%- else -%}
-            {"id":"47212533547200","title":"S / 430 GSM","available":true},
-            {"id":"47212533579968","title":"M / 430 GSM","available":true},
-            {"id":"47212533612736","title":"L / 430 GSM","available":true},
-            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
-            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
-          {%- endif -%}
-        ]
+        "default_gsm": "220 GSM",
+        "gsm_products": {
+          "180 GSM": {
+            "title": {{ tshirt_180.title | default: "Custom T-Shirt 180 GSM" | json }},
+            "variants": [
+              {%- if tshirt_180 != empty and tshirt_180.variants.size > 0 -%}
+                {%- for variant in tshirt_180.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "200 GSM": {
+            "title": {{ tshirt_200.title | default: "Custom T-Shirt 200 GSM" | json }},
+            "variants": [
+              {%- if tshirt_200 != empty and tshirt_200.variants.size > 0 -%}
+                {%- for variant in tshirt_200.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "220 GSM": {
+            "title": {{ tshirt_220.title | default: "Custom T-Shirt 220 GSM" | json }},
+            "variants": [
+              {%- if tshirt_220 != empty and tshirt_220.variants.size > 0 -%}
+                {%- for variant in tshirt_220.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "240 GSM": {
+            "title": {{ tshirt_240.title | default: "Custom T-Shirt 240 GSM" | json }},
+            "variants": [
+              {%- if tshirt_240 != empty and tshirt_240.variants.size > 0 -%}
+                {%- for variant in tshirt_240.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          }
+        }
       },
       "polo": {
         "label": "Polo",
-        "title": {{ polo_prod.title | default: "Custom Polo" | json }},
-        "variants": [
-          {%- if polo_prod != empty and polo_prod.variants.size > 0 -%}
-            {%- for variant in polo_prod.variants -%}
-              {
-                "id": {{ variant.id | json }},
-                "title": {{ variant.title | json }},
-                "available": {{ variant.available | json }}
-              }{%- unless forloop.last -%},{%- endunless -%}
-            {%- endfor -%}
-          {%- else -%}
-            {"id":"47212533547200","title":"S / 430 GSM","available":true},
-            {"id":"47212533579968","title":"M / 430 GSM","available":true},
-            {"id":"47212533612736","title":"L / 430 GSM","available":true},
-            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
-            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
-          {%- endif -%}
-        ]
+        "default_gsm": "220 GSM",
+        "gsm_products": {
+          "160 GSM": {
+            "title": {{ polo_160.title | default: "Custom Polo 160 GSM" | json }},
+            "variants": [
+              {%- if polo_160 != empty and polo_160.variants.size > 0 -%}
+                {%- for variant in polo_160.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "180 GSM": {
+            "title": {{ polo_180.title | default: "Custom Polo 180 GSM" | json }},
+            "variants": [
+              {%- if polo_180 != empty and polo_180.variants.size > 0 -%}
+                {%- for variant in polo_180.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "200 GSM": {
+            "title": {{ polo_200.title | default: "Custom Polo 200 GSM" | json }},
+            "variants": [
+              {%- if polo_200 != empty and polo_200.variants.size > 0 -%}
+                {%- for variant in polo_200.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "220 GSM": {
+            "title": {{ polo_220.title | default: "Custom Polo 220 GSM" | json }},
+            "variants": [
+              {%- if polo_220 != empty and polo_220.variants.size > 0 -%}
+                {%- for variant in polo_220.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "240 GSM": {
+            "title": {{ polo_240.title | default: "Custom Polo 240 GSM" | json }},
+            "variants": [
+              {%- if polo_240 != empty and polo_240.variants.size > 0 -%}
+                {%- for variant in polo_240.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          }
+        }
       },
       "sweatshirt": {
         "label": "Sweatshirt",
-        "title": {{ sweatshirt_prod.title | default: "Custom Sweatshirt" | json }},
-        "variants": [
-          {%- if sweatshirt_prod != empty and sweatshirt_prod.variants.size > 0 -%}
-            {%- for variant in sweatshirt_prod.variants -%}
-              {
-                "id": {{ variant.id | json }},
-                "title": {{ variant.title | json }},
-                "available": {{ variant.available | json }}
-              }{%- unless forloop.last -%},{%- endunless -%}
-            {%- endfor -%}
-          {%- else -%}
-            {"id":"47212533547200","title":"S / 430 GSM","available":true},
-            {"id":"47212533579968","title":"M / 430 GSM","available":true},
-            {"id":"47212533612736","title":"L / 430 GSM","available":true},
-            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
-            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
-          {%- endif -%}
-        ]
+        "default_gsm": "320 GSM",
+        "gsm_products": {
+          "280 GSM": {
+            "title": {{ sweatshirt_280.title | default: "Custom Sweatshirt 280 GSM" | json }},
+            "variants": [
+              {%- if sweatshirt_280 != empty and sweatshirt_280.variants.size > 0 -%}
+                {%- for variant in sweatshirt_280.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "320 GSM": {
+            "title": {{ sweatshirt_320.title | default: "Custom Sweatshirt 320 GSM" | json }},
+            "variants": [
+              {%- if sweatshirt_320 != empty and sweatshirt_320.variants.size > 0 -%}
+                {%- for variant in sweatshirt_320.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "360 GSM": {
+            "title": {{ sweatshirt_360.title | default: "Custom Sweatshirt 360 GSM" | json }},
+            "variants": [
+              {%- if sweatshirt_360 != empty and sweatshirt_360.variants.size > 0 -%}
+                {%- for variant in sweatshirt_360.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          }
+        }
       },
       "hoodie": {
         "label": "Hoodie",
-        "title": {{ hoodie_prod.title | default: "Custom Hoodie" | json }},
-        "variants": [
-          {%- if hoodie_prod != empty and hoodie_prod.variants.size > 0 -%}
-            {%- for variant in hoodie_prod.variants -%}
-              {
-                "id": {{ variant.id | json }},
-                "title": {{ variant.title | json }},
-                "available": {{ variant.available | json }}
-              }{%- unless forloop.last -%},{%- endunless -%}
-            {%- endfor -%}
-          {%- else -%}
-            {"id":"47212533547200","title":"S / 430 GSM","available":true},
-            {"id":"47212533579968","title":"M / 430 GSM","available":true},
-            {"id":"47212533612736","title":"L / 430 GSM","available":true},
-            {"id":"47212533645504","title":"XL / 430 GSM","available":true},
-            {"id":"47212533678272","title":"2XL / 430 GSM","available":true}
-          {%- endif -%}
-        ]
+        "default_gsm": "350 GSM",
+        "gsm_products": {
+          "300 GSM": {
+            "title": {{ hoodie_300.title | default: "Custom Hoodie 300 GSM" | json }},
+            "variants": [
+              {%- if hoodie_300 != empty and hoodie_300.variants.size > 0 -%}
+                {%- for variant in hoodie_300.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "350 GSM": {
+            "title": {{ hoodie_350.title | default: "Custom Hoodie 350 GSM" | json }},
+            "variants": [
+              {%- if hoodie_350 != empty and hoodie_350.variants.size > 0 -%}
+                {%- for variant in hoodie_350.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          },
+          "400 GSM": {
+            "title": {{ hoodie_400.title | default: "Custom Hoodie 400 GSM" | json }},
+            "variants": [
+              {%- if hoodie_400 != empty and hoodie_400.variants.size > 0 -%}
+                {%- for variant in hoodie_400.variants -%}
+                  {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }}}{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                {"id":"47212533547200","title":"S","available":true,"price":89900},{"id":"47212533579968","title":"M","available":true,"price":89900},{"id":"47212533612736","title":"L","available":true,"price":89900},{"id":"47212533645504","title":"XL","available":true,"price":89900},{"id":"47212533678272","title":"2XL","available":true,"price":89900}
+              {%- endif -%}
+            ]
+          }
+        }
       }
     }
   </script>
@@ -372,31 +506,110 @@
   "settings": [
     {
       "type": "header",
-      "content": "Garment Product Mappings"
+      "content": "👕 T-Shirt Products — by GSM"
     },
     {
       "type": "paragraph",
-      "content": "Select the products from your Shopify catalog that correspond to each garment type. The customizer will dynamically load their active variants (sizes, inventory, prices, and IDs)."
+      "content": "Map a separate Shopify product for each T-Shirt GSM tier. When a customer selects a GSM, the studio loads that product's variants and pricing."
     },
     {
       "type": "product",
-      "id": "tshirt_product",
-      "label": "Custom T-Shirt Product"
+      "id": "tshirt_180_product",
+      "label": "T-Shirt — 180 GSM Product"
     },
     {
       "type": "product",
-      "id": "polo_product",
-      "label": "Custom Polo Product"
+      "id": "tshirt_200_product",
+      "label": "T-Shirt — 200 GSM Product"
     },
     {
       "type": "product",
-      "id": "sweatshirt_product",
-      "label": "Custom Sweatshirt Product"
+      "id": "tshirt_220_product",
+      "label": "T-Shirt — 220 GSM Product"
     },
     {
       "type": "product",
-      "id": "hoodie_product",
-      "label": "Custom Hoodie Product"
+      "id": "tshirt_240_product",
+      "label": "T-Shirt — 240 GSM Product"
+    },
+    {
+      "type": "header",
+      "content": "🎽 Polo Products — by GSM"
+    },
+    {
+      "type": "paragraph",
+      "content": "Map a separate Shopify product for each Polo GSM tier."
+    },
+    {
+      "type": "product",
+      "id": "polo_160_product",
+      "label": "Polo — 160 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "polo_180_product",
+      "label": "Polo — 180 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "polo_200_product",
+      "label": "Polo — 200 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "polo_220_product",
+      "label": "Polo — 220 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "polo_240_product",
+      "label": "Polo — 240 GSM Product"
+    },
+    {
+      "type": "header",
+      "content": "🧥 Sweatshirt Products — by GSM"
+    },
+    {
+      "type": "paragraph",
+      "content": "Map a separate Shopify product for each Sweatshirt GSM tier."
+    },
+    {
+      "type": "product",
+      "id": "sweatshirt_280_product",
+      "label": "Sweatshirt — 280 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "sweatshirt_320_product",
+      "label": "Sweatshirt — 320 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "sweatshirt_360_product",
+      "label": "Sweatshirt — 360 GSM Product"
+    },
+    {
+      "type": "header",
+      "content": "🪝 Hoodie Products — by GSM"
+    },
+    {
+      "type": "paragraph",
+      "content": "Map a separate Shopify product for each Hoodie GSM tier."
+    },
+    {
+      "type": "product",
+      "id": "hoodie_300_product",
+      "label": "Hoodie — 300 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "hoodie_350_product",
+      "label": "Hoodie — 350 GSM Product"
+    },
+    {
+      "type": "product",
+      "id": "hoodie_400_product",
+      "label": "Hoodie — 400 GSM Product"
     }
   ],
   "presets": [
