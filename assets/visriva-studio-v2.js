@@ -275,7 +275,7 @@
       if (garmentData && garmentData.gsm_products) {
         const product = garmentData.gsm_products[currentGsm] || Object.values(garmentData.gsm_products)[0];
         if (product && product.variants) {
-          const activeVariant = product.variants.find((v) => v.id === sizeSelect?.value) || product.variants[0];
+          const activeVariant = product.variants.find((/** @type {any} */ v) => v.id === sizeSelect?.value) || product.variants[0];
           if (activeVariant && activeVariant.price) {
             variantPrice = Math.round(activeVariant.price / 100);
           }
