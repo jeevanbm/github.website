@@ -43,6 +43,7 @@
   const resetBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector('[data-studio-reset-side]'));
   const submitBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector('[data-studio-submit]'));
   const priceDisplay = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-price]'));
+  const priceBreakdownEl = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-price-breakdown]'));
   const statusEl = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-status]'));
   const form = /** @type {HTMLFormElement | null} */ (root.querySelector('[data-studio-form]'));
 
@@ -233,17 +234,145 @@
         const index = product.variants.findIndex((/** @type {any} */ v) => v.id === activeVariant.id);
         const buttons = sizesContainer.querySelectorAll('.studio-v2-size-card');
         if (buttons[index]) buttons[index].classList.add('is-active');
-
-        // Update the price display from this product's variant price (in paise → rupees)
-        if (priceDisplay && activeVariant.price) {
-          const priceInRupees = Math.round(activeVariant.price / 100);
-          priceDisplay.textContent = `${CURRENCY}${priceInRupees}`;
-        }
       }
     }
 
     updateSizeReadout();
     updateVariantId();
+    updatePricing();
+  }
+
+  // Calculate and update final price dynamically based on garment, GSM, Size, and Customisation uploads
+  function updatePricing() {
+    let basePrice = 0;
+    let baseExplanation = '';
+
+    const currentGsm = gsmSelect ? gsmSelect.value : '';
+    const currentSizeOpt = sizeSelect ? sizeSelect.options[sizeSelect.selectedIndex] : null;
+    const currentSize = currentSizeOpt ? currentSizeOpt.textContent || '' : '';
+
+    if (currentGarment === 'tshirt') {
+      if (currentGsm.includes('180')) {
+        basePrice = 350;
+        baseExplanation = 'T-Shirt 180 GSM Base';
+      } else if (currentGsm.includes('200')) {
+        basePrice = 399;
+        baseExplanation = 'T-Shirt 200 GSM Base';
+      } else if (currentGsm.includes('220')) {
+        basePrice = 450;
+        baseExplanation = 'T-Shirt 220 GSM Base';
+      } else if (currentGsm.includes('240')) {
+        basePrice = 499;
+        baseExplanation = 'T-Shirt 240 GSM Base';
+      } else {
+        basePrice = 450; // Fallback
+        baseExplanation = 'T-Shirt Base';
+      }
+    } else {
+      // Fallback for other garments: use product variant price or realistic fallbacks
+      let variantPrice = 0;
+      const garmentData = PRODUCTS[currentGarment];
+      if (garmentData && garmentData.gsm_products) {
+        const product = garmentData.gsm_products[currentGsm] || Object.values(garmentData.gsm_products)[0];
+        if (product && product.variants) {
+          const activeVariant = product.variants.find((v) => v.id === sizeSelect?.value) || product.variants[0];
+          if (activeVariant && activeVariant.price) {
+            variantPrice = Math.round(activeVariant.price / 100);
+          }
+        }
+      }
+      if (variantPrice > 0) {
+        basePrice = variantPrice;
+        baseExplanation = `${PRODUCTS[currentGarment]?.label || currentGarment} Base`;
+      } else {
+        // Safe defaults
+        if (currentGarment === 'polo') { basePrice = 550; baseExplanation = 'Polo Base'; }
+        else if (currentGarment === 'sweatshirt') { basePrice = 799; baseExplanation = 'Sweatshirt Base'; }
+        else if (currentGarment === 'hoodie') { basePrice = 999; baseExplanation = 'Hoodie Base'; }
+        else { basePrice = 899; baseExplanation = 'Base Price'; }
+      }
+    }
+
+    // Size Surcharge (Progressive: +₹30 per size above Medium)
+    let sizeSurcharge = 0;
+    let sizeExplanation = '';
+    const normSize = currentSize.trim().toUpperCase();
+
+    if (normSize === 'L') {
+      sizeSurcharge = 30;
+      sizeExplanation = 'Size L Surcharge';
+    } else if (normSize === 'XL') {
+      sizeSurcharge = 60;
+      sizeExplanation = 'Size XL Surcharge';
+    } else if (normSize === '2XL' || normSize === 'XXL') {
+      sizeSurcharge = 90;
+      sizeExplanation = 'Size 2XL Surcharge';
+    } else if (normSize === '3XL' || normSize === 'XXXL') {
+      sizeSurcharge = 120;
+      sizeExplanation = 'Size 3XL Surcharge';
+    }
+
+    // Customisation Surcharge (Front: +₹120, Back: +₹120)
+    let frontSurcharge = 0;
+    let backSurcharge = 0;
+
+    if (artworkImages.front) {
+      frontSurcharge = 120;
+    }
+    if (artworkImages.back) {
+      backSurcharge = 120;
+    }
+
+    const total = basePrice + sizeSurcharge + frontSurcharge + backSurcharge;
+
+    // Update screen elements
+    if (priceDisplay) {
+      priceDisplay.textContent = `${CURRENCY}${total}`;
+    }
+    if (submitBtn) {
+      submitBtn.textContent = `Add to cart — ${CURRENCY}${total}`;
+    }
+
+    // Populate dynamic pricing breakdown list
+    if (priceBreakdownEl) {
+      let html = `
+        <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:rgba(255,255,255,0.7);">
+          <span>${baseExplanation}</span>
+          <span style="font-family:'Outfit',sans-serif; font-weight:500; color:#fff;">${CURRENCY}${basePrice}</span>
+        </div>
+      `;
+      if (sizeSurcharge > 0) {
+        html += `
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:rgba(255,255,255,0.7);">
+            <span>${sizeExplanation} (+${CURRENCY}30 per size tier above M)</span>
+            <span style="font-family:'Outfit',sans-serif; font-weight:500; color:#fcf6ba;">+${CURRENCY}${sizeSurcharge}</span>
+          </div>
+        `;
+      }
+      if (frontSurcharge > 0) {
+        html += `
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:rgba(255,255,255,0.7);">
+            <span>Front Customisation Charge</span>
+            <span style="font-family:'Outfit',sans-serif; font-weight:500; color:#fcf6ba;">+${CURRENCY}${frontSurcharge}</span>
+          </div>
+        `;
+      }
+      if (backSurcharge > 0) {
+        html += `
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:rgba(255,255,255,0.7);">
+            <span>Back Customisation Charge</span>
+            <span style="font-family:'Outfit',sans-serif; font-weight:500; color:#fcf6ba;">+${CURRENCY}${backSurcharge}</span>
+          </div>
+        `;
+      }
+      html += `
+        <div style="display:flex; justify-content:space-between; font-size:1.05rem; font-weight:600; margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid rgba(212,175,55,0.2); color:#fcf6ba;">
+          <span>Total Rate</span>
+          <span style="font-family:'Outfit',sans-serif;">${CURRENCY}${total}</span>
+        </div>
+      `;
+      priceBreakdownEl.innerHTML = html;
+    }
   }
 
   function updateVariantId() {
@@ -491,6 +620,7 @@
         btn.classList.toggle('is-active', i === index);
       });
     }
+    updatePricing();
   });
 
   swatches.forEach(s => s.addEventListener('click', () => selectSwatch(s)));
@@ -531,6 +661,7 @@
         artworkTransforms.front = { x: 0.3, y: 0.25, scale: 0.35 };
         renderBothCanvases();
         updateTransformProperties();
+        updatePricing();
       };
       if (e.target && typeof e.target.result === 'string') {
         img.src = e.target.result;
@@ -555,6 +686,7 @@
         artworkTransforms.back = { x: 0.3, y: 0.25, scale: 0.35 };
         renderBothCanvases();
         updateTransformProperties();
+        updatePricing();
       };
       if (e.target && typeof e.target.result === 'string') {
         img.src = e.target.result;
@@ -731,7 +863,7 @@
     } catch (err) {
       console.error(err);
       if (statusEl) statusEl.textContent = 'Error adding to cart. Please try again.';
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Add to cart - ' + CURRENCY + FIXED_PRICE; }
+      if (submitBtn) { submitBtn.disabled = false; updatePricing(); }
     }
   });
 
@@ -742,6 +874,6 @@
   // Initialize
   populateSizes();
   updateConditionalFields();
-  if (priceDisplay) priceDisplay.textContent = CURRENCY + FIXED_PRICE;
+  updatePricing();
   initMasks();
 })();
