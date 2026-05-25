@@ -287,7 +287,7 @@
     if (activeContainer) {
        const activeSwatchInContainer = activeContainer.querySelector('.is-active');
        if (!activeSwatchInContainer) {
-         const firstSwatch = activeContainer.querySelector('[data-studio-swatch]');
+         const firstSwatch = /** @type {HTMLElement | null} */ (activeContainer.querySelector('[data-studio-swatch]'));
          if (firstSwatch) selectSwatch(firstSwatch);
        }
     }

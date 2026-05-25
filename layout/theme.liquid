@@ -565,6 +565,180 @@
         line-height: 1.4 !important;
         font-size: 1rem !important;
       }
+
+      /* ============================================
+         LUMINOUS GOLD NAVIGATION BAR & HEADER
+      ============================================ */
+      #header-component {
+        border-bottom: 1px solid rgba(212, 175, 55, 0.45) !important;
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.15) !important;
+      }
+
+      /* ============================================
+         MOBILE NAVIGATION GRID (NO OVERLAPS / GLITCHES)
+      ============================================ */
+      @media screen and (max-width: 749px) {
+        /* Force robust grid column tracks to fit all icons without collisions */
+        #header-component .header__columns {
+          display: grid !important;
+          grid-template-columns: 44px 0 1fr auto auto !important;
+          grid-template-areas: 'leftA leftB center rightA rightB' !important;
+          column-gap: 6px !important;
+          align-items: center !important;
+          padding-inline: 12px !important;
+        }
+
+        /* Hamburger menu on the left */
+        #header-component header-drawer,
+        #header-component .header__icon--menu {
+          grid-area: leftA !important;
+          justify-self: flex-start !important;
+          margin: 0 !important;
+        }
+
+        /* Logo perfectly centered */
+        #header-component .header-logo {
+          grid-area: center !important;
+          justify-self: center !important;
+          margin: 0 auto !important;
+        }
+
+        /* Search Magnifying Glass in the 4th column */
+        #header-component .search-action {
+          grid-area: rightA !important;
+          justify-self: flex-end !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          margin: 0 !important;
+        }
+
+        /* Actions container (Pencil, Profile, Cart) in the 5th column */
+        #header-component header-actions {
+          grid-area: rightB !important;
+          justify-self: flex-end !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 6px !important;
+          margin: 0 !important;
+        }
+
+        /* Ensure columns containers are treated as display: contents to let grid do the work */
+        #header-component .header__column--left,
+        #header-component .header__column--right {
+          display: contents !important;
+        }
+      }
+
+      /* ============================================
+         ROYAL GLASSMORPHIC MOBILE DRAWER MENU
+      ============================================ */
+      .menu-drawer {
+        background: rgba(4, 13, 10, 0.96) !important;
+        backdrop-filter: blur(28px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+        border-right: 1px solid rgba(212, 175, 55, 0.4) !important;
+        box-shadow: 15px 0 45px rgba(0, 0, 0, 0.8) !important;
+      }
+
+      .menu-drawer__navigation {
+        padding-inline: 24px !important;
+        padding-block: 40px !important;
+      }
+
+      /* Mobile Drawer Links Styling */
+      .menu-drawer__menu-item {
+        font-family: 'Cinzel', serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.1em !important;
+        color: #fcf6ba !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        display: flex !important;
+        align-items: center !important;
+        padding-block: 14px !important;
+      }
+
+      /* Hierarchy sizing for premium readability */
+      .menu-drawer__menu-item--mainlist {
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+      }
+
+      .menu-drawer__menu-item--parent {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        padding-left: 12px !important;
+      }
+
+      .menu-drawer__menu-item--child {
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+        padding-left: 24px !important;
+        color: rgba(252, 246, 186, 0.8) !important;
+      }
+
+      /* Interactive Hovers & Active State Animation */
+      .menu-drawer__menu-item:hover,
+      .menu-drawer__menu-item--active {
+        color: #ffffff !important;
+        padding-left: 8px !important;
+        text-shadow: 0 0 15px rgba(252, 246, 186, 0.9) !important;
+        background: rgba(212, 175, 55, 0.08) !important;
+        border-radius: 6px !important;
+      }
+
+      .menu-drawer__menu-item--child:hover {
+        padding-left: 32px !important;
+      }
+
+      /* Icon Colors inside Drawer */
+      .menu-drawer__menu-item svg,
+      .menu-drawer__close-button svg,
+      .menu-drawer__back-button svg,
+      .menu-drawer__menu-item .icon-plus svg,
+      .menu-drawer__menu-item .icon-caret svg {
+        color: rgba(252, 246, 186, 0.85) !important;
+        stroke: rgba(252, 246, 186, 0.85) !important;
+        transition: transform 0.3s ease, filter 0.3s ease !important;
+      }
+
+      .menu-drawer__menu-item:hover svg {
+        filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.9)) !important;
+        transform: scale(1.1) !important;
+      }
+
+      /* Utility Back and Close buttons inside Drawer */
+      .menu-drawer__close-button,
+      .menu-drawer__back-button {
+        font-family: 'Cinzel', serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        color: #fcf6ba !important;
+        font-weight: 700 !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .menu-drawer__close-button:hover,
+      .menu-drawer__back-button:hover {
+        color: #ffffff !important;
+        text-shadow: 0 0 10px rgba(252, 246, 186, 0.8) !important;
+      }
+
+      .menu-drawer__close-button:hover svg {
+        transform: rotate(90deg) !important;
+      }
+
+      .menu-drawer__back-button:hover svg {
+        transform: translateX(-4px) !important;
+      }
+
+      /* Beautiful customized divider lines */
+      .menu-drawer__menu-container--divider,
+      .menu-drawer__list-item--divider {
+        border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+      }
     </style>
     <link href="{{ 'visriva-global.css' | asset_url }}" rel="stylesheet">
   </head>
