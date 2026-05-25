@@ -24,6 +24,8 @@
   const materialWrapper = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-material-wrapper]'));
   const gsmWrapper = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-gsm-wrapper]'));
   const sizeSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-size]'));
+  const defaultSwatchesContainer = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-swatches-container="default"]'));
+  const hoodieSwatchesContainer = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-swatches-container="hoodie"]'));
   const swatches = /** @type {NodeListOf<HTMLElement>} */ (root.querySelectorAll('[data-studio-swatch]'));
   const customColorPicker = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-picker]'));
   const customColorHex = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-hex]'));
@@ -257,6 +259,7 @@
     const garment = currentGarment;
     /** @type {string[]} */
     let gsmOptions = [];
+    const isHoodie = garment === 'hoodie';
     
     if (garment === 'tshirt') {
       gsmOptions = ['180 GSM', '220 GSM', '240 GSM'];
@@ -274,6 +277,19 @@
       gsmOptions = ['280 GSM', '320 GSM', '360 GSM'];
       if (materialWrapper) materialWrapper.style.display = 'none';
       if (gsmWrapper) gsmWrapper.style.display = 'block';
+    }
+
+    if (defaultSwatchesContainer) defaultSwatchesContainer.style.display = isHoodie ? 'none' : 'block';
+    if (hoodieSwatchesContainer) hoodieSwatchesContainer.style.display = isHoodie ? 'block' : 'none';
+
+    // Auto-select first visible swatch if the currently active swatch is now hidden
+    const activeContainer = isHoodie ? hoodieSwatchesContainer : defaultSwatchesContainer;
+    if (activeContainer) {
+       const activeSwatchInContainer = activeContainer.querySelector('.is-active');
+       if (!activeSwatchInContainer) {
+         const firstSwatch = activeContainer.querySelector('[data-studio-swatch]');
+         if (firstSwatch) selectSwatch(firstSwatch);
+       }
     }
 
     if (gsmSelect) {
