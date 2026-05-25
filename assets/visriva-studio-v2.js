@@ -19,6 +19,10 @@
   const frontCard = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-preview-card="front"]'));
   const backCard = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-preview-card="back"]'));
   const garmentSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-garment]'));
+  const materialSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-material]'));
+  const gsmSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-gsm]'));
+  const materialWrapper = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-material-wrapper]'));
+  const gsmWrapper = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-gsm-wrapper]'));
   const sizeSelect = /** @type {HTMLSelectElement | null} */ (root.querySelector('[data-studio-size]'));
   const swatches = /** @type {NodeListOf<HTMLElement>} */ (root.querySelectorAll('[data-studio-swatch]'));
   const customColorPicker = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-custom-color-picker]'));
@@ -43,6 +47,8 @@
   // Readouts
   const garmentReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-garment-readout]'));
   const sizeReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-size-readout]'));
+  const gsmReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-gsm-readout]'));
+  const materialReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-material-readout]'));
   const colorReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-color-readout]'));
   const washReadout = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-wash-readout]'));
   const fileReadoutFront = /** @type {HTMLElement | null} */ (root.querySelector('[data-studio-file-readout-front]'));
@@ -51,6 +57,8 @@
   // Hidden inputs
   const variantIdInput = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-variant-id]'));
   const sizeProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-size-property]'));
+  const gsmProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-gsm-property]'));
+  const materialProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-material-property]'));
   const colorProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-color-property]'));
   const washProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-wash-property]'));
   const colorSourceProperty = /** @type {HTMLInputElement | null} */ (root.querySelector('[data-studio-color-source-property]'));
@@ -245,6 +253,53 @@
     }
   }
 
+  function updateConditionalFields() {
+    const garment = currentGarment;
+    /** @type {string[]} */
+    let gsmOptions = [];
+    
+    if (garment === 'tshirt') {
+      gsmOptions = ['180 GSM', '220 GSM', '240 GSM'];
+      if (materialWrapper) materialWrapper.style.display = 'block';
+      if (gsmWrapper) gsmWrapper.style.display = 'block';
+    } else if (garment === 'hoodie') {
+      gsmOptions = ['300 GSM', '350 GSM', '400 GSM'];
+      if (materialWrapper) materialWrapper.style.display = 'none';
+      if (gsmWrapper) gsmWrapper.style.display = 'block';
+    } else if (garment === 'polo') {
+      gsmOptions = ['220 GSM', '240 GSM', '260 GSM'];
+      if (materialWrapper) materialWrapper.style.display = 'none';
+      if (gsmWrapper) gsmWrapper.style.display = 'block';
+    } else if (garment === 'sweatshirt') {
+      gsmOptions = ['280 GSM', '320 GSM', '360 GSM'];
+      if (materialWrapper) materialWrapper.style.display = 'none';
+      if (gsmWrapper) gsmWrapper.style.display = 'block';
+    }
+
+    if (gsmSelect) {
+      // Preserve current selection if it exists in the new options
+      const currentSelection = gsmSelect.value;
+      gsmSelect.innerHTML = gsmOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+      if (gsmOptions.includes(currentSelection)) {
+        gsmSelect.value = currentSelection;
+      }
+    }
+
+    updateGsmAndMaterialReadouts();
+  }
+
+  function updateGsmAndMaterialReadouts() {
+    if (gsmSelect && gsmProperty) gsmProperty.value = gsmWrapper?.style.display !== 'none' ? gsmSelect.value : '';
+    if (materialSelect && materialProperty) materialProperty.value = materialWrapper?.style.display !== 'none' ? materialSelect.value : '';
+    
+    if (gsmSelect && gsmReadout) {
+      gsmReadout.textContent = gsmWrapper?.style.display !== 'none' ? gsmSelect.value || 'Not selected' : 'N/A';
+    }
+    if (materialSelect && materialReadout) {
+      materialReadout.textContent = materialWrapper?.style.display !== 'none' ? materialSelect.value || 'Not selected' : 'N/A';
+    }
+  }
+
   // Swatch selection
   /**
    * @param {HTMLElement} el
@@ -395,8 +450,12 @@
     currentGarment = garmentSelect.value;
     if (garmentReadout) garmentReadout.textContent = PRODUCTS[currentGarment]?.label || currentGarment;
     populateSizes();
+    updateConditionalFields();
     renderBothCanvases();
   });
+
+  gsmSelect?.addEventListener('change', updateGsmAndMaterialReadouts);
+  materialSelect?.addEventListener('change', updateGsmAndMaterialReadouts);
 
   sizeSelect?.addEventListener('change', () => {
     updateSizeReadout();
@@ -663,6 +722,7 @@
 
   // Initialize
   populateSizes();
+  updateConditionalFields();
   if (priceDisplay) priceDisplay.textContent = CURRENCY + FIXED_PRICE;
   initMasks();
 })();

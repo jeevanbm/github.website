@@ -164,6 +164,8 @@
         <div class="studio-v2-summary" aria-live="polite">
           <p><span>Garment</span><strong data-studio-garment-readout>T-Shirt</strong></p>
           <p><span>Size</span><strong data-studio-size-readout>Not selected</strong></p>
+          <p><span>GSM</span><strong data-studio-gsm-readout>Not selected</strong></p>
+          <p><span>Material</span><strong data-studio-material-readout>Not selected</strong></p>
           <p><span>Selected color</span><strong data-studio-color-readout>Acid Wash Blue</strong></p>
           <p><span>Wash finish</span><strong data-studio-wash-readout>Acid Wash Blue</strong></p>
           <p><span>Front Artwork</span><strong data-studio-file-readout-front>No file uploaded</strong></p>
@@ -186,6 +188,8 @@
       {%- form 'product', form_product, class: 'studio-v2-form', data-studio-form: '', enctype: 'multipart/form-data' -%}
         <input type="hidden" name="id" value="47212533547200" data-studio-variant-id>
         <input type="hidden" name="properties[Size]" value="" data-studio-size-property>
+        <input type="hidden" name="properties[GSM]" value="" data-studio-gsm-property>
+        <input type="hidden" name="properties[Material Type]" value="" data-studio-material-property>
         <input type="hidden" name="properties[Garment Color]" value="Acid Wash Blue (#828FB2)" data-studio-color-property>
         <input type="hidden" name="properties[Wash Finish]" value="Acid Wash Blue" data-studio-wash-property>
         <input type="hidden" name="properties[Color Source]" value="Acid swatch" data-studio-color-source-property>
@@ -208,6 +212,27 @@
               <option value="sweatshirt">Sweatshirt</option>
               <option value="hoodie">Hoodie</option>
             </select>
+          </div>
+
+          <div data-studio-material-wrapper style="margin-top:1.5rem;">
+            <label class="studio-v2-label" for="studio-material">Material type</label>
+            <div class="studio-v2-select-wrap">
+              <select id="studio-material" data-studio-material>
+                <option value="Cotton">Cotton</option>
+                <option value="Polyester">Polyester</option>
+                <option value="Cotton Blend">Cotton Blend</option>
+                <option value="Cotton Poly Blend">Cotton Poly Blend</option>
+              </select>
+            </div>
+          </div>
+
+          <div data-studio-gsm-wrapper style="margin-top:1.5rem;">
+            <label class="studio-v2-label" for="studio-gsm">GSM</label>
+            <div class="studio-v2-select-wrap">
+              <select id="studio-gsm" data-studio-gsm>
+                <!-- populated dynamically -->
+              </select>
+            </div>
           </div>
 
           <label class="studio-v2-label" style="margin-top:1.5rem">Size</label>
