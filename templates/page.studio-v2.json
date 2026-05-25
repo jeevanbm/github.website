@@ -12,10 +12,21 @@
     "main": {
       "type": "visriva-studio-v2",
       "settings": {
-        "tshirt_product": "premium-monkey-d-luffy-one-piece",
-        "polo_product": "premium-monkey-d-luffy-one-piece",
-        "sweatshirt_product": "premium-monkey-d-luffy-one-piece",
-        "hoodie_product": "premium-monkey-d-luffy-one-piece"
+        "tshirt_180_product": "premium-monkey-d-luffy-one-piece",
+        "tshirt_200_product": "",
+        "tshirt_220_product": "",
+        "tshirt_240_product": "",
+        "polo_160_product": "",
+        "polo_180_product": "",
+        "polo_200_product": "",
+        "polo_220_product": "",
+        "polo_240_product": "",
+        "sweatshirt_280_product": "",
+        "sweatshirt_320_product": "",
+        "sweatshirt_360_product": "",
+        "hoodie_300_product": "",
+        "hoodie_350_product": "",
+        "hoodie_400_product": ""
       }
     }
   },
