@@ -633,12 +633,16 @@
       /* ============================================
          ROYAL GLASSMORPHIC MOBILE DRAWER MENU
       ============================================ */
+      .menu-drawer,
+      .menu-drawer__submenu {
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        box-shadow: 15px 0 45px rgba(212, 175, 55, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.05) !important;
+      }
+
       .menu-drawer {
-        background: rgba(4, 13, 10, 0.96) !important;
-        backdrop-filter: blur(28px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-        border-right: 1px solid rgba(212, 175, 55, 0.4) !important;
-        box-shadow: 15px 0 45px rgba(0, 0, 0, 0.8) !important;
+        border-right: 1.5px solid rgba(212, 175, 55, 0.45) !important;
       }
 
       .menu-drawer__navigation {
@@ -664,6 +668,12 @@
         font-size: 1.25rem !important;
         font-weight: 700 !important;
         border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+      }
+
+      /* Close gap between Customise icon and text */
+      .menu-drawer__menu-item--customise {
+        justify-content: flex-start !important;
+        gap: 10px !important;
       }
 
       .menu-drawer__menu-item--parent {
