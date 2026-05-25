@@ -267,8 +267,8 @@
       if (materialWrapper) materialWrapper.style.display = 'none';
       if (gsmWrapper) gsmWrapper.style.display = 'block';
     } else if (garment === 'polo') {
-      gsmOptions = ['220 GSM', '240 GSM', '260 GSM'];
-      if (materialWrapper) materialWrapper.style.display = 'none';
+      gsmOptions = ['160 GSM', '200 GSM', '240 GSM'];
+      if (materialWrapper) materialWrapper.style.display = 'block';
       if (gsmWrapper) gsmWrapper.style.display = 'block';
     } else if (garment === 'sweatshirt') {
       gsmOptions = ['280 GSM', '320 GSM', '360 GSM'];
