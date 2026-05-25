@@ -750,3 +750,85 @@
   font-weight: 700;
   margin-top: 2px;
 }
+
+/* ========================================================
+   📱 MOBILE-SPECIFIC UI OVERRIDES (Phones only) 
+   ======================================================== */
+@media (max-width: 767px) {
+  /* 1. Global Fieldset & Padding */
+  .studio-v2-fieldset {
+    padding: 1.25rem 1rem;
+  }
+  
+  .studio-v2-head h1 {
+    font-size: 1.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* 2. Sizing Container layout fixes */
+  .studio-v2-sizes-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .studio-v2-size-card {
+    padding: 0.75rem 0.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .studio-v2-size-title {
+    font-size: 0.95rem;
+  }
+
+  /* 3. Swatches scaling so they don't squish */
+  .studio-v2-swatches {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem 0.5rem;
+  }
+  
+  .studio-v2-swatch-chip {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .studio-v2-swatch-name {
+    font-size: 0.65rem;
+  }
+
+  /* 4. Fix dropdowns label layout & margin */
+  .studio-v2-label {
+    font-size: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+  
+  .studio-v2-select-wrap select {
+    padding: 0.75rem 2rem 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  [data-studio-gsm-wrapper],
+  [data-studio-material-wrapper] {
+    margin-top: 1.15rem !important;
+  }
+
+  /* 5. Custom Color Layout fixing squish */
+  .studio-v2-custom-color-row {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .studio-v2-custom-color-row input[type="color"] {
+    width: 48px;
+    height: 48px;
+  }
+
+  .studio-v2-custom-color-row input[type="text"] {
+    flex: 1 1 50%;
+    padding: 0.75rem 1rem;
+  }
+  
+  .studio-v2-small-button {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
