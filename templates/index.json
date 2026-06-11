@@ -111,7 +111,7 @@
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
-                    "padding-block-start": 60,
+                    "padding-block-start": 40,
                     "padding-block-end": 60,
                     "padding-inline-start": 0,
                     "padding-inline-end": 0
@@ -135,7 +135,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/93a267cf2f78c3d92c047ab2706d390b.png",
+        "image_1": "shopify://shop_images/Backgroundimage.png",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
@@ -586,7 +586,7 @@
             "link": "",
             "video_loop": true,
             "video_autoplay": false,
-            "image_position": "cover",
+            "image_position": "contain",
             "video_position": "cover"
           },
           "blocks": {}
@@ -698,7 +698,7 @@
             "link": "",
             "video_loop": true,
             "video_autoplay": false,
-            "image_position": "cover",
+            "image_position": "contain",
             "video_position": "cover"
           },
           "blocks": {}
